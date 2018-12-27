@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "chDivin", "chDivin\chDivin.vcxproj", "{3162432A-59C0-4750-8AC4-874B4EBF98BE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3162432A-59C0-4750-8AC4-874B4EBF98BE}.Debug|x64.ActiveCfg = Debug|x64
+		{3162432A-59C0-4750-8AC4-874B4EBF98BE}.Debug|x64.Build.0 = Debug|x64
+		{3162432A-59C0-4750-8AC4-874B4EBF98BE}.Debug|x86.ActiveCfg = Debug|Win32
+		{3162432A-59C0-4750-8AC4-874B4EBF98BE}.Debug|x86.Build.0 = Debug|Win32
+		{3162432A-59C0-4750-8AC4-874B4EBF98BE}.Release|x64.ActiveCfg = Release|x64
+		{3162432A-59C0-4750-8AC4-874B4EBF98BE}.Release|x64.Build.0 = Release|x64
+		{3162432A-59C0-4750-8AC4-874B4EBF98BE}.Release|x86.ActiveCfg = Release|Win32
+		{3162432A-59C0-4750-8AC4-874B4EBF98BE}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9D4E257F-5AAF-4F43-9D56-9740E9A780CC}
+	EndGlobalSection
+EndGlobal

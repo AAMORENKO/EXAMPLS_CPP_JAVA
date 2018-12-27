@@ -1,0 +1,375 @@
+----------------------------------- *.h ----------------------------
+
+#define mtime 298
+#define pi 3.14159265358979323846
+
+
+protected:
+	HICON m_hIcon;
+
+private:
+
+	COLORREF cf, c[25];
+	HFONT hold, hNew, hbk;
+	HPEN hPenOxy, hOldPen, pen;
+	HBRUSH m, oldm, brush;
+	CPen d, oldd;
+	CBitmap pic;
+	CRect rc, w, kw[30];
+
+	CString ms, t, z;
+
+	int Matrix[50][50];
+	int x1, y1, x2, y2, x3, y3, x4, y4;
+	int RH, RW, k, i, j, p, x, y, cx, cy, dx, dy;
+
+	bool fg;
+
+
+----------------------------------- *.cpp ------------------------
+//#include "newKvadratikDlg.h"
+//#include "Kw0.h"
+
+#include <fstream>
+
+//#include <stdlib.h>
+//#include <string.h>
+
+using namespace std;
+
+
+
+	c[0] = 0xFF00FF;
+	c[1] = 0xFFA500;
+	c[2] = 0xFFFF;
+	c[3] = 0x0C7800;
+	c[4] = 0x005690;
+	c[5] = 0xFFFF0000;
+	c[6] = 0xCC00AA;
+	c[7] = 0xAA5600;
+	c[8] = 0xAAAA;
+	c[9] = 0x00CC00;
+	c[10] = 0x090056;
+	c[11] = 0xF0F0F0;
+
+	fg = true;
+
+	SetWindowTextW(L"Кольорові квадрати");
+
+		CClientDC dc(this);
+		GetClientRect(&rc);
+
+		dc.FillSolidRect(&rc, RGB(255,255,255));
+
+		RH = abs(rc.left - rc.right);
+		RW = abs(rc.top - rc.bottom);
+
+		dx = RH / 3;
+		dy = RW / 2;
+
+		j = 0;
+
+		for (k = 0; k < 2; k++)
+		{
+			for (i = 0; i < 3; i++)
+			{
+				cf = c[j];
+				m = CreateSolidBrush(cf);
+				oldm = (HBRUSH)dc.SelectObject(m);
+
+				w.top = k*dy; w.bottom = (k + 1)*dy;
+				w.left = i*dx;
+
+				if (i == 2) w.right = (i + 1)*dx + 2;
+				else w.right = (i + 1)*dx;
+
+				w.DeflateRect(1, 1);
+				dc.RoundRect(&w, CPoint(25, 25));
+
+				j++;
+				DeleteObject(m);
+				SelectObject(dc, oldm);
+			}
+
+		}
+
+	if (PtInRect(&kw[0], point))
+	{
+		cf = c[6];
+		m = CreateSolidBrush(cf);
+		oldm = (HBRUSH)dc.SelectObject(m);
+		kw[0].DeflateRect(1, 1);
+		dc.RoundRect(&kw[0], CPoint(25, 25));
+		DeleteObject(m);
+		SelectObject(dc, oldm);
+	} 
+	else
+	{
+		cf = c[0];
+		m = CreateSolidBrush(cf);
+		oldm = (HBRUSH)dc.SelectObject(m);
+		kw[0].DeflateRect(1, 1);
+		dc.RoundRect(&kw[0], CPoint(25, 25));
+		DeleteObject(m);
+		SelectObject(dc, oldm);
+	}
+
+
+	if (PtInRect(&kw[1], point))
+	{
+		cf = c[7];
+		m = CreateSolidBrush(cf);
+		oldm = (HBRUSH)dc.SelectObject(m);
+		kw[1].DeflateRect(1, 1);
+		dc.RoundRect(&kw[1], CPoint(25, 25));
+		DeleteObject(m);
+		SelectObject(dc, oldm);
+	}
+	else
+	{
+		cf = c[1];
+		m = CreateSolidBrush(cf);
+		oldm = (HBRUSH)dc.SelectObject(m);
+		kw[1].DeflateRect(1, 1);
+		dc.RoundRect(&kw[1], CPoint(25, 25));
+		DeleteObject(m);
+		SelectObject(dc, oldm);
+	}
+
+	if (PtInRect(&kw[2], point))
+	{
+		cf = c[8];
+		m = CreateSolidBrush(cf);
+		oldm = (HBRUSH)dc.SelectObject(m);
+		kw[2].DeflateRect(1, 1);
+		dc.RoundRect(&kw[2], CPoint(25, 25));
+		DeleteObject(m);
+		SelectObject(dc, oldm);
+	}
+	else
+	{
+		cf = c[2];
+		m = CreateSolidBrush(cf);
+		oldm = (HBRUSH)dc.SelectObject(m);
+		kw[2].DeflateRect(1, 1);
+		dc.RoundRect(&kw[2], CPoint(25, 25));
+		DeleteObject(m);
+		SelectObject(dc, oldm);
+	}
+
+
+	if (PtInRect(&kw[3], point))
+	{
+		cf = c[9];
+		m = CreateSolidBrush(cf);
+		oldm = (HBRUSH)dc.SelectObject(m);
+		kw[3].DeflateRect(1, 1);
+		dc.RoundRect(&kw[3], CPoint(25, 25));
+		DeleteObject(m);
+		SelectObject(dc, oldm);
+	}
+	else
+	{
+		cf = c[3];
+		m = CreateSolidBrush(cf);
+		oldm = (HBRUSH)dc.SelectObject(m);
+		kw[3].DeflateRect(1, 1);
+		dc.RoundRect(&kw[3], CPoint(25, 25));
+		DeleteObject(m);
+		SelectObject(dc, oldm);
+	}
+
+
+	if (PtInRect(&kw[4], point))
+	{
+		cf = c[10];
+		m = CreateSolidBrush(cf);
+		oldm = (HBRUSH)dc.SelectObject(m);
+		kw[4].DeflateRect(1, 1);
+		dc.RoundRect(&kw[4], CPoint(25, 25));
+		DeleteObject(m);
+		SelectObject(dc, oldm);
+	}
+	else
+	{
+		cf = c[4];
+		m = CreateSolidBrush(cf);
+		oldm = (HBRUSH)dc.SelectObject(m);
+		kw[4].DeflateRect(1, 1);
+		dc.RoundRect(&kw[4], CPoint(25, 25));
+		DeleteObject(m);
+		SelectObject(dc, oldm);
+	}
+
+	if (PtInRect(&kw[5], point))
+	{
+		cf = c[11];
+		m = CreateSolidBrush(cf);
+		oldm = (HBRUSH)dc.SelectObject(m);
+		kw[5].DeflateRect(1, 1);
+		dc.RoundRect(&kw[5], CPoint(25, 25));
+		DeleteObject(m);
+		SelectObject(dc, oldm);
+	}
+	else
+	{
+		cf = c[5];
+		m = CreateSolidBrush(cf);
+		oldm = (HBRUSH)dc.SelectObject(m);
+		kw[5].DeflateRect(1, 1);
+		dc.RoundRect(&kw[5], CPoint(25, 25));
+		DeleteObject(m);
+		SelectObject(dc, oldm);
+	}
+
+	CStdioFile inf(L"data.txt", CFile::modeCreate | CFile::modeWrite);
+	
+
+	if (PtInRect(&kw[0], point))
+	{
+		ms = "0";
+		inf.WriteString(ms); // записать в файл
+		inf.Flush();
+		inf.Close();
+		CKw0 dlg;
+		dlg.DoModal();
+	}
+
+	CStdioFile otf;
+	otf.Open(L"data.txt", CFile::modeRead);
+	
+	otf.ReadString(ms);
+	otf.Close();
+
+	k=_wtoi(ms);
+	
+	switch (k)
+	{
+		case 0: SetWindowTextW(L"Розовый");
+			cf = c[0];
+			break;
+		case 1: SetWindowTextW(L"Бирюзовый");
+			cf = c[1];
+			break;
+		case 2: SetWindowTextW(L"Желтый");
+			cf = c[2];
+			break;
+		case 3: SetWindowTextW(L"Зеленый");
+			cf = c[3];
+			break;
+		case 4: SetWindowTextW(L"Коричневый");
+			cf = c[4];
+			break;
+		case 5: SetWindowTextW(L"Черный");
+			cf = c[5];
+			break;
+	}
+
+
+		CClientDC dc(this);
+		GetClientRect(&rc);
+		ClientToScreen(&rc);
+		ScreenToClient(&rc);
+
+		m = CreateSolidBrush(cf);
+		oldm = (HBRUSH)dc.SelectObject(m);
+		rc.DeflateRect(5, 5);
+		dc.RoundRect(&rc, CPoint(45, 45));
+		DeleteObject(m);
+		SelectObject(dc, oldm);
+		fg = false;
+
+
+	CClientDC dc(this);
+	GetClientRect(&rc);
+
+	m = CreateSolidBrush(cf);
+	oldm = (HBRUSH)dc.SelectObject(m);
+
+
+	if (PtInRect(&w, point))
+	{
+		
+
+		switch (k)
+		{
+		case 0: cf = c[6];
+			break;
+		case 1: cf = c[7];
+			break;
+		case 2: cf = c[8];
+			break;
+		case 3: cf = c[9];
+			break;
+		case 4: cf = c[10];
+			break;
+		case 5: cf = c[11];
+			break;
+		}
+
+
+		rc.DeflateRect(5, 5);
+		dc.RoundRect(&rc, CPoint(45, 45));
+		DeleteObject(m);
+		SelectObject(dc, oldm);
+	}
+	else
+	{
+	
+		switch (k)
+		{
+		case 0: cf = c[0];
+			break;
+		case 1: cf = c[1];
+			break;
+		case 2: cf = c[2];
+			break;
+		case 3: cf = c[3];
+			break;
+		case 4: cf = c[4];
+			break;
+		case 5: cf = c[5];
+			break;
+		}
+	
+		rc.DeflateRect(5, 5);
+		dc.RoundRect(&rc, CPoint(45, 45));
+		DeleteObject(m);
+		SelectObject(dc, oldm);
+	}
+
+	SendMessage(WM_SYSCOMMAND, 0xF012, NULL);
+
+	CClientDC dc(this);
+	GetClientRect(&rc);
+
+	if (PtInRect(&w, point)&&(k!=5))
+	{
+
+    	cf = c[5];
+		dc.FillSolidRect(&rc, cf);
+		Sleep(mtime_0);
+
+		OnOK();
+	}
+	else
+	{
+		cf = c[5];
+		dc.FillSolidRect(&rc, cf);
+		Sleep(mtime_0);
+
+		if (MessageBox(L"Вы действительно хотите выйти?", L"ВЫХОД", MB_YESNO | MB_ICONQUESTION) == IDYES)
+		{
+			OnOK();
+		}
+		else
+		{
+			OnOK();
+			CnewKvadratikDlg dlg;
+			dlg.DoModal();
+		}
+	}
+	
+
+
+

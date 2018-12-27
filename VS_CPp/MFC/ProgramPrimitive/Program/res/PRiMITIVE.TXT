@@ -1,0 +1,301 @@
+private:
+
+	COLORREF cf, c[25],pir[7];
+
+	HFONT hold, hNew, hbk;
+	HBRUSH m, oldm;
+	HPEN hPenOxy, hOldPen;
+
+	CPen d, oldd;
+	CBitmap pic;
+	CRect mp,rc,w,kw[12];
+
+	CString ms,t, z;
+
+	int Matrix[50][50];
+	int RH, RW, k, i, p, j, cx,cy, dx, dy;
+	int x, y, x1, y1, x2, y2;
+	bool fg;
+
+-----------------------------------------------------------
+
+/*
+	pir[6] = 0x000000FF;
+	pir[5] = 0x000088FF;
+	pir[4] = 0x0000DDFF;
+	pir[3] = 0x0024FF00;
+	pir[2] = 0x00CEE23A;
+	pir[1] = 0x00E2383A;
+	pir[0] = 0x00A90D8A;
+*/
+	pir[6] = 0x000000FF;
+	pir[5] = 0x000088FF;
+	pir[4] = 0x0000DDFF;
+	pir[3] = 0x000D820D;
+	pir[2] = 0x00FF9D3A;
+	pir[1] = 0x00945823;
+	pir[0] = 0x007A1B50;
+
+	k=0;
+	fg=true;
+
+----------------------------------------------------------- ƒŒÃ» 
+
+	k = 1;
+
+	CClientDC dc(this);
+	GetClientRect(&rc);
+	dc.FillSolidRect(&rc, RGB(255, 255, 255));
+	w.left = rc.left;
+	w.right = rc.right;
+	w.top = rc.top;
+	w.bottom = rc.bottom;
+
+	//stena
+	x1 = w.left + 100;
+	y1 = w.top + 200;
+	x2 = x1 + 200;
+	y2 = w.bottom - 80;
+	m = CreateSolidBrush(0x0000FFFF);
+	oldm = (HBRUSH)SelectObject(dc, m);
+	dc.Rectangle(x1, y1, x2, y2);
+
+	//dver
+	x = x1 + 40;
+	y = y1 + 70;
+	m = CreateSolidBrush(0x0023356E);
+	oldm = (HBRUSH)SelectObject(dc, m);
+	dc.Rectangle(x, y, x2 - 110, y2);
+
+	//okno
+	x = x1 + 130;
+	y = y1 + 40;
+	m = CreateSolidBrush(0x00000000);
+	oldm = (HBRUSH)SelectObject(dc, m);
+	dc.Rectangle(x, y, x2 - 20, y2 - 80);
+
+	//swet v okne
+	x += 9;
+	y += 6;
+	m = CreateSolidBrush(0x00D8B871);
+	oldm = (HBRUSH)SelectObject(dc, m);
+	dc.Rectangle(x, y, x2 - 29, y2 - 120);
+	y += 33;
+	dc.Rectangle(x, y, x2 - 29, y2 - 85);
+
+	//krusha
+	x = x1 - 20;
+	y = y1 - 30;
+	m = CreateSolidBrush(0x0000650B);
+	oldm = (HBRUSH)SelectObject(dc, m);
+	dc.Rectangle(x, y, x2 + 20, y2 - 196);
+
+	//truba
+	x = x1 + 154;
+	y = y1 - 100;
+	m = CreateSolidBrush(0x001E53DE);
+	oldm = (HBRUSH)SelectObject(dc, m);
+	dc.Rectangle(x, y, x2 - 30, y2 - 226);
+
+	SelectObject(dc, oldm);
+	DeleteObject(m);
+	hbk = (HFONT)::GetStockObject(SYSTEM_FONT);
+	hNew = CreateFont(55, 0, 0, 0, FW_NORMAL, 0, 0, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Penta");
+
+	t = "›ÚÓ ÏÓÈ ‰ÓÏËÍ";
+
+	hold = (HFONT)SelectObject(dc, hNew);
+	SetTextColor(dc, c[3]);
+	dc.TextOutW(400, 320, t, t.GetLength());
+	hold = (HFONT)SelectObject(dc, hbk);
+
+----------------------------------------------------------- œ»–¿Ã»ƒ¿
+
+	k = 2;
+	
+	CClientDC dc(this);
+	GetClientRect(&rc);
+	dc.FillSolidRect(&rc, RGB(255, 255, 255));
+	w.left = rc.left;
+	w.right = rc.right;
+	w.top = rc.top;
+	w.bottom = rc.bottom;
+
+	//piramidka
+
+
+	x1 = w.left + 400;
+	y1 = w.top + 100;
+	x2 = w.right - 100;
+	y2 = w.bottom - 80;
+
+	k = (x2 - x1) / 14;
+	p = (y2 - y1) / 7;
+
+	for (i = 0; i < 7; i++)
+	{
+		m = CreateSolidBrush(pir[6 - i]);
+		oldm = (HBRUSH)SelectObject(dc, m);
+		hPenOxy = CreatePen(PS_SOLID, 2, pir[6 - i]);
+		hOldPen = (HPEN)SelectObject(dc, hPenOxy);
+
+		//dc.Rectangle(x1+k*i, y1, x1+k*(i+1), y2);
+		//dc.Rectangle(x1, y2-p*i, x2, y2-p*(i+1));
+
+		mp.left = x1 + k*i;
+		mp.top = y2 - p*i;
+		mp.right = x2 - k*i;
+		mp.bottom = y2 - p*(i + 1);
+
+		mp.DeflateRect(1, 1);
+		dc.RoundRect(&mp, CPoint(21, 21));
+	}
+
+
+
+	hbk = (HFONT)::GetStockObject(SYSTEM_FONT);
+	hNew = CreateFont(50, 0, 0, 0, FW_NORMAL, 0, 0, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Impact");
+
+	t = "—œ≈ “– - œ»–¿Ã»ƒ¿";
+
+	hold = (HFONT)SelectObject(dc, hNew);
+	SetTextColor(dc, c[1]);
+	dc.TextOutW(40, 320, t, t.GetLength());
+	hold = (HFONT)SelectObject(dc, hbk);
+
+	SelectObject(dc, oldm);
+	DeleteObject(m);
+	SelectObject(dc, hOldPen);
+	DeleteObject(hPenOxy);
+	DeleteObject(hNew);
+
+-----------------------------------------------------------  ¬¿ƒ–¿“€
+
+	k = 3;
+	
+	CClientDC dc(this);
+	GetClientRect(&rc);
+	dc.FillSolidRect(&rc, RGB(255, 255, 255));
+	w.left = rc.left;
+	w.right = rc.right;
+	w.top = rc.top;
+	w.bottom = rc.bottom;
+
+	// Mishen-1
+	x1 = w.left + 50;
+	y1 = w.top + 100;
+	x2 = w.right - 425;
+	y2 = w.bottom - 80;
+
+	k = (x2 - x1) / 14;
+	p = (y2 - y1) / 14;
+	for (i = 0; i < 7; i++)
+	{
+		m = CreateSolidBrush(pir[6 - i]);
+		oldm = (HBRUSH)SelectObject(dc, m);
+		hPenOxy = CreatePen(PS_SOLID, 2, pir[6 - i]);
+		hOldPen = (HPEN)SelectObject(dc, hPenOxy);
+		dc.Rectangle(x1 + i*k, y1 + p*i, x2 - i*k, y2 - p*i);
+	}
+
+	hbk = (HFONT)::GetStockObject(SYSTEM_FONT);
+	hNew = CreateFont(36, 0, 0, 0, FW_BOLD, 0, 0, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Penta");
+
+	t = "—œ≈ “– -  ¬¿ƒ–¿“» »";
+
+	hold = (HFONT)SelectObject(dc, hNew);
+	SetTextColor(dc, c[0]);
+	dc.TextOutW(360, 320, t, t.GetLength());
+	hold = (HFONT)SelectObject(dc, hbk);
+
+
+
+	SelectObject(dc, oldm);
+	DeleteObject(m);
+	SelectObject(dc, hOldPen);
+	DeleteObject(hPenOxy);
+	DeleteObject(hNew);
+
+
+-----------------------------------------------------------  –”√»
+
+	k = 4;
+
+	CClientDC dc(this);
+	GetClientRect(&rc);
+	dc.FillSolidRect(&rc, RGB(255, 255, 255));
+	w.left = rc.left;
+	w.right = rc.right;
+	w.top = rc.top;
+	w.bottom = rc.bottom;
+
+	
+	//Mishen-2
+	x1 = w.left + 400;
+	y1 = w.top + 100;
+	x2 = w.right - 75;
+	y2 = w.bottom - 80;
+	k = (x2 - x1) / 14;
+	p = (y2 - y1) / 14;
+
+	for (i = 0; i < 7; i++)
+	{
+		m = CreateSolidBrush(pir[i]);
+		oldm = (HBRUSH)SelectObject(dc, m);
+		hPenOxy = CreatePen(PS_SOLID, 2, pir[i]);
+		hOldPen = (HPEN)SelectObject(dc, hPenOxy);
+		dc.Ellipse(x1 + i*k, y1 + p*i, x2 - i*k, y2 - p*i);
+	}
+
+	hbk = (HFONT)::GetStockObject(SYSTEM_FONT);
+	hNew = CreateFont(56, 0, 0, 0, FW_BOLD, 0, 0, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Opium");
+
+	t = "—œ≈ “– -  –”√»";
+
+	hold = (HFONT)SelectObject(dc, hNew);
+	SetTextColor(dc, c[6]);
+	dc.TextOutW(10, 200, t, t.GetLength());
+	hold = (HFONT)SelectObject(dc, hbk);
+
+
+	SelectObject(dc, oldm);
+	DeleteObject(m);
+	SelectObject(dc, hOldPen);
+	DeleteObject(hPenOxy);
+	DeleteObject(hNew);
+
+
+------------------------------------------------------- OnLButtonDown
+
+	CClientDC dc(this);
+	GetClientRect(&rc);
+	w.left = rc.left;
+	w.right = rc.right;
+	w.top = rc.top;
+	w.bottom = rc.bottom;
+
+
+	kw[0].left = w.left + 110;
+	kw[0].top = w.top + 5;
+	kw[0].right = kw[0].left + 200;
+	kw[0].bottom = kw[0].top + 220;
+
+	kw[1].left = w.left + 400;
+	kw[1].top = w.top + 5;
+	kw[1].right = kw[1].left + 280;
+	kw[1].bottom = kw[1].top + 240;
+
+	//dc.Rectangle(&kw[0]);
+	//dc.Rectangle(&kw[1]);
+
+	if (k == 0 && fg)
+	{
+		if (PtInRect(&kw[0], point)) OnFilePic1();
+		if (PtInRect(&kw[1], point)) OnFilePic2();
+	}
+
+	fg = false;
+
+------------------------------------------------------ EXIT
+
+	if (MessageBox(TEXT("¬Ë ‰≥ÈÒÌÓ ·‡Ê‡∫ÚÂ ‚ËÈÚË ?"), TEXT("”¬¿√¿!!!"), MB_OKCANCEL | MB_ICONQUESTION) == IDOK) OnOK();

@@ -1,0 +1,12 @@
+#define IDD_PROGRAM_DIALOG	102
+
+#define IDB_BITMAP1	7000
+
+#define IDC_EDIT1	1000
+#define IDC_EDIT2	1001
+
+#define IDC_PIC	2000
+
+#define IDC_BUTTON1	3000
+
+#define IDC_E	4000

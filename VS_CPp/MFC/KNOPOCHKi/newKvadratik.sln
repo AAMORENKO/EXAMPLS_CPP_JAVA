@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "newKvadratik", "newKvadratik\newKvadratik.vcxproj", "{13D231A6-CC77-4159-A358-C0C1F55D77BE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{13D231A6-CC77-4159-A358-C0C1F55D77BE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{13D231A6-CC77-4159-A358-C0C1F55D77BE}.Debug|Win32.Build.0 = Debug|Win32
+		{13D231A6-CC77-4159-A358-C0C1F55D77BE}.Release|Win32.ActiveCfg = Release|Win32
+		{13D231A6-CC77-4159-A358-C0C1F55D77BE}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

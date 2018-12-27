@@ -1,0 +1,56 @@
+Установка Intellij Idea Ultimate
+https://youtu.be/XzbyP2kKx7M
+
+Уроки Java для начинающих | #13 - Создание класса и объекта
+https://youtu.be/_GLnOwDEE_A
+
+IntelliJ IDEA для новичков: советы и секреты
+https://youtu.be/mcvnjaLqVWQ
+
+Горячие клавиши в Intellij IDEA (1часть) с подписью кнопок внизу
+https://youtu.be/gZzaOzkUKoY
+https://youtu.be/vQksLDvacTo <Ctrl>+<J>
+
+
+Классная фича в Intellij IDEA
+https://youtu.be/W68KMUb3h0k
+
+Отправка проекта на GitHub из IntelliJ IDEA
+https://youtu.be/zM6z57OtR2Q
+Java. 4 урок. Intellij Idea 14 + GitHub
+https://youtu.be/dO883S85d_k
+
+
+Уроки Java для начинающих | #23 - GUI Java (Swing JFrame)
+https://youtu.be/VJND4kTH8y4
+
+Эффективная работа с кодом в IntelliJ IDEA
+https://youtu.be/tpv5n2jWHlw
+https://youtu.be/y5O8dIW-ROg
+
+Настройка Intellij IDEA Java - 3 совета как пользоваться
+https://youtu.be/-e-SG4Wvjzo
+
+Git: Урок 0. Подготовка и Введение
+https://youtu.be/en6gms6e54Q
+Git: основы работы с Intellij Idea
+https://youtu.be/ohygdCu5Flg
+https://youtu.be/U82dUchVroc
+
+Git. Быстрый старт. Назначение и возможности. Урок 1
+https://youtu.be/4-NX17Ip-xQ
+Изучение GitHub в одном видео уроке за 15 минут!
+https://youtu.be/JfpCicDUMKc
+
+
+
+Git - Установка Системы контроля версий #1
+https://youtu.be/mpK_MYb38zs
+Git branch — работа с ветками
+https://youtu.be/SZARWakrCro
+Ускоряем разработку: GitHub Gist - хранение и повторное использование кода
+https://youtu.be/fUUXus8gGk0
+
+
+https://github.com/login
+AAMORENKO *Ka
