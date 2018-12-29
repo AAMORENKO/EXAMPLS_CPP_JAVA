@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Program.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgramDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialog2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialog3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dintro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Program.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgramDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialog2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialog3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dintro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Program.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\Program.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\Program.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\LOGO.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\01.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\02.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\03.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\04.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\05.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\06.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\07.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\08.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\09.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\10.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\11.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\12.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\13.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\14.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\15.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\16.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\17.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\18.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\19.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\20.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\21.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\22.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\23.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\24.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\25.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\26.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\27.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\00.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\28.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Project - Дізнайтеся\pic27\29.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Result.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Intro.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
