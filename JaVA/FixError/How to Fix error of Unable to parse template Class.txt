@@ -1,0 +1,30 @@
+How to Fix error of Unable to parse template Class in Android Studio
+
+0)
+
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end #parse("File Header.java") public class ${NAME} { }
+
+Unable to parse template class error in android studio...
+
+##copy and paste in setting/editor/file and code templates/class
+
+1)
+
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end #parse("File Header.java") public class ${NAME} { }
+
+
+2)
+
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "" &&    ${Is_your_class_abstract_Reply_yes_no} == "no")
+package ${PACKAGE_NAME};
+#parse("File Header.java") public class ${NAME} {
+
+}
+#elseif (${Is_your_class_abstract_Reply_yes_no} == "yes")
+#parse("File Header.java") public abstract class ${NAME} {
+
+}
+#end
+
+
+https://stackoverflow.com/questions/45497266/unable-to-parse-template-class
