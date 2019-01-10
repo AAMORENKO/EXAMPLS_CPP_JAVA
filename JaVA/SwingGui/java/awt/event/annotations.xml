@@ -1,5 +1,0 @@
-<root>
-    <item name='java.awt.event.ActionListener void actionPerformed(java.awt.event.ActionEvent)'>
-        <annotation name='java.lang.Deprecated'/>
-    </item>
-</root>
