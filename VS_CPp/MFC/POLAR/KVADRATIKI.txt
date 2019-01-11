@@ -1,0 +1,61 @@
+#define PI 3.1415926535897932384626433832795
+
+private:
+
+	HFONT hold,hNew,hbk;	
+	CRect rc;
+	CRect rt;
+	int RH,RW;
+	POINT p;
+	COLORREF cf,c;
+	bool f;
+
+	int n,m,i,j,k;
+	CString msg;
+
+================================
+
+		CPaintDC dc(this);
+		GetClientRect(&rc);
+		dc.FillSolidRect(&rc, RGB(0, 0, 0));
+		c = RGB(255, 0, 0);
+		SetTextColor(dc, c);
+
+		COLORREF crAxes = RGB(89, 89, 250);//цвет линий
+		HPEN hPenOxy, hOldPen;
+		hPenOxy = CreatePen(PS_SOLID, 2, crAxes);//создаем кисть цветом
+		hOldPen = (HPEN)SelectObject(dc, hPenOxy);
+
+		int dx;
+		int x1, y1, x2, y2;
+
+		x1 = rc.left;
+		x2 = rc.right;
+		y1 = rc.top;
+		y2 = rc.bottom;
+
+		j = 1;
+		dx = 10;
+		while (j<25)
+		{
+
+			x1 += dx;
+			y1 += dx;
+			x2 -= (2 * dx);
+			y2 -= (2 * dx);
+
+			if ((j % 2) == 0)
+			{
+				dc.FillSolidRect(x1, y1, x2, y2, RGB(0, 0, 0));
+			}
+			else
+			{
+				dc.FillSolidRect(x1, y1, x2, y2, RGB(255, 255, 255));
+			}
+
+			j++;
+		}
+
+		SelectObject(dc, hOldPen);
+		DeleteObject(hPenOxy);
+

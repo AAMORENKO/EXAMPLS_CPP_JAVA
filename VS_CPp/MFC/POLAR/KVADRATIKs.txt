@@ -1,0 +1,33 @@
+private:
+
+	RECT r;
+	HBRUSH MyBrush, OldBrush;
+
+	int i, j, x, y, f;
+
+================================
+
+#include <time.h>
+
+using namespace std;	
+
+	srand((unsigned)time(NULL));
+
+================================
+
+		CPaintDC hdc(this);
+		GetClientRect(&r);
+		
+		x = 29, y = 28, f = 14;
+		for (j = 0; j < r.right; j += f)
+		{
+			for (i = 0; i < r.bottom; i += f)
+			{
+				MyBrush = CreateSolidBrush(RGB(rand() % 255, rand() % 255, rand() % 255));
+				OldBrush = (HBRUSH)SelectObject(hdc, MyBrush);
+				Rectangle(hdc, j, i, f + j, f + i);
+				SelectObject(hdc, OldBrush);
+				DeleteObject(MyBrush);
+			}
+			Sleep(0);
+		}
