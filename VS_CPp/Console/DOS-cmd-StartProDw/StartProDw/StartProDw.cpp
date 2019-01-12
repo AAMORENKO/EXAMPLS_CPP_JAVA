@@ -1,3 +1,4 @@
+// РєРѕРјР°РЅРґРЅР° СЃС‚СЂРѕРєР° РЎРњР”
 #include <direct.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -59,23 +60,23 @@ void main()
 	
 
 	_getcwd(m_AppPath, _MAX_PATH);
-	//printf("\nтекущая директория\\>> %s\n", m_AppPath);
+	//printf("\nГІГҐГЄГіГ№Г Гї Г¤ГЁГ°ГҐГЄГІГ®Г°ГЁГї\\>> %s\n", m_AppPath);
 	pth=m_AppPath;
 	
 	curdrive = _getdrive();
-	//printf("\nтекущий носитель %c: \n", curdrive + 'A'-1, curdrive-1);
+	//printf("\nГІГҐГЄГіГ№ГЁГ© Г­Г®Г±ГЁГІГҐГ«Гј %c: \n", curdrive + 'A'-1, curdrive-1);
 
     _chdir(pvd);
 	
 		cout<<endl<<endl;
 		cout<<" ---------------------------------------------- "<<endl;
-		cout<<"|               Диск R: подключен              |"<<endl;
-		cout<<"|          Отключаем виртуальный диск R:       |"<<endl;
+		cout<<"|               Г„ГЁГ±ГЄ R: ГЇГ®Г¤ГЄГ«ГѕГ·ГҐГ­              |"<<endl;
+		cout<<"|          ГЋГІГЄГ«ГѕГ·Г ГҐГ¬ ГўГЁГ°ГІГіГ Г«ГјГ­Г»Г© Г¤ГЁГ±ГЄ R:       |"<<endl;
 		cout<<" ---------------------------------------------- "<<endl;
 		Sleep(tms);
 		system(d_vdx);
 		cout<<" ============================================== "<<endl;
-		cout<<"|               Диск R: отключен               |"<<endl;
+		cout<<"|               Г„ГЁГ±ГЄ R: Г®ГІГЄГ«ГѕГ·ГҐГ­               |"<<endl;
 		cout<<" ============================================== "<<endl;
 		_chdir(host_dir);
 		system(kill_host);
@@ -83,11 +84,11 @@ void main()
 		system(restore_host);
 		Sleep(tms);
 		
-        cout<<"\nОтключаем почтовую службу"<<endl;
+        cout<<"\nГЋГІГЄГ«ГѕГ·Г ГҐГ¬ ГЇГ®Г·ГІГ®ГўГіГѕ Г±Г«ГіГ¦ГЎГі"<<endl;
         WinExec(mail_stop,SW_RESTORE);
     	Sleep(tms);
 
-		cout<<"\nОтключаем Apache Service"<<endl;
+		cout<<"\nГЋГІГЄГ«ГѕГ·Г ГҐГ¬ Apache Service"<<endl;
 		ZeroMemory(&szi,sizeof(STARTUPINFO));
 		szi.cb = sizeof(szi);
 		ZeroMemory( &pci, sizeof(pci) );
@@ -96,7 +97,7 @@ void main()
 		WinExec(mapache_stop,SW_RESTORE);
 		Sleep(tms);
  
-		cout<<"\nОтключаем MySQL Service"<<endl;
+		cout<<"\nГЋГІГЄГ«ГѕГ·Г ГҐГ¬ MySQL Service"<<endl;
 		ZeroMemory(&szi,sizeof(STARTUPINFO));
 		szi.cb = sizeof(szi);
 		ZeroMemory( &pci, sizeof(pci) );
@@ -110,7 +111,7 @@ void main()
 
 		cout<<endl<<endl;
 		cout<<" ---------------------------------------------- "<<endl;
-		cout<<"| Задание выполнено. Система готова к работе.  |"<<endl;
+		cout<<"| Г‡Г Г¤Г Г­ГЁГҐ ГўГ»ГЇГ®Г«Г­ГҐГ­Г®. Г‘ГЁГ±ГІГҐГ¬Г  ГЈГ®ГІГ®ГўГ  ГЄ Г°Г ГЎГ®ГІГҐ.  |"<<endl;
 		cout<<" ---------------------------------------------- "<<endl;
  
 	
