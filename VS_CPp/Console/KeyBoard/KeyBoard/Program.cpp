@@ -1,3 +1,4 @@
+// Кодування, коди клавіатури
 #include <iostream>
 using namespace std;
 
@@ -5,7 +6,7 @@ int main()
 {
 	system("color 1f");
 	setlocale(LC_ALL, ".1251");
-	cout << "\n\t��������� DOS(866)\n";
+	cout << "\n\tÊîäóâàííÿ DOS(866)\n";
 	
 	setlocale(LC_ALL, ".866");
 	cout << endl;
@@ -15,7 +16,7 @@ int main()
 	}
 
 	setlocale(LC_ALL, ".1251");
-	cout << "\n\n\t��������� Windows(1251)\n";
+	cout << "\n\n\tÊîäóâàííÿ Windows(1251)\n";
 	cout << endl;
 	for (int k = 32; k < 256; k++)
 	{
