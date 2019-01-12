@@ -1,3 +1,9 @@
+// zmTab - заповнення таблиці змійкою
+// 1 6 7 12
+// 2 5 8 11
+// 3 4 9 10
+
+
 #include <iostream>
 using namespace std;
 int n, m;
