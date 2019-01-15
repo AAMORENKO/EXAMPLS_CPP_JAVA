@@ -1,4 +1,5 @@
-// РљРѕРґСѓРІР°РЅРЅСЏ, РєРѕРґРё РєР»Р°РІС–Р°С‚СѓСЂРё
+// Кодування, коди клавіатури
+
 #include <iostream>
 using namespace std;
 
@@ -6,7 +7,7 @@ int main()
 {
 	system("color 1f");
 	setlocale(LC_ALL, ".1251");
-	cout << "\n\tГЉГ®Г¤ГіГўГ Г­Г­Гї DOS(866)\n";
+	cout << "\n\tКодування DOS(866)\n";
 	
 	setlocale(LC_ALL, ".866");
 	cout << endl;
@@ -16,7 +17,7 @@ int main()
 	}
 
 	setlocale(LC_ALL, ".1251");
-	cout << "\n\n\tГЉГ®Г¤ГіГўГ Г­Г­Гї Windows(1251)\n";
+	cout << "\n\n\tКодування Windows(1251)\n";
 	cout << endl;
 	for (int k = 32; k < 256; k++)
 	{

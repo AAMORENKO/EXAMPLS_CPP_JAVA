@@ -1,3 +1,5 @@
+// ќбробка даних в таблиц€х
+
 #include <iostream>
 #include <time.h>
 
