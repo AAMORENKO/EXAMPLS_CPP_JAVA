@@ -39,5 +39,5 @@ int main()
 		cin >> z;
 	} while (z != 'n');
 
-	return 0;
+	return 0; 
 }
