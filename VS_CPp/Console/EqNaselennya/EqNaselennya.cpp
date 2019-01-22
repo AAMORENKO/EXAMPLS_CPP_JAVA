@@ -8,8 +8,8 @@ int main()
 	srand((unsigned)time(NULL));
 	setlocale(LC_ALL, "rus");
 	system("color 17");
-	
-	int n, A[1000],s1,s2;
+
+	int n, A[1000], s1, s2;
 	char z;
 	do
 	{
@@ -18,12 +18,13 @@ int main()
 
 		cout << "Введiть кiлькiсть будинкiв на вулицi N=";
 		cin >> n;
+		cout << endl;
 
 		s1 = s2 = 0;
 		for (int k = 0; k < n; k++)
 		{
 			A[k] = 1 + rand() % 400;
-			printf("\tA[%i]=%i\n", k + 1, A[k]);
+			printf("\tA[%i]=%i ", k + 1, A[k]);
 			if (k % 2 != 0) s1 += A[k]; else s2 += A[k];
 		}
 

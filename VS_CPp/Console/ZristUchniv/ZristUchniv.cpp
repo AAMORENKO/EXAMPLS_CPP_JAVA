@@ -14,7 +14,7 @@ int main()
 	do
 	{
 		system("cls");
-		cout << "\n\n\tПорiвняння кiлькостi учнiв за зростом, що меншi за M:\n\n\t";
+		cout << "\n\n\tПорiвняння кiлькостi учнiв за зростом, що не меншi за M:\n\n\t";
 
 		cout << "Введiть число учнiв N=";
 		cin >> n;
@@ -25,9 +25,9 @@ int main()
 		s = 0;
 		for (int k = 0; k < n; k++)
 		{
-			A[k] = 150 + rand() % (189-150+1);
-			printf("\tA[%i]=%i\n", k + 1, A[k]);
-			if (A[k]<= m) s ++;
+			A[k] = 150 + rand() % (189 - 150 + 1);
+			printf("\tA[%i]=%i ", k + 1, A[k]);
+			if (A[k] >= m) s++;
 		}
 
 		if (s >0)
