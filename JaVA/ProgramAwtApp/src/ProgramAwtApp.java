@@ -74,8 +74,8 @@ class GrLibrary extends Frame implements WindowListener {
         Graphics2D g2=(Graphics2D) g;
         g2.setStroke(new BasicStroke(3.0f));
 
-        x1=90; y1=110; int d=100;
-        dx=dy=80;
+        x1=90; y1=90; int d=120;
+        dx=dy=115;
 /*
         for (int j = 0; j <30 ; j++) {
             g.setColor(new Color(0xD56D10));
@@ -84,7 +84,7 @@ class GrLibrary extends Frame implements WindowListener {
             g.drawOval(x1+j*dx,y1+j*dy,d-j*dx,d-j*dx);
             d-=dx;
         }
-*/
+
         for (int j = 0; j <4; j++) {
 
             for (int l = 0; l <5; l++) {
@@ -92,8 +92,26 @@ class GrLibrary extends Frame implements WindowListener {
             }
             y1+=dy;
         }
+*/
+        x1=90; y1=90; d=120;
+        for (int j = 0; j <3; j++) {
+            x1=90;
+            for (int l = 0; l <4; l++) {
+                g.drawRect(x1,y1,d,d);
+                x1+=(d+10);
+            }
+            y1+=(dy+20);
+        }
 
-
+        x1=150; y1=150; d=120;
+        for (int j = 0; j <2; j++) {
+            x1=150;
+            for (int l = 0; l <3; l++) {
+                g.drawRect(x1,y1,d,d);
+                x1+=(d+10);
+            }
+            y1+=(dy+20);
+        }
 
     }
 
