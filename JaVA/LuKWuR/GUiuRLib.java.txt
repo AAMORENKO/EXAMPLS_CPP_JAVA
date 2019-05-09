@@ -1,0 +1,247 @@
+package GUiuRLib;
+
+import java.io.File;
+import java.nio.CharBuffer;
+import java.sql.Struct;
+import java.util.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.*;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.util.List;
+
+public class GUiuRLib extends  Frame implements
+        WindowListener {
+
+    public int x, y, w, h;
+    public int x1, y1, x2, y2, x3, y3;
+    public int cr, cq, cb;
+    public int d;
+    public int cx, cy, dx, dy;
+
+    public String ms="";
+
+    public String msa="";
+    public String msb="";
+    public String msc="";
+    public String msd="";
+    public String msx="";
+    public String msx1="";
+    public String msx2="";
+
+
+    public void windowOpened(WindowEvent e) {    }    ;
+
+    public void windowClosing(WindowEvent e) {
+        dispose();
+        System.exit(0);
+    };
+
+    public void windowClosed(WindowEvent e) { };
+    public void windowIconified(WindowEvent e) { };
+    public void windowDeiconified(WindowEvent e) { };
+    public void windowActivated(WindowEvent e) { };
+    public void windowDeactivated(WindowEvent e) { };
+
+    public int count=0;
+
+    public void paint(Graphics g) {
+
+        Dimension rc = getSize();
+        Insets in = getInsets();
+
+        int RH = rc.width;
+        int RW = rc.height;
+
+        int minX = in.left;
+        int maxX = RH - in.right;
+        int minY = in.top;
+        int maxY = RW - in.bottom;
+
+        float wdk = 3.0f;
+
+        cx = Math.abs(maxX - minX) / 2;
+        cy = Math.abs(maxY - minY) / 2;
+        dx = maxX / 10;
+        dy = maxY / 10;
+
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(wdk));
+
+        // TO DO init
+
+        dx=100; dy=60;
+
+        String txt="";
+        ms = "Розв'язок лінійно-квадратного рівняння";
+        txt+=ms;
+        txt+="\n";
+        g.setFont(new Font("Trebuchet Ms", Font.BOLD, 16));
+        g.setColor(new Color(0, 0, 0));
+        g.drawString(ms, dx, dy);
+
+        ms="загального вигляду: ax^2+bx+c=0";
+        g.drawString(ms, dx, dy+20);
+        txt+=ms+"\n";
+
+
+        double a,b,c;
+        a=b=c=0;
+        File file = new File("data.txt");
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(file));
+            String text = null;
+            text = reader.readLine();
+            a=Double.parseDouble(text);
+
+            text = null;
+            text = reader.readLine();
+            b=Double.parseDouble(text);
+
+            text = null;
+            text = reader.readLine();
+            c=Double.parseDouble(text);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+            }
+        }
+
+
+        // TO DO DRAW
+
+        ms="аргументи: ";
+        txt+="\n";
+        txt+=ms;
+        txt+="\n";
+        msa="a= "+a;
+        txt+=msa;
+        txt+="\n";
+        msb="b= "+b;
+        txt+=msb;
+        txt+="\n";
+        msc="c= "+c;
+        txt+=msc;
+        txt+="\n";
+        g.drawString(ms,dx,dy+60);
+        g.drawString(msa,dx+100,dy+60);
+        g.drawString(msb,dx+100,dy+80);
+        g.drawString(msc,dx+100,dy+100);
+
+        ms="Результати обчислень:";
+        txt+="\n"+ms;
+        g.drawString(ms,dx,dy+140);
+        if(a==0)
+        {
+            // LUR
+            if(b!=0)
+            {
+                double x=-c/b;
+                ms="x= " +x;
+                g.drawString(ms,dx,dy+160);
+                txt+=ms;
+                txt+="\n";
+            }
+            else
+            {
+                if(c==0)
+                {
+                    ms="x - будь-яке дійсне число";
+                    g.drawString(ms,dx,dy+160);
+                    txt+=ms;
+                    txt+="\n";
+                }
+                else
+                {
+                    ms="розв'язків немає";
+                    g.drawString(ms,dx,dy+160);
+                    txt+=ms;
+                    txt+="\n";
+                }
+
+            }
+        }
+        else
+        {
+            //KWUR
+            double d=b*b-4*a*c;
+
+            if(d>=0)
+            {
+                double x1=(-b-Math.sqrt(d))/(2*a);
+                double x2=(-b+Math.sqrt(d))/(2*a);
+                ms="x1= " +x1;
+                g.drawString(ms,dx,dy+160);
+                txt+="\n"+ms;
+                txt+="\n";
+                ms="x2= " +x2;
+                g.drawString(ms,dx,dy+180);
+                txt+=ms;
+                txt+="\n";
+            }
+            else
+            {
+                ms="розв'язків немає";
+                g.drawString(ms,dx,dy+160);
+                txt+=ms;
+                txt+="\n";
+            }
+
+        }
+
+
+        //Запис до іншого файлу ....
+
+        File wfile = new File("result.txt");
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(wfile));
+            writer.write(txt);
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+/*
+    private static int rnd(int min, int max) {
+        return (new Random()).ints(min,max).iterator().nextInt();
+    }
+*/
+
+    public GUiuRLib() {
+
+        super("Практикум ПРО. LUKWUR");
+        addWindowListener(this);
+        setLayout(null);
+        setLocation(120,150);
+        setSize(540,320);
+        this.setResizable(false);
+
+        show();
+    }
+}

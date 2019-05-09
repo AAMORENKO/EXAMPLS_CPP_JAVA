@@ -1,0 +1,9 @@
+﻿import GUiuRLib.GUiuRLib;
+
+public class LUKWUR {
+
+    public static void main(String[] args) throws Exception {
+
+        new GUiuRLib();
+    }
+}
