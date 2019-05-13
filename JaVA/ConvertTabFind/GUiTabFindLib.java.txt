@@ -1,0 +1,165 @@
+package GUiTabFindLib;
+
+
+        import java.io.File;
+        import java.nio.CharBuffer;
+        import java.sql.Struct;
+        import java.util.*;
+        import javax.swing.*;
+        import java.awt.*;
+        import java.awt.event.*;
+
+        import java.awt.event.ActionEvent;
+        import java.awt.event.ActionListener;
+        import java.awt.image.BufferedImage;
+        import java.io.*;
+
+        import javax.imageio.ImageIO;
+        import javax.swing.ImageIcon;
+        import java.awt.event.MouseAdapter;
+        import java.awt.event.MouseEvent;
+        import java.io.IOException;
+        import java.awt.Dimension;
+        import java.awt.Graphics;
+        import java.awt.Graphics2D;
+        import java.util.List;
+
+public class GUiTabFindLib extends  Frame implements
+        WindowListener {
+
+    public int x, y, w, h;
+    public int x1, y1, x2, y2, x3, y3;
+    public int cr, cq, cb;
+    public int d;
+    public int cx, cy, dx, dy;
+
+    public String ms="";
+
+    public void windowOpened(WindowEvent e) {    }    ;
+
+    public void windowClosing(WindowEvent e) {
+        dispose();
+        System.exit(0);
+    };
+
+    public void windowClosed(WindowEvent e) { };
+    public void windowIconified(WindowEvent e) { };
+    public void windowDeiconified(WindowEvent e) { };
+    public void windowActivated(WindowEvent e) { };
+    public void windowDeactivated(WindowEvent e) { };
+
+    public int count=0;
+
+    public void paint(Graphics g) {
+
+        Dimension rc = getSize();
+        Insets in = getInsets();
+
+        int RH = rc.width;
+        int RW = rc.height;
+
+        int minX = in.left;
+        int maxX = RH - in.right;
+        int minY = in.top;
+        int maxY = RW - in.bottom;
+
+        float wdk = 3.0f;
+
+        cx = Math.abs(maxX - minX) / 2;
+        cy = Math.abs(maxY - minY) / 2;
+        dx = maxX / 10;
+        dy = maxY / 10;
+
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(wdk));
+
+        // TO DO init
+
+        g.setFont(new Font("Trebuchet Ms", Font.BOLD, 16));
+        g.setColor(new Color(0, 0, 0));
+
+        ms = "Дана квадратна матриця:";
+        x=80; y=60; dx=30; dy=20;
+        g.drawString(ms, x, y);
+
+        int n=8;
+        int [][] TAB=new  int [10][10];
+        int k,i,j;
+
+        // init TAB[][]
+
+        for (k = 0; k <n; k++) {
+            for (i = 0; i <n; i++) {
+                TAB[k][i]=rnd(10,99);
+            }
+        }
+
+        // Print TAB[][]
+
+        y+=dy;
+        for (k = 0; k <n; k++) {
+
+            double c=0;
+            for (j = 0; j <n; j++)
+            {
+                c += TAB[k][j];
+            }
+            c/=n;
+
+            for (i = 0; i <n; i++) {
+                String txt= String.valueOf(TAB[k][i]);
+                g.drawString(txt, x+i*dx, y+k*dy);
+            }
+            String txt= String.valueOf(c);
+            g.drawString(txt, x+i*dx+dx, y+k*dy);
+
+        }
+
+
+        ms = "Перетворена матриця:";
+        x=80; y=260;
+        g.drawString(ms, x, y);
+
+        y+=dy;
+        for (k = 0; k <n; k++) {
+
+            double c=0;
+            for (i = 0; i <n; i++)
+            {
+                c += TAB[k][i];
+            }
+            c/=n;
+
+            for (i = 0; i <n-1; i++)
+            {
+                TAB[k][i]-=c;
+                String txt= String.valueOf(TAB[k][i]);
+                g.drawString(txt, x+i*dx, y+k*dy);
+            }
+
+            String txt= String.valueOf(TAB[k][n-1]);
+            g.drawString(txt, x+(n-1)*dx, y+k*dy);
+        }
+
+
+
+    }
+
+
+    private static int rnd(int min, int max) {
+        return (new Random()).ints(min,max).iterator().nextInt();
+    }
+
+
+    public GUiTabFindLib() {
+
+        super("Практикум ПРО. Перетворення матриці.");
+        addWindowListener(this);
+        setLayout(null);
+        setLocation(120,150);
+        setSize(480,480);
+        this.setResizable(false);
+
+        show();
+    }
+}
