@@ -1,0 +1,220 @@
+﻿package GUiProject61Lib;
+
+import java.io.File;
+import java.nio.CharBuffer;
+import java.sql.Struct;
+import java.util.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.*;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.util.List;
+
+public class GUiProject61Lib extends  Frame implements
+        WindowListener {
+
+    public int x, y, w, h;
+    public int x1, y1, x2, y2, x3, y3;
+    public int cr, cq, cb;
+    public int d;
+    public int cx, cy, dx, dy;
+
+    public int m;
+
+
+    public String ms="";
+    public String txt="";
+
+    public void windowOpened(WindowEvent e) {    }    ;
+
+    public void windowClosing(WindowEvent e) {
+        dispose();
+        System.exit(0);
+    };
+
+    public void windowClosed(WindowEvent e) { };
+    public void windowIconified(WindowEvent e) { };
+    public void windowDeiconified(WindowEvent e) { };
+    public void windowActivated(WindowEvent e) { };
+    public void windowDeactivated(WindowEvent e) { };
+
+    public int count=0;
+
+    public void paint(Graphics g) {
+
+        Dimension rc = getSize();
+        Insets in = getInsets();
+
+        int RH = rc.width;
+        int RW = rc.height;
+
+        int minX = in.left;
+        int maxX = RH - in.right;
+        int minY = in.top;
+        int maxY = RW - in.bottom;
+
+        float wdk = 3.0f;
+
+        cx = Math.abs(maxX - minX) / 2;
+        cy = Math.abs(maxY - minY) / 2;
+        dx = maxX / 10;
+        dy = maxY / 10;
+
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(wdk));
+
+        // TO DO init
+
+        g.setFont(new Font("Trebuchet Ms", Font.BOLD, 16));
+        g.setColor(new Color(0, 0, 0));
+
+        ms = "Дана матриця:";
+        txt+=ms; txt+="\n";
+        x=80; y=60; dx=30; dy=20;
+        g.drawString(ms, x, y);
+
+        int n=8;
+        int q=n*n;
+        int [] TAB=new  int [q];
+        int k,i,j;
+        int a=10;
+        int b=99;
+
+        // init TAB[][]
+
+        for (k = 0; k <q; k++) {
+            TAB[k]=rnd(a,b);
+        }
+
+        // Print TAB[][]
+
+        y+=dy; int p=0;
+        for (k = 0; k <n; k++) {
+            for (i = 0; i <n ; i++) {
+                String text = String.valueOf(TAB[p]); p++;
+                g.drawString(text, x + i * dx, y+k*dy);
+                txt += text;
+                txt += "\t";
+            }
+            txt+="\n";
+        }
+
+        ms="Дане число M=";
+
+        File inf = new File("data.txt");
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(inf));
+            String text="";
+            text=reader.readLine();
+            m= Integer.parseInt(text);
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ms+=m;
+        txt+="\n\n";txt+=ms; txt+="\n";
+        y+=n*dy; y+=dy;
+        g.drawString(ms, x, y);
+
+
+        int[] B=new int[q*q];
+        int[] C=new int[q*q];
+
+        for (i = 0; i <q*q; i++) {
+            B[i]=C[i]=-1;
+        }
+
+        p = 0;
+        int sum;
+
+        for (k = 0; k < q - 1; k++)
+        {
+            for (i = k+1; i < q; i++)
+            {
+                sum = TAB[k] + TAB[i];
+                if (sum == m)
+                {
+                    B[p] = TAB[k];
+                    C[p] = TAB[i];
+                    p++;
+                }
+            }
+        }
+
+        ms="Результати пошуку:";
+        txt+="\n";txt+=ms; txt+="\n";
+        y+=dy; y+=dy;
+        g.drawString(ms, x, y);
+        p=0;
+        for (k = 0; k < q+q/2; k++)
+        {
+            ms="";
+            if(B[k]+C[k]==m)
+            {
+                ms+=B[k];
+                ms+="+";
+                ms+=C[k];
+                ms+="=";
+                ms+=+m;
+                txt+=ms; txt+="\n";
+                if(p<13) {
+                    y += dy;
+                    g.drawString(ms, x, y);
+                    p++;
+                }
+            }
+        }
+
+        ms="Більше інформації у створеному файлі result.txt";
+        y += 2*dy;
+        g.drawString(ms, x, y);
+
+
+        File otf = new File("result.txt");
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(otf));
+            writer.write(txt);
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
+
+
+    private static int rnd(int min, int max) {
+        return (new Random()).ints(min,max).iterator().nextInt();
+    }
+
+
+    public GUiProject61Lib() {
+
+        super("Прикладне програмування. Обробка даних в матриці.");
+        addWindowListener(this);
+        setLayout(null);
+        setLocation(120,70);
+        setSize(580,620);
+        this.setResizable(false);
+
+        show();
+    }
+}

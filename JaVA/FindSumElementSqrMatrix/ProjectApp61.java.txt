@@ -1,0 +1,10 @@
+﻿import GUiProject61Lib.GUiProject61Lib;
+
+public class ProjectApp61 {
+
+    public static void main(String[] args) throws Exception {
+
+        new GUiProject61Lib();
+    }
+}
+
