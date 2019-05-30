@@ -36,7 +36,7 @@ int main()
 
 	otf.open("res.txt", ios::out);
 	if (!otf) return 0;
-	otf << "file douwn";
+	otf << y;
 	otf.flush();
 	otf.close();
 
