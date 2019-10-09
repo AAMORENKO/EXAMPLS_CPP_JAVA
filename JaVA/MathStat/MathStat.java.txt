@@ -1,0 +1,113 @@
+﻿import java.io.FileNotFoundException;
+import java.io.FileReader;
+
+public class MathStat {
+public static void main(String[] args) {
+int [] V=new int [30];
+int [] B=new int [30];
+int p=0;
+try {
+            FileReader inf=new FileReader("data.txt");
+int c=0;
+while((c=inf.read())!=-1)
+            {
+if(c!=9)
+            {
+                V[p]=Integer.parseInt(String.valueOf((char)c));
+                B[p]=V[p];
+                System.out.print(V[p]+" ");
+                p++;
+            }
+            }
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
+int min,sw,g;
+for (int k = 0; k <29 ; k++) {
+            min=B[k];g=k;
+for (int i = k; i <30 ; i++) {
+if(min>B[i])
+                {
+                    min=B[i];
+                    g=i;
+                }
+            }
+            sw=B[k];
+            B[k]=B[g];
+            B[g]=sw;
+        }
+        System.out.println();
+double ser=0;
+for (int k = 0; k <30 ; k++) {
+            System.out.print(B[k]+" ");
+            ser+=B[k];
+        }
+        ser/=30.0f;
+int [] W=new int[5]; W[0]=3;W[1]=4;W[2]=5;W[3]=6;W[4]=7;
+int [] C=new int[5];
+double [] U=new double[5];
+for (int k = 0; k <5 ; k++) {
+int count=0;
+for (int i = 0; i <30 ; i++) {
+if(W[k]==B[i]) count++;
+            }
+            C[k]=count;
+            U[k]=C[k]/30.0f;
+        }
+        System.out.println();
+for (int k = 0; k <5 ; k++) {
+            System.out.printf("\n\t%d\t%d\t%4.2f",W[k],C[k],U[k]);
+        }
+        System.out.printf("\n\nseredne=%2.0f",ser);
+
+int max; double ws;
+for (int k = 0; k <4 ; k++) {
+            max=C[k];g=k;
+for (int i = k; i <5 ; i++) {
+if(max<C[i])
+                {
+                    max=C[i];
+                    g=i;
+                }
+            }
+            sw=C[k];
+            C[k]=C[g];
+            C[g]=sw;
+
+            sw=W[k];
+            W[k]=W[g];
+            W[g]=sw;
+
+            ws=U[k];
+            U[k]=U[g];
+            U[g]=ws;
+        }
+/*
+        System.out.println();
+        for (int k = 0; k <5 ; k++) {
+            System.out.printf("\n\t%d\t%d\t%4.2f",W[k],C[k],U[k]);
+        }
+*/
+        max=C[0]; g=0;
+        System.out.println();
+        System.out.print("Moda: "+W[g]);
+for (int k = 1; k <5 ; k++) {
+if(max==C[k]) {
+                g=k;
+                System.out.print("; "+W[g]);
+            }
+        }
+        System.out.println("\nMediana: "+B[15]);
+
+double MAD=0; double Disp=0;
+for (int k = 0; k <30 ; k++) {
+            MAD+=Math.abs(B[k]-ser);
+            Disp+=((B[k]-ser)*(B[k]-ser));
+        }
+        MAD/=30.0f; Disp/=30.0f;
+        System.out.printf("Сер.абс.відх.=: %4.2f",MAD);
+        System.out.printf("\nДісперсія=: %8.6f",Disp);
+        System.out.printf("\nСтанд.відх=: %8.6f",Math.sqrt(Disp));
+        System.out.printf("\nКоеф.вар.=: %8.6f",Math.sqrt(Disp)/ser);
+    }
+}
