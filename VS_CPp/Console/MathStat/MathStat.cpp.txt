@@ -1,0 +1,114 @@
+﻿#include <iostream>
+#include <fstream>
+using namespace std;
+
+fstream inf;
+
+int main()
+{
+	setlocale(LC_ALL, ".1251");
+	system("color 1F");
+
+	int V[30], B[30];
+	int p = 0;
+	double ser = 0;
+
+	cout << "\t";
+	inf.open("data.txt", ios::in);
+	if (!inf) return 0;
+	ser = 0;
+	while (!inf.eof())
+	{
+		inf >> V[p];
+		B[p] = V[p];
+		ser += B[p];
+		cout << V[p] << " ";
+		p++;
+	}
+	ser /= 30.0;
+	inf.close();
+
+	int min, sw, g;
+	cout << "\n\t";
+	for (int k = 0; k < 29; k++)
+	{
+		min = B[k]; g = k;
+		for (int i = k; i < 30; i++)
+		{
+			if (min > B[i])
+			{
+				min = B[i];
+				g = i;
+			}
+		}
+		sw = B[k];
+		B[k] = B[g];
+		B[g] = sw;
+	}
+	for (int k = 0; k < 30; k++) cout << B[k] << " ";
+	
+	int W[5] = { 3,4,5,6,7 };
+	int C[5]; double U[5];
+
+	cout << "\n";
+	for (int k = 0; k < 5; k++)
+	{
+		int count = 0;
+		for (int i = 0; i < 30; i++) if (W[k] == B[i]) count++;
+		C[k] = count;
+		U[k] = C[k] / 30.0;
+		printf("\n\t%i\t%i\t%4.2f", W[k], C[k], U[k]);
+	}
+	printf("\n\n\tSeredne: %2.0f", ser);
+
+	int max; double ws;
+
+	for (int k = 0; k < 4; k++)
+	{
+		max = C[k]; g = k;
+		for (int i = k; i < 5; i++)
+		{
+			if (max < C[i])
+			{
+				max = C[i];
+				g = i;
+			}
+		}
+		sw = C[k];
+		C[k] = C[g];
+		C[g] = sw;
+
+		sw = W[k];
+		W[k] = W[g];
+		W[g] = sw;
+
+		ws = U[k];
+		U[k] = U[g];
+		U[g] = ws;
+	}
+	max = C[0]; cout << "\n\tModa: " << W[0] << "; ";
+	for (int k = 1; k < 5; k++) if (max == C[k]) cout << W[k] << "; ";
+	cout << "\n\tMediana: " << B[15];
+	
+	double abvid = 0;
+	for (int k = 0; k < 30; k++) abvid += fabs(B[k] - ser);
+	abvid /= 30.0;
+	printf("\n\tSer.abs.vid.: %4.2f", abvid);
+
+	//cout << "\n\n";
+	//for(int k=0;k<5;k++) printf("\n\t%i\t%i\t%4.2f", W[k], C[k], U[k]);
+
+	double MAD = 0; double Disp = 0;
+	for (int k = 0; k <30; k++) {
+		MAD += fabs(B[k] - ser);
+		Disp += ((B[k] - ser)*(B[k] - ser));
+	}
+	MAD /= 30.0f; Disp /= 30.0f;
+	printf("\n\tDispersia=: %8.6f", Disp);
+	printf("\n\tStand.vid.=: %8.6f", sqrt(Disp));
+	printf("\n\tKoef.var.=: %8.6f", sqrt(Disp) / ser);
+
+	cout << endl << endl << "\t";
+	system("pause");
+	return 0;
+}
