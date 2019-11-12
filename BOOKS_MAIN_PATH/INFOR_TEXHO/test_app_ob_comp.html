@@ -1,0 +1,221 @@
+<html>
+<head>
+
+<title>Тест "Аппаратная реализация компьютера"</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Author" content="Лазарева М.В.">
+<script language="JavaScript">
+<!-- hide
+
+var scrtxt = "Тест по информатике - аппаратная реализация компьютера " ; 
+var length = scrtxt.length;
+var width = 100;
+var pos = -(width + 2);
+
+function scroll() {
+  pos++;
+  var scroller = "";
+  if (pos == length) {
+    pos = -(width + 2);
+  }
+
+  if (pos < 0) {
+    for (var i = 1; i <= Math.abs(pos); i++) {
+      scroller = scroller+" ";}
+    scroller = scroller + scrtxt.substring(0, width - i + 1);
+  }
+  else {
+    scroller = scroller + scrtxt.substring(pos, width + pos);
+  }
+
+  window.status = scroller;
+  setTimeout("scroll()", 100);
+}
+
+// -->
+</script>
+</head>
+
+<body onLoad="scroll()">
+
+<Script Language="JavaScript">
+<!--Начало сценария
+
+var res="1331424213"
+
+function check_me()
+{
+	var count=0
+	with(document.test)
+	{
+		if (!Q1[0].checked&&!Q1[1].checked&&!Q1[2].checked&&!Q1[3].checked) {count+=1};
+		if (!Q2[0].checked&&!Q2[1].checked&&!Q2[2].checked&&!Q2[3].checked) {count+=1};
+		if (!Q3[0].checked&&!Q3[1].checked&&!Q3[2].checked&&!Q3[3].checked) {count+=1};
+		if (!Q4[0].checked&&!Q4[1].checked&&!Q4[2].checked&&!Q4[3].checked) {count+=1};
+		if (!Q5[0].checked&&!Q5[1].checked&&!Q5[2].checked&&!Q5[3].checked) {count+=1};
+		if (!Q6[0].checked&&!Q6[1].checked&&!Q6[2].checked&&!Q6[3].checked) {count+=1};
+		if (!Q7[0].checked&&!Q7[1].checked&&!Q7[2].checked&&!Q7[3].checked) {count+=1};
+		if (!Q8[0].checked&&!Q8[1].checked&&!Q8[2].checked&&!Q8[3].checked) {count+=1};
+		if (!Q9[0].checked&&!Q9[1].checked&&!Q9[2].checked&&!Q9[3].checked) {count+=1};
+		if (!Q10[0].checked&&!Q10[1].checked&&!Q10[2].checked&&!Q10[3].checked) {count+=1};
+		if (count>0) {alert("Вы выполнили не все задания. Проверьте себя.")} 
+		else answer()
+	}
+}
+
+function control(k,f1,f2,f3,f4,f5,f6,f7,f8,f9,f10)
+{
+	if (k==1&&f1.checked) return true;
+	if (k==2&&f2.checked) return true;
+	if (k==3&&f3.checked) return true;
+	if (k==4&&f4.checked) return true;
+	if (k==5&&f5.checked) return true;
+	if (k==6&&f6.checked) return true;
+	if (k==7&&f7.checked) return true;
+	if (k==8&&f8.checked) return true;
+	if (k==9&&f9.checked) return true;
+	if (k==10&&f10.checked) return true;
+	return false;
+}
+
+function answer()
+{
+	answ="";
+	with(document)
+	{
+		answ+=control(res.charAt(0),test.Q1[0],test.Q1[1],test.Q1[2],test.Q1[3])?"1":"0"
+		answ+=control(res.charAt(1),test.Q2[0],test.Q2[1],test.Q2[2],test.Q2[3])?"1":"0"
+		answ+=control(res.charAt(2),test.Q3[0],test.Q3[1],test.Q3[2],test.Q3[3])?"1":"0"
+		answ+=control(res.charAt(3),test.Q4[0],test.Q4[1],test.Q4[2],test.Q4[3])?"1":"0"
+		answ+=control(res.charAt(4),test.Q5[0],test.Q5[1],test.Q5[2],test.Q5[3])?"1":"0"
+		answ+=control(res.charAt(5),test.Q6[0],test.Q6[1],test.Q6[2],test.Q6[3])?"1":"0"
+		answ+=control(res.charAt(6),test.Q7[0],test.Q7[1],test.Q7[2],test.Q7[3])?"1":"0"
+		answ+=control(res.charAt(7),test.Q8[0],test.Q8[1],test.Q8[2],test.Q8[3])?"1":"0"
+		answ+=control(res.charAt(8),test.Q9[0],test.Q9[1],test.Q9[2],test.Q9[3])?"1":"0"
+		answ+=control(res.charAt(9),test.Q10[0],test.Q10[1],test.Q10[2],test.Q10[3])?"1":"0"
+		showResult();
+	}
+}
+
+function showResult()
+{
+	var nok=0;
+	var i,s;
+	for (i=0;i<answ.length;i++) {nok+=answ.charAt(i)=="1"?1:0;}
+	 if(nok<=4) s='"НЕУДОВЛЕТВОРИТЕЛЬНО"';
+	if(nok>4 && nok<6) s='"УДОВЛЕТВОРИТЕЛЬНО"';
+	if(nok==6) s='"УДОВЛЕТВОРИТЕЛЬНО"';
+	if(nok>6 && nok<8) s='"ХОРОШО"';
+	if(nok==8) s='"ХОРОШО"';
+	if(nok>8) s='"ОТЛИЧНО"';
+	document.test.s1.value="Количество правильных ответов "+nok+". Ваша оценка "+s+". Загляните в окно рядом с номером задания. Если ответ правильный, то там (+). Если Вы ошиблись, там (-).";
+	with(document.test)
+	{
+		if (answ.charAt(0)=="1") {T1.value=" +"} else {T1.value=" -"};
+		if (answ.charAt(1)=="1") {T2.value=" +"} else {T2.value=" -"};
+		if (answ.charAt(2)=="1") {T3.value=" +"} else {T3.value=" -"};
+		if (answ.charAt(3)=="1") {T4.value=" +"} else {T4.value=" -"};
+		if (answ.charAt(4)=="1") {T5.value=" +"} else {T5.value=" -"};
+		if (answ.charAt(5)=="1") {T6.value=" +"} else {T6.value=" -"};
+		if (answ.charAt(6)=="1") {T7.value=" +"} else {T7.value=" -"};
+		if (answ.charAt(7)=="1") {T8.value=" +"} else {T8.value=" -"};
+		if (answ.charAt(8)=="1") {T9.value=" +"} else {T9.value=" -"};
+		if (answ.charAt(9)=="1") {T10.value=" +"} else {T10.value=" -"};
+	}
+}
+
+</script>
+</head>
+
+<body bgcolor="white">
+<form name=test>
+
+<center><font face="Arial,Helvetica,sans-serif" color="000099"><h3>Аппаратная реализация компьютера</h3></center>
+
+<ol>
+
+<br><li><h4> <input type=text name=T1 size=1 value=""> Укажите верное высказывание</h4>
+
+   <input type=radio name=Q1> компьютер состоит из отдельных модулей, соединенных между собой магистралью <br>
+   <input type=radio name=Q1> компьютер представляет собой единое, неделимое устройство <br>
+   <input type=radio name=Q1> составные части компьютерной системы являются незаменяемыми <br>
+   <input type=radio name=Q1> компьютерная система способна сколь угодно долго соответствовать требованиям современного общества и не нуждается в модернизации <br>
+
+<br><li><h4> <input type=text name=T2 size=1 value=""> Укажите устройство, выполняющее обработку компьютера </h4>
+
+   <input type=radio name=Q2> внешняя память <br>
+   <input type=radio name=Q2> монитор<br>
+   <input type=radio name=Q2> процессор <br>
+   <input type=radio name=Q2> клавиатура <br>
+
+<br><li><h4> <input type=text name=T3 size=1 value="">  Производительность работы компьютера зависит от </h4>
+
+   <input type=radio name=Q3> типа монитора <br>
+   <input type=radio name=Q3> напряжения питания <br>
+   <input type=radio name=Q3> частоты процессора <br>
+   <input type=radio name=Q3> быстроты нажатия на клавиши <br>
+
+<br><li><h4> <input type=text name=T4 size=1 value=""> Свойством ПЗУ является </h4>
+
+   <input type=radio name=Q4> только чтение информации <br>
+   <input type=radio name=Q4> энергозависимость <br>
+   <input type=radio name=Q4> перезапись информации <br>
+   <input type=radio name=Q4> кратковременное хранение информации  <br>
+
+<br><li><h4> <input type=text name=T5 size=1 value=""> При выключении компьютера вся информация стирается </h4>
+
+   <input type=radio name=Q5> на гибком диске  <br>
+   <input type=radio name=Q5> на жестком диске <br>
+   <input type=radio name=Q5> на CD-ROM диске <br>
+   <input type=radio name=Q5> в оперативной памяти <br>
+
+<br><li><h4> <input type=text name=T6 size=1 value=""> Чтобы процессор мог работать с программами, хранящимися на жестком диске, необходимо</h4>
+
+   <input type=radio name=Q6> вывести их на экран монитора <br>
+   <input type=radio name=Q6> загрузить их в оперативную память <br>
+   <input type=radio name=Q6> загрузить их в процессор <br>
+   <input type=radio name=Q6> открыть доступ <br>
+
+<br><li><h4> <input type=text name=T7 size=1 value=""> Укажите устройства, не являющиеся устройствами ввода информации</h4>
+
+   <input type=radio name=Q7> клавиатура <br>
+   <input type=radio name=Q7> мышь <br>
+   <input type=radio name=Q7> сканер <br>
+   <input type=radio name=Q7> монитор <br>
+
+<br><li><h4> <input type=text name=T8 size=1 value=""> Акустичкские колонки - это </h4>
+
+   <input type=radio name=Q8> устройство обработки звуковой информации<br>
+   <input type=radio name=Q8> устройство вывода звуковой информации <br>
+   <input type=radio name=Q8> устройство хранения звуковой информации<br>
+   <input type=radio name=Q8> устройство ввода звуковой информации <br>
+
+<br><li><h4> <input type=text name=T9 size=1 value=""> Быстродействие процессора характеризуется</h4>
+
+   <input type=radio name=Q9> количеством операций в секунду <br>
+   <input type=radio name=Q9> количеством одновременно выполняемых программ <br>
+   <input type=radio name=Q9> временем организации связи между АЛУ и ОЗУ <br>
+   <input type=radio name=Q9> динамическими характеристиками устройств ввода-вывода <br>
+
+<br><li><h4> <input type=text name=T10 size=1 value=""> Во время исполнения программа находится</h4>
+
+   <input type=radio name=Q10> в буфере обмена  <br>
+   <input type=radio name=Q10> на клавиатуре  <br>
+   <input type=radio name=Q10> в оперативной памяти <br>
+   <input type=radio name=Q10> на жестком диске <br>
+
+</ol>
+
+<br>
+<center>
+<p> <textarea rows=4 cols=70 name=s1> </textarea> </p>
+<input type=button value="Показать результат" onClick=check_me()>&nbsp;&nbsp;&nbsp;&nbsp;
+<input type=reset value="Сбросить ответы">
+</center>
+<br><br>
+
+</form>
+
+</body>
+</html><div><span id="openstat2324925"></span><script type="text/javascript">var openstat = { counter: 2324925, next: openstat };(function(d, t, p) {var j = d.createElement(t); j.async = true; j.type = "text/javascript";j.src = ("https:" == p ? "https:" : "http:") + "//openstat.net/cnt.js";var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);})(document, "script", document.location.protocol);</script></div>
+

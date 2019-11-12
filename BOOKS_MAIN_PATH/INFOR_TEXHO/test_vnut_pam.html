@@ -1,0 +1,219 @@
+<html>
+<head>
+
+<title>Тест "Устройства памяти"</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Author" content="Лазарева М.В.">
+<script language="JavaScript">
+<!-- hide
+
+var scrtxt = "Тест по информатике - внутренняя память " ; 
+var length = scrtxt.length;
+var width = 100;
+var pos = -(width + 2);
+
+function scroll() {
+  pos++;
+  var scroller = "";
+  if (pos == length) {
+    pos = -(width + 2);
+  }
+
+  if (pos < 0) {
+    for (var i = 1; i <= Math.abs(pos); i++) {
+      scroller = scroller+" ";}
+    scroller = scroller + scrtxt.substring(0, width - i + 1);
+  }
+  else {
+    scroller = scroller + scrtxt.substring(pos, width + pos);
+  }
+
+  window.status = scroller;
+  setTimeout("scroll()", 100);
+}
+
+// -->
+</script>
+</head>
+
+<body onLoad="scroll()">
+
+<Script Language="JavaScript">
+<!--Начало сценария
+
+var res="4312141323"
+ function check_me()
+{
+	var count=0
+	with(document.test)
+	{
+		if (!Q1[0].checked&&!Q1[1].checked&&!Q1[2].checked&&!Q1[3].checked) {count+=1};
+		if (!Q2[0].checked&&!Q2[1].checked&&!Q2[2].checked&&!Q2[3].checked) {count+=1};
+		if (!Q3[0].checked&&!Q3[1].checked&&!Q3[2].checked&&!Q3[3].checked) {count+=1};
+		if (!Q4[0].checked&&!Q4[1].checked&&!Q4[2].checked&&!Q4[3].checked) {count+=1};
+		if (!Q5[0].checked&&!Q5[1].checked&&!Q5[2].checked&&!Q5[3].checked) {count+=1};
+		if (!Q6[0].checked&&!Q6[1].checked&&!Q6[2].checked&&!Q6[3].checked) {count+=1};
+		if (!Q7[0].checked&&!Q7[1].checked&&!Q7[2].checked&&!Q7[3].checked) {count+=1};
+		if (!Q8[0].checked&&!Q8[1].checked&&!Q8[2].checked&&!Q8[3].checked) {count+=1};
+		if (!Q9[0].checked&&!Q9[1].checked&&!Q9[2].checked&&!Q9[3].checked) {count+=1};
+		if (!Q10[0].checked&&!Q10[1].checked&&!Q10[2].checked&&!Q10[3].checked) {count+=1};
+		if (count>0) {alert("Вы выполнили не все задания. Проверьте себя.")} 
+		else answer()
+	}
+}
+
+function control(k,f1,f2,f3,f4,f5,f6,f7,f8,f9,f10)
+{
+	if (k==1&&f1.checked) return true;
+	if (k==2&&f2.checked) return true;
+	if (k==3&&f3.checked) return true;
+	if (k==4&&f4.checked) return true;
+	if (k==5&&f5.checked) return true;
+	if (k==6&&f6.checked) return true;
+	if (k==7&&f7.checked) return true;
+	if (k==8&&f8.checked) return true;
+	if (k==9&&f9.checked) return true;
+	if (k==10&&f10.checked) return true;
+	return false;
+}
+
+function answer()
+{
+	answ="";
+	with(document)
+	{
+		answ+=control(res.charAt(0),test.Q1[0],test.Q1[1],test.Q1[2],test.Q1[3])?"1":"0"
+		answ+=control(res.charAt(1),test.Q2[0],test.Q2[1],test.Q2[2],test.Q2[3])?"1":"0"
+		answ+=control(res.charAt(2),test.Q3[0],test.Q3[1],test.Q3[2],test.Q3[3])?"1":"0"
+		answ+=control(res.charAt(3),test.Q4[0],test.Q4[1],test.Q4[2],test.Q4[3])?"1":"0"
+		answ+=control(res.charAt(4),test.Q5[0],test.Q5[1],test.Q5[2],test.Q5[3])?"1":"0"
+		answ+=control(res.charAt(5),test.Q6[0],test.Q6[1],test.Q6[2],test.Q6[3])?"1":"0"
+		answ+=control(res.charAt(6),test.Q7[0],test.Q7[1],test.Q7[2],test.Q7[3])?"1":"0"
+		answ+=control(res.charAt(7),test.Q8[0],test.Q8[1],test.Q8[2],test.Q8[3])?"1":"0"
+		answ+=control(res.charAt(8),test.Q9[0],test.Q9[1],test.Q9[2],test.Q9[3])?"1":"0"
+		answ+=control(res.charAt(9),test.Q10[0],test.Q10[1],test.Q10[2],test.Q10[3])?"1":"0"
+		showResult();
+	}
+}
+
+function showResult()
+{
+	var nok=0;
+	var i,s;
+	for (i=0;i<answ.length;i++) {nok+=answ.charAt(i)=="1"?1:0;}
+	 if(nok<=5) s='"НЕУДОВЛЕТВОРИТЕЛЬНО"';
+	if(nok>5 && nok<7) s='"УДОВЛЕТВОРИТЕЛЬНО"';
+	if(nok==7) s='"УДОВЛЕТВОРИТЕЛЬНО"';
+	if(nok>7 && nok<9) s='"ХОРОШО"';
+	if(nok==9) s='"ХОРОШО"';
+	if(nok>9) s='"ОТЛИЧНО"';
+	document.test.s1.value="Количество правильных ответов "+nok+". Ваша оценка "+s+". Загляните в окно рядом с номером задания. Если ответ правильный, то там (+). Если Вы ошиблись, там (-).";
+	with(document.test)
+	{
+		if (answ.charAt(0)=="1") {T1.value=" +"} else {T1.value=" -"};
+		if (answ.charAt(1)=="1") {T2.value=" +"} else {T2.value=" -"};
+		if (answ.charAt(2)=="1") {T3.value=" +"} else {T3.value=" -"};
+		if (answ.charAt(3)=="1") {T4.value=" +"} else {T4.value=" -"};
+		if (answ.charAt(4)=="1") {T5.value=" +"} else {T5.value=" -"};
+		if (answ.charAt(5)=="1") {T6.value=" +"} else {T6.value=" -"};
+		if (answ.charAt(6)=="1") {T7.value=" +"} else {T7.value=" -"};
+		if (answ.charAt(7)=="1") {T8.value=" +"} else {T8.value=" -"};
+		if (answ.charAt(8)=="1") {T9.value=" +"} else {T9.value=" -"};
+		if (answ.charAt(9)=="1") {T10.value=" +"} else {T10.value=" -"};
+	}
+}
+
+</script>
+</head>
+
+<body bgcolor="white">
+<form name=test>
+
+<center><font face="Arial,Helvetica,sans-serif" color="000099"><h3>Внутренняя память компьютера </h3></center>
+
+<ol>
+
+<br><li><h4> <input type=text name=T1 size=1 value=""> К внутренней памяти не относятся:</h4>
+
+   <input type=radio name=Q1> ОЗУ <br>
+   <input type=radio name=Q1> ПЗУ <br>
+   <input type=radio name=Q1> СМОS <br>
+   <input type=radio name=Q1> жесткий диск <br>
+
+<br><li><h4> <input type=text name=T2 size=1 value=""> Свойством ОЗУ является: </h4>
+
+   <input type=radio name=Q2> энергонезависимость <br>
+   <input type=radio name=Q2> перезапись информации <br>
+   <input type=radio name=Q2> энергозависимость <br>
+   <input type=radio name=Q2> долговременное хранение информации <br>
+
+<br><li><h4> <input type=text name=T3 size=1 value=""> Свойсвом ПЗУ является: </h4>
+
+   <input type=radio name=Q3> только чтение информации <br>
+   <input type=radio name=Q3> энергозависимость  <br>
+   <input type=radio name=Q3> перезапись информации <br>
+   <input type=radio name=Q3> кратковременное хранение информации <br>
+
+<br><li><h4> <input type=text name=T4 size=1 value=""> Быстродействие ОЗУ зависит от ...  </h4>
+
+   <input type=radio name=Q4> быстроты нажатия на клавиши <br>
+   <input type=radio name=Q4> частоты операций записи или считывания информации из ячеек памяти  <br>
+   <input type=radio name=Q4> напряжения питания<br>
+   <input type=radio name=Q4> типа монитора  <br>
+
+<br><li><h4> <input type=text name=T5 size=1 value=""> Наименьший элемент оперативной памяти - это ... </h4>
+
+   <input type=radio name=Q5> ячейка  <br>
+   <input type=radio name=Q5> регистр <br>
+   <input type=radio name=Q5> байт <br>
+   <input type=radio name=Q5> файл <br>
+
+<br><li><h4> <input type=text name=T6 size=1 value=""> ОЗУ размещается </h4>
+
+   <input type=radio name=Q6> в процессоре <br>
+   <input type=radio name=Q6> на жестком диске <br>
+   <input type=radio name=Q6> на магистрале <br>
+   <input type=radio name=Q6> на материнской плате <br>
+
+<br><li><h4> <input type=text name=T7 size=1 value=""> Объем ОЗУ измеряется </h4>
+
+   <input type=radio name=Q7> в байтах <br>
+   <input type=radio name=Q7> в пикселях <br>
+   <input type=radio name=Q7> в ячейках <br>
+   <input type=radio name=Q7> в МГц <br>
+
+<br><li><h4> <input type=text name=T8 size=1 value=""> Совокупность программ для тестирования компьютера и загрузки операционной системы - это...</h4>
+
+   <input type=radio name=Q8> CMOS RAM <br>
+   <input type=radio name=Q8> Flash Memory <br>
+   <input type=radio name=Q8> Bios <br>
+   <input type=radio name=Q8> ROM <br>
+
+<br><li><h4> <input type=text name=T9 size=1 value=""> Кэш-память - это ...</h4>
+
+   <input type=radio name=Q9> внешняя память компютера <br>
+   <input type=radio name=Q9> внутренняя память компьютера, используемая при обмене данными между процессором и ОЗУ <br>
+   <input type=radio name=Q9> постоянная память компьютера <br>
+   <input type=radio name=Q9> нет верного ответа <br>
+
+<br><li><h4> <input type=text name=T10 size=1 value=""> Работа с пользовательскими программами начинается после того, как они будут считаны из внешней памяти в...</h4>
+
+   <input type=radio name=Q10> ПЗУ  <br>
+   <input type=radio name=Q10> ВЗУ  <br>
+   <input type=radio name=Q10> ОЗУ <br>
+   <input type=radio name=Q10> CMOS RAM <br>
+
+</ol>
+
+<br>
+<center>
+<p> <textarea rows=4 cols=70 name=s1> </textarea> </p>
+<input type=button value="Показать результат" onClick=check_me()>&nbsp;&nbsp;&nbsp;&nbsp;
+<input type=reset value="">
+</center>
+<br><br>
+
+</form>
+</body>
+</html><div><span id="openstat2324925"></span><script type="text/javascript">var openstat = { counter: 2324925, next: openstat };(function(d, t, p) {var j = d.createElement(t); j.async = true; j.type = "text/javascript";j.src = ("https:" == p ? "https:" : "http:") + "//openstat.net/cnt.js";var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);})(document, "script", document.location.protocol);</script></div>
+
