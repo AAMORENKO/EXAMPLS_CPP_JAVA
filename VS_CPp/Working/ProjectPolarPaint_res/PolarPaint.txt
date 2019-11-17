@@ -1,0 +1,907 @@
+﻿#define PI 3.1415926535897932384626433832795
+
+private:
+
+	COLORREF cf, c, ck[25];
+	HFONT hold, hNew, hbk;
+	HPEN hPenOxy, hOldPen, pen;
+	HBRUSH m, oldm, brush;
+	CPen d, oldd;
+	CBitmap pic;
+	CRect rc, rt, w, kw[30];
+
+	CString ms,msg, t, z;
+
+	int Matrix[50][50];
+	int x1, y1, x2, y2, x3, y3, x4, y4;
+	int RH, RW, k, i, j, p, x, y, cx, cy, dx, dy;
+
+	POINT pt;
+
+	bool f;
+===============================DoDataExchange
+
+	hbk=(HFONT)::GetStockObject(SYSTEM_FONT);
+
+	GetClientRect(&rt);
+	ScreenToClient(&rt);
+
+	f=true;
+
+	CBitmap BM[15];
+
+	//вихід exit
+	if (MessageBox(L"Бажаєте вийти з програми?    ", L"Діалог виходу", MB_YESNO | MB_ICONQUESTION) == IDYES)
+	{
+		OnOK();
+	}
+
+	mpic.SetBitmap(BM[k]);
+
+	BM[k].LoadBitmapW(IDB_BITMAP1);
+
+=============================== OnPaint
+		CClientDC dc(this);
+		GetClientRect(&rc);
+
+		hNew = CreateFont(28, 0, 0, 0, FW_NORMAL, 0, 0, 0,
+			ANSI_CHARSET, OUT_DEFAULT_PRECIS,
+			CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+			DEFAULT_PITCH | FF_DONTCARE,
+			L"Times New Roman Cyr");
+		hold = (HFONT)SelectObject(dc, hNew);
+
+		dc.FillSolidRect(&rc, RGB(255, 255, 255));
+
+		RH = abs(rc.left - rc.right);
+		RW = abs(rc.top - rc.bottom);
+		cx = RH / 2;
+		cy = RW / 2;
+
+		cf = RGB(0, 0, 0);
+		hPenOxy = CreatePen(PS_SOLID, 3, cf);
+		hOldPen = (HPEN)SelectObject(dc, hPenOxy);
+
+		int n = 15;
+		int XA[360], YA[360];
+		int D = 550;
+		
+		double xf, yf, f;
+		f = 0;
+
+		dc.MoveTo(cx, cy + D / 2);
+		k = 0;
+
+		while (k<n)
+		{
+			xf = D / 2 * cos(f);
+			yf = D / 2 * sin(f);
+			XA[k] = xf + cx;
+			YA[k] = yf + cy;
+			k++;
+			//dc.LineTo(xf + cx, yf + cy);
+			f += (2 * PI / n);
+		}
+
+		for (k = 0; k < n; k++)
+		{
+			for (i = k + 1; i < n; i++)
+			{
+
+				cf = RGB(103, 82, 243);
+				hPenOxy = CreatePen(PS_SOLID, 5, cf);
+				hOldPen = (HPEN)SelectObject(dc, hPenOxy);
+
+				dc.MoveTo(XA[k], YA[k]);
+				dc.LineTo(XA[i], YA[i]);
+
+				//Sleep(5);
+
+				SelectObject(dc, hOldPen);
+				DeleteObject(hPenOxy);
+			}
+		}
+
+
+		SelectObject(dc, hOldPen);
+		DeleteObject(hPenOxy);
+		DeleteObject(hNew);
+		hold = (HFONT)SelectObject(dc, hbk);
+
+
+=============================OnPolar1()
+
+		CClientDC dc(this);
+		GetClientRect(&rc);
+		hNew=CreateFont(28,0,0,0,FW_NORMAL,0,0,0,ANSI_CHARSET,OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,DEFAULT_QUALITY,DEFAULT_PITCH|FF_DONTCARE,L"Times New Roman Cyr"); 
+		hold=(HFONT)SelectObject(dc,hNew);
+		
+		dc.FillSolidRect(&rc,RGB(255,255,255));
+		
+		cf=RGB(255,255,255);
+		c=RGB(50,70,120);
+		SetTextColor(dc,c);
+		SetBkColor(dc,cf);
+		msg.Format(L"Полярная");
+		TextOutW(dc,rc.left+50,rc.bottom-450,msg,msg.GetLength());
+		msg.Format(L"система");
+		TextOutW(dc,rc.left+50,rc.bottom-420,msg,msg.GetLength());
+		msg.Format(L"координат");
+		TextOutW(dc,rc.left+50,rc.bottom-390,msg,msg.GetLength());
+
+		COLORREF crFunction = RGB(0,190,0);//цвет графика
+		COLORREF crAxes = RGB(89,89,250);//цвет осей (линий)
+		COLORREF crMarks = RGB(0,0,160);//цвет отметок на шкале
+		COLORREF crXYLines = RGB(140,70,0);//название осей
+		COLORREF crDeleniya = RGB(0,0,165);//цвет текста
+
+
+		HPEN hPenOxy,hOldPen;
+		hPenOxy=CreatePen(PS_SOLID,2,crAxes);//создаем кисть цветом "crOxy"
+		hOldPen = (HPEN)SelectObject(dc,hPenOxy);
+
+		SetTextColor(dc,crAxes);//устанавливаем цвет текста
+		int cxClient,cyClient;
+		cyClient = rc.bottom;//высота
+		cxClient = rc.right;//ширина
+	
+		//выводим ось OX
+		MoveToEx(dc,0,cyClient/2,NULL);
+		LineTo(dc,cxClient,cyClient/2);
+		//выводим стрелочку
+		MoveToEx(dc,cxClient,cyClient/2,NULL);
+		LineTo(dc,cxClient-cxClient/100*2,cyClient/2-cyClient/100*2);
+		MoveToEx(dc,cxClient,cyClient/2,NULL);
+		LineTo(dc,cxClient-cxClient/100*2,cyClient/2+cyClient/100*2);
+		//рисуем ось OY
+		MoveToEx(dc,cxClient/2,00,NULL);
+		LineTo(dc,cxClient/2,cyClient);
+		//выводим стрелочку
+		MoveToEx(dc,cxClient/2,0,NULL);
+		LineTo(dc,cxClient/2-cxClient/100*2,cyClient/100*2);
+		MoveToEx(dc,cxClient/2,0,NULL);
+		LineTo(dc,cxClient/2+cxClient/100*2,cyClient/100*2);
+		//название осей
+		SetTextColor(dc,crXYLines);
+		TextOut(dc,cxClient-cxClient/100*2-30,cyClient/2+cyClient/100*2,L"OX",2);
+		TextOut(dc,cxClient/2+cxClient/100*2.5,cyClient/200,L"OY",2);
+		TextOut(dc,cxClient-cxClient/100*2-120,cyClient/200+140,L"R=200",5);
+		
+
+		// рисуем график y=sin(x)
+
+		double x,y;//значений функций
+		int width,height;//высота, ширина делений
+
+		//ширину области деленим на колличество делений
+		width=cxClient/12;
+		height=cyClient/4;
+
+		double r,f;
+	    r=200;
+		f=0;
+		do 
+		{
+			x=r*cos(f);
+			y=r*sin(f);
+			SetPixel(dc,x+cxClient/2,y+cyClient/2,crFunction);
+			f+=0.01;
+		} while(f<=360);
+
+
+		
+		SelectObject(dc,hOldPen);
+		DeleteObject(hPenOxy);
+		DeleteObject(hNew);		
+		hold=(HFONT)SelectObject(dc,hbk);		
+
+
+=============================OnPolar2()
+
+		CClientDC dc(this);
+		GetClientRect(&rc);
+		hNew=CreateFont(28,0,0,0,FW_NORMAL,0,0,0,ANSI_CHARSET,OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,DEFAULT_QUALITY,DEFAULT_PITCH|FF_DONTCARE,L"Times New Roman Cyr"); 
+		hold=(HFONT)SelectObject(dc,hNew);
+		
+		dc.FillSolidRect(&rc,RGB(255,255,255));
+		
+		cf=RGB(255,255,255);
+		c=RGB(50,70,120);
+		SetTextColor(dc,c);
+		SetBkColor(dc,cf);
+		msg.Format(L"Полярная");
+		TextOutW(dc,rc.left+50,rc.bottom-450,msg,msg.GetLength());
+		msg.Format(L"система");
+		TextOutW(dc,rc.left+50,rc.bottom-420,msg,msg.GetLength());
+		msg.Format(L"координат");
+		TextOutW(dc,rc.left+50,rc.bottom-390,msg,msg.GetLength());
+
+		COLORREF crFunction = RGB(230,0,0);//цвет графика
+		COLORREF crAxes = RGB(89,89,250);//цвет осей (линий)
+		COLORREF crMarks = RGB(0,0,160);//цвет отметок на шкале
+		COLORREF crXYLines = RGB(140,70,0);//название осей
+		COLORREF crDeleniya = RGB(0,0,165);//цвет текста
+
+
+		HPEN hPenOxy,hOldPen;
+		hPenOxy=CreatePen(PS_SOLID,2,crAxes);//создаем кисть цветом "crOxy"
+		hOldPen = (HPEN)SelectObject(dc,hPenOxy);
+
+		SetTextColor(dc,crAxes);//устанавливаем цвет текста
+		int cxClient,cyClient;
+		cyClient = rc.bottom;//высота
+		cxClient = rc.right;//ширина
+	
+		//выводим ось OX
+		MoveToEx(dc,0,cyClient/2,NULL);
+		LineTo(dc,cxClient,cyClient/2);
+		//выводим стрелочку
+		MoveToEx(dc,cxClient,cyClient/2,NULL);
+		LineTo(dc,cxClient-cxClient/100*2,cyClient/2-cyClient/100*2);
+		MoveToEx(dc,cxClient,cyClient/2,NULL);
+		LineTo(dc,cxClient-cxClient/100*2,cyClient/2+cyClient/100*2);
+		//рисуем ось OY
+		MoveToEx(dc,cxClient/2,00,NULL);
+		LineTo(dc,cxClient/2,cyClient);
+		//выводим стрелочку
+		MoveToEx(dc,cxClient/2,0,NULL);
+		LineTo(dc,cxClient/2-cxClient/100*2,cyClient/100*2);
+		MoveToEx(dc,cxClient/2,0,NULL);
+		LineTo(dc,cxClient/2+cxClient/100*2,cyClient/100*2);
+		//название осей
+		SetTextColor(dc,crXYLines);
+		TextOut(dc,cxClient-cxClient/100*2-30,cyClient/2+cyClient/100*2,L"OX",2);
+		TextOut(dc,cxClient/2+cxClient/100*2.5,cyClient/200,L"OY",2);
+		TextOut(dc,cxClient-cxClient/100*2-180,cyClient/200+110,L"спираль",7);
+		TextOut(dc,cxClient-cxClient/100*2-180,cyClient/200+140,L"\"АРХИМЕДА\"",10);
+
+		// рисуем график y=sin(x)
+
+		double x,y;//значений функций
+		int width,height;//высота, ширина делений
+
+		//ширину области деленим на колличество делений
+		width=cxClient/12;
+		height=cyClient/4;
+
+		double r,f;
+	    r=0;
+		f=0.1;
+		do 
+		{
+			r+=0.05;
+			x=r*cos(f);
+			y=r*sin(f);
+			SetPixel(dc,x+cxClient/2,y+cyClient/2,crFunction);
+			f+=0.01;
+		} while(f<=360);
+
+		SelectObject(dc,hOldPen);
+		DeleteObject(hPenOxy);
+		DeleteObject(hNew);		
+		hold=(HFONT)SelectObject(dc,hbk);	
+
+=============================OnPolar3()
+
+		CClientDC dc(this);
+		GetClientRect(&rc);
+		hNew=CreateFont(28,0,0,0,FW_NORMAL,0,0,0,ANSI_CHARSET,OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,DEFAULT_QUALITY,DEFAULT_PITCH|FF_DONTCARE,L"Times New Roman Cyr"); 
+		hold=(HFONT)SelectObject(dc,hNew);
+		
+		dc.FillSolidRect(&rc,RGB(255,255,255));
+		
+		cf=RGB(255,255,255);
+		c=RGB(50,70,120);
+		SetTextColor(dc,c);
+		SetBkColor(dc,cf);
+		msg.Format(L"Полярная");
+		TextOutW(dc,rc.left+50,rc.bottom-450,msg,msg.GetLength());
+		msg.Format(L"система");
+		TextOutW(dc,rc.left+50,rc.bottom-420,msg,msg.GetLength());
+		msg.Format(L"координат");
+		TextOutW(dc,rc.left+50,rc.bottom-390,msg,msg.GetLength());
+
+		COLORREF crFunction = RGB(250,100,50);//цвет графика
+		COLORREF crAxes = RGB(89,89,250);//цвет осей (линий)
+		COLORREF crMarks = RGB(0,0,160);//цвет отметок на шкале
+		COLORREF crXYLines = RGB(140,70,0);//название осей
+		COLORREF crDeleniya = RGB(0,0,165);//цвет текста
+
+
+		HPEN hPenOxy,hOldPen;
+		hPenOxy=CreatePen(PS_SOLID,2,crAxes);//создаем кисть цветом "crOxy"
+		hOldPen = (HPEN)SelectObject(dc,hPenOxy);
+
+		SetTextColor(dc,crAxes);//устанавливаем цвет текста
+		int cxClient,cyClient;
+		cyClient = rc.bottom;//высота
+		cxClient = rc.right;//ширина
+	
+		//выводим ось OX
+		MoveToEx(dc,0,cyClient/2,NULL);
+		LineTo(dc,cxClient,cyClient/2);
+		//выводим стрелочку
+		MoveToEx(dc,cxClient,cyClient/2,NULL);
+		LineTo(dc,cxClient-cxClient/100*2,cyClient/2-cyClient/100*2);
+		MoveToEx(dc,cxClient,cyClient/2,NULL);
+		LineTo(dc,cxClient-cxClient/100*2,cyClient/2+cyClient/100*2);
+		//рисуем ось OY
+		MoveToEx(dc,cxClient/2,00,NULL);
+		LineTo(dc,cxClient/2,cyClient);
+		//выводим стрелочку
+		MoveToEx(dc,cxClient/2,0,NULL);
+		LineTo(dc,cxClient/2-cxClient/100*2,cyClient/100*2);
+		MoveToEx(dc,cxClient/2,0,NULL);
+		LineTo(dc,cxClient/2+cxClient/100*2,cyClient/100*2);
+		//название осей
+		SetTextColor(dc,crXYLines);
+		TextOut(dc,cxClient-cxClient/100*2-30,cyClient/2+cyClient/100*2,L"OX",2);
+		TextOut(dc,cxClient/2+cxClient/100*2.5,cyClient/200,L"OY",2);
+		TextOut(dc,cxClient-cxClient/100*2-120,cyClient/200+140,L"k=7",3);
+		
+
+		// рисуем график y=sin(x)
+
+		double x,y;//значений функций
+		int width,height;//высота, ширина делений
+
+		//ширину области деленим на колличество делений
+		width=cxClient/12;
+		height=cyClient/4;
+
+		double r,f;
+		int a,k;
+		a=200;
+		k=7;
+	    r=200;
+		f=0.1;
+		do 
+		{
+			r=a*sin(k*f);
+			x=r*cos(f);
+			y=r*sin(f);
+			SetPixel(dc,x+cxClient/2,y+cyClient/2,crFunction);
+			f+=0.01;
+		} while(f<=360);
+
+
+		
+		SelectObject(dc,hOldPen);
+		DeleteObject(hPenOxy);
+		DeleteObject(hNew);		
+		hold=(HFONT)SelectObject(dc,hbk);	
+
+=============================OnPolar4()
+
+		CClientDC dc(this);
+		GetClientRect(&rc);
+		hNew=CreateFont(28,0,0,0,FW_NORMAL,0,0,0,ANSI_CHARSET,OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,DEFAULT_QUALITY,DEFAULT_PITCH|FF_DONTCARE,L"Times New Roman Cyr"); 
+		hold=(HFONT)SelectObject(dc,hNew);
+		
+		dc.FillSolidRect(&rc,RGB(255,255,255));
+		
+		cf=RGB(255,255,255);
+		c=RGB(50,70,120);
+		SetTextColor(dc,c);
+		SetBkColor(dc,cf);
+		msg.Format(L"Полярная");
+		TextOutW(dc,rc.left+50,rc.bottom-450,msg,msg.GetLength());
+		msg.Format(L"система");
+		TextOutW(dc,rc.left+50,rc.bottom-420,msg,msg.GetLength());
+		msg.Format(L"координат");
+		TextOutW(dc,rc.left+50,rc.bottom-390,msg,msg.GetLength());
+
+		COLORREF crFunction = RGB(250,100,50);//цвет графика
+		COLORREF crAxes = RGB(89,89,250);//цвет осей (линий)
+		COLORREF crMarks = RGB(0,0,160);//цвет отметок на шкале
+		COLORREF crXYLines = RGB(140,70,0);//название осей
+		COLORREF crDeleniya = RGB(0,0,165);//цвет текста
+
+
+		HPEN hPenOxy,hOldPen;
+		hPenOxy=CreatePen(PS_SOLID,2,crAxes);//создаем кисть цветом "crOxy"
+		hOldPen = (HPEN)SelectObject(dc,hPenOxy);
+
+		SetTextColor(dc,crAxes);//устанавливаем цвет текста
+		int cxClient,cyClient;
+		cyClient = rc.bottom;//высота
+		cxClient = rc.right;//ширина
+	
+		//выводим ось OX
+		MoveToEx(dc,0,cyClient/2,NULL);
+		LineTo(dc,cxClient,cyClient/2);
+		//выводим стрелочку
+		MoveToEx(dc,cxClient,cyClient/2,NULL);
+		LineTo(dc,cxClient-cxClient/100*2,cyClient/2-cyClient/100*2);
+		MoveToEx(dc,cxClient,cyClient/2,NULL);
+		LineTo(dc,cxClient-cxClient/100*2,cyClient/2+cyClient/100*2);
+		//рисуем ось OY
+		MoveToEx(dc,cxClient/2,00,NULL);
+		LineTo(dc,cxClient/2,cyClient);
+		//выводим стрелочку
+		MoveToEx(dc,cxClient/2,0,NULL);
+		LineTo(dc,cxClient/2-cxClient/100*2,cyClient/100*2);
+		MoveToEx(dc,cxClient/2,0,NULL);
+		LineTo(dc,cxClient/2+cxClient/100*2,cyClient/100*2);
+		//название осей
+		SetTextColor(dc,crXYLines);
+		TextOut(dc,cxClient-cxClient/100*2-30,cyClient/2+cyClient/100*2,L"OX",2);
+		TextOut(dc,cxClient/2+cxClient/100*2.5,cyClient/200,L"OY",2);
+		TextOut(dc,cxClient-cxClient/100*2-120,cyClient/200+140,L"k=3",3);
+		
+
+		// рисуем график y=sin(x)
+
+		double x,y;//значений функций
+		int width,height;//высота, ширина делений
+
+		//ширину области деленим на колличество делений
+		width=cxClient/12;
+		height=cyClient/4;
+
+		double r,f;
+		int a,k;
+		a=200;
+		k=3;
+	    r=200;
+		f=0.1;
+		do 
+		{
+			r=a*sin(k*f);
+			x=r*cos(f);
+			y=r*sin(f);
+			SetPixel(dc,x+cxClient/2,y+cyClient/2,crFunction);
+			f+=0.01;
+		} while(f<=360);
+
+
+		
+		SelectObject(dc,hOldPen);
+		DeleteObject(hPenOxy);
+		DeleteObject(hNew);		
+		hold=(HFONT)SelectObject(dc,hbk);	
+
+=============================OnPolar5()
+
+		CClientDC dc(this);
+		GetClientRect(&rc);
+		hNew=CreateFont(28,0,0,0,FW_NORMAL,0,0,0,ANSI_CHARSET,OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,DEFAULT_QUALITY,DEFAULT_PITCH|FF_DONTCARE,L"Times New Roman Cyr"); 
+		hold=(HFONT)SelectObject(dc,hNew);
+		
+		dc.FillSolidRect(&rc,RGB(255,255,255));
+		
+		cf=RGB(255,255,255);
+		c=RGB(50,70,120);
+		SetTextColor(dc,c);
+		SetBkColor(dc,cf);
+		msg.Format(L"Полярная");
+		TextOutW(dc,rc.left+50,rc.bottom-450,msg,msg.GetLength());
+		msg.Format(L"система");
+		TextOutW(dc,rc.left+50,rc.bottom-420,msg,msg.GetLength());
+		msg.Format(L"координат");
+		TextOutW(dc,rc.left+50,rc.bottom-390,msg,msg.GetLength());
+
+		COLORREF crFunction = RGB(250,100,50);//цвет графика
+		COLORREF crAxes = RGB(89,89,250);//цвет осей (линий)
+		COLORREF crMarks = RGB(0,0,160);//цвет отметок на шкале
+		COLORREF crXYLines = RGB(140,70,0);//название осей
+		COLORREF crDeleniya = RGB(0,0,165);//цвет текста
+
+
+		HPEN hPenOxy,hOldPen;
+		hPenOxy=CreatePen(PS_SOLID,2,crAxes);//создаем кисть цветом "crOxy"
+		hOldPen = (HPEN)SelectObject(dc,hPenOxy);
+
+		SetTextColor(dc,crAxes);//устанавливаем цвет текста
+		int cxClient,cyClient;
+		cyClient = rc.bottom;//высота
+		cxClient = rc.right;//ширина
+	
+		//выводим ось OX
+		MoveToEx(dc,0,cyClient/2,NULL);
+		LineTo(dc,cxClient,cyClient/2);
+		//выводим стрелочку
+		MoveToEx(dc,cxClient,cyClient/2,NULL);
+		LineTo(dc,cxClient-cxClient/100*2,cyClient/2-cyClient/100*2);
+		MoveToEx(dc,cxClient,cyClient/2,NULL);
+		LineTo(dc,cxClient-cxClient/100*2,cyClient/2+cyClient/100*2);
+		//рисуем ось OY
+		MoveToEx(dc,cxClient/2,00,NULL);
+		LineTo(dc,cxClient/2,cyClient);
+		//выводим стрелочку
+		MoveToEx(dc,cxClient/2,0,NULL);
+		LineTo(dc,cxClient/2-cxClient/100*2,cyClient/100*2);
+		MoveToEx(dc,cxClient/2,0,NULL);
+		LineTo(dc,cxClient/2+cxClient/100*2,cyClient/100*2);
+		//название осей
+		SetTextColor(dc,crXYLines);
+		TextOut(dc,cxClient-cxClient/100*2-30,cyClient/2+cyClient/100*2,L"OX",2);
+		TextOut(dc,cxClient/2+cxClient/100*2.5,cyClient/200,L"OY",2);
+		TextOut(dc,cxClient-cxClient/100*2-120,cyClient/200+140,L"k=5",3);
+		
+
+		// рисуем график y=sin(x)
+
+		double x,y;//значений функций
+		int width,height;//высота, ширина делений
+
+		//ширину области деленим на колличество делений
+		width=cxClient/12;
+		height=cyClient/4;
+
+		double r,f;
+		int a,k;
+		a=200;
+		k=5;
+	    r=200;
+		f=0.1;
+		do 
+		{
+			r=a*sin(k*f);
+			x=r*cos(f);
+			y=r*sin(f);
+			SetPixel(dc,x+cxClient/2,y+cyClient/2,crFunction);
+			f+=0.01;
+		} while(f<=360);
+
+
+		
+		SelectObject(dc,hOldPen);
+		DeleteObject(hPenOxy);
+		DeleteObject(hNew);		
+		hold=(HFONT)SelectObject(dc,hbk);	
+
+=============================OnPolar6()
+
+
+		CClientDC dc(this);
+		GetClientRect(&rc);
+		hNew=CreateFont(28,0,0,0,FW_NORMAL,0,0,0,ANSI_CHARSET,OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,DEFAULT_QUALITY,DEFAULT_PITCH|FF_DONTCARE,L"Times New Roman Cyr"); 
+		hold=(HFONT)SelectObject(dc,hNew);
+		
+		dc.FillSolidRect(&rc,RGB(255,255,255));
+		
+		cf=RGB(255,255,255);
+		c=RGB(50,70,120);
+		SetTextColor(dc,c);
+		SetBkColor(dc,cf);
+		msg.Format(L"Полярная");
+		TextOutW(dc,rc.left+50,rc.bottom-450,msg,msg.GetLength());
+		msg.Format(L"система");
+		TextOutW(dc,rc.left+50,rc.bottom-420,msg,msg.GetLength());
+		msg.Format(L"координат");
+		TextOutW(dc,rc.left+50,rc.bottom-390,msg,msg.GetLength());
+
+		COLORREF crFunction = RGB(250,100,50);//цвет графика
+		COLORREF crAxes = RGB(89,89,250);//цвет осей (линий)
+		COLORREF crMarks = RGB(0,0,160);//цвет отметок на шкале
+		COLORREF crXYLines = RGB(140,70,0);//название осей
+		COLORREF crDeleniya = RGB(0,0,165);//цвет текста
+
+
+		HPEN hPenOxy,hOldPen;
+		hPenOxy=CreatePen(PS_SOLID,2,crAxes);//создаем кисть цветом "crOxy"
+		hOldPen = (HPEN)SelectObject(dc,hPenOxy);
+
+		SetTextColor(dc,crAxes);//устанавливаем цвет текста
+		int cxClient,cyClient;
+		cyClient = rc.bottom;//высота
+		cxClient = rc.right;//ширина
+	
+		//выводим ось OX
+		MoveToEx(dc,0,cyClient/2,NULL);
+		LineTo(dc,cxClient,cyClient/2);
+		//выводим стрелочку
+		MoveToEx(dc,cxClient,cyClient/2,NULL);
+		LineTo(dc,cxClient-cxClient/100*2,cyClient/2-cyClient/100*2);
+		MoveToEx(dc,cxClient,cyClient/2,NULL);
+		LineTo(dc,cxClient-cxClient/100*2,cyClient/2+cyClient/100*2);
+		//рисуем ось OY
+		MoveToEx(dc,cxClient/2,00,NULL);
+		LineTo(dc,cxClient/2,cyClient);
+		//выводим стрелочку
+		MoveToEx(dc,cxClient/2,0,NULL);
+		LineTo(dc,cxClient/2-cxClient/100*2,cyClient/100*2);
+		MoveToEx(dc,cxClient/2,0,NULL);
+		LineTo(dc,cxClient/2+cxClient/100*2,cyClient/100*2);
+		//название осей
+		SetTextColor(dc,crXYLines);
+		TextOut(dc,cxClient-cxClient/100*2-30,cyClient/2+cyClient/100*2,L"OX",2);
+		TextOut(dc,cxClient/2+cxClient/100*2.5,cyClient/200,L"OY",2);
+		TextOut(dc,cxClient-cxClient/100*2-120,cyClient/200+140,L"k=129",5);
+		
+
+		// рисуем график y=sin(x)
+
+		double x,y;//значений функций
+		int width,height;//высота, ширина делений
+
+		//ширину области деленим на колличество делений
+		width=cxClient/12;
+		height=cyClient/4;
+
+		double r,f;
+		int a,k;
+		a=200;
+		k=128;
+	    r=200;
+		f=0.1;
+		do 
+		{
+			r=a*sin(k*f);
+			x=r*cos(f);
+			y=r*sin(f);
+			SetPixel(dc,x+cxClient/2,y+cyClient/2,crFunction);
+			f+=0.01;
+		} while(f<=360);
+
+
+		
+		SelectObject(dc,hOldPen);
+		DeleteObject(hPenOxy);
+		DeleteObject(hNew);		
+		hold=(HFONT)SelectObject(dc,hbk);	
+
+=============================OnPolar7()
+
+
+		CClientDC dc(this);
+		GetClientRect(&rc);
+		hNew=CreateFont(28,0,0,0,FW_NORMAL,0,0,0,ANSI_CHARSET,OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,DEFAULT_QUALITY,DEFAULT_PITCH|FF_DONTCARE,L"Times New Roman Cyr"); 
+		hold=(HFONT)SelectObject(dc,hNew);
+		
+		dc.FillSolidRect(&rc,RGB(255,255,255));
+		
+		cf=RGB(255,255,255);
+		c=RGB(50,70,120);
+		SetTextColor(dc,c);
+		SetBkColor(dc,cf);
+		msg.Format(L"Полярная");
+		TextOutW(dc,rc.left+50,rc.bottom-450,msg,msg.GetLength());
+		msg.Format(L"система");
+		TextOutW(dc,rc.left+50,rc.bottom-420,msg,msg.GetLength());
+		msg.Format(L"координат");
+		TextOutW(dc,rc.left+50,rc.bottom-390,msg,msg.GetLength());
+
+		COLORREF crFunction = RGB(250,100,50);//цвет графика
+		COLORREF crAxes = RGB(89,89,250);//цвет осей (линий)
+		COLORREF crMarks = RGB(0,0,160);//цвет отметок на шкале
+		COLORREF crXYLines = RGB(140,70,0);//название осей
+		COLORREF crDeleniya = RGB(0,0,165);//цвет текста
+
+
+		HPEN hPenOxy,hOldPen;
+		hPenOxy=CreatePen(PS_SOLID,2,crAxes);//создаем кисть цветом "crOxy"
+		hOldPen = (HPEN)SelectObject(dc,hPenOxy);
+
+		SetTextColor(dc,crAxes);//устанавливаем цвет текста
+		int cxClient,cyClient;
+		cyClient = rc.bottom;//высота
+		cxClient = rc.right;//ширина
+	
+		//выводим ось OX
+		MoveToEx(dc,0,cyClient/2,NULL);
+		LineTo(dc,cxClient,cyClient/2);
+		//выводим стрелочку
+		MoveToEx(dc,cxClient,cyClient/2,NULL);
+		LineTo(dc,cxClient-cxClient/100*2,cyClient/2-cyClient/100*2);
+		MoveToEx(dc,cxClient,cyClient/2,NULL);
+		LineTo(dc,cxClient-cxClient/100*2,cyClient/2+cyClient/100*2);
+		//рисуем ось OY
+		MoveToEx(dc,cxClient/2,00,NULL);
+		LineTo(dc,cxClient/2,cyClient);
+		//выводим стрелочку
+		MoveToEx(dc,cxClient/2,0,NULL);
+		LineTo(dc,cxClient/2-cxClient/100*2,cyClient/100*2);
+		MoveToEx(dc,cxClient/2,0,NULL);
+		LineTo(dc,cxClient/2+cxClient/100*2,cyClient/100*2);
+		//название осей
+		SetTextColor(dc,crXYLines);
+		TextOut(dc,cxClient-cxClient/100*2-30,cyClient/2+cyClient/100*2,L"OX",2);
+		TextOut(dc,cxClient/2+cxClient/100*2.5,cyClient/200,L"OY",2);
+		TextOut(dc,cxClient-cxClient/100*2-150,cyClient/200+140,L"КАРДИОИДА",9);
+		
+
+		// рисуем график y=sin(x)
+
+		double x,y;//значений функций
+		int width,height;//высота, ширина делений
+
+		//ширину области деленим на колличество делений
+		width=cxClient/12;
+		height=cyClient/4;
+
+		double e,r,f;
+		int a,b,k;
+		a=90;
+		b=70;
+		k=82;
+		e=a/b;
+	    r=200;
+		f=0;
+		do 
+		{
+			x=(b+e*b)*cos(e*f)-k*cos(f+e*f);
+			y=(b+e*b)*sin(e*f)-k*sin(f+e*f);
+			SetPixel(dc,x+cxClient/2,y+cyClient/2,crFunction);
+			f+=0.01;
+		} while(f<=360);
+
+
+		
+		SelectObject(dc,hOldPen);
+		DeleteObject(hPenOxy);
+		DeleteObject(hNew);		
+		hold=(HFONT)SelectObject(dc,hbk);	
+
+============================= OnSinn()
+
+
+		CClientDC dc(this);
+		GetClientRect(&rc);
+		hNew = CreateFont(28, 0, 0, 0, FW_NORMAL, 0, 0, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Times New Roman Cyr");
+		hold = (HFONT)SelectObject(dc, hNew);
+
+		dc.FillSolidRect(&rc, RGB(255, 255, 255));
+		msg.Format(L"График тригонометрической функции");
+		cf = RGB(255, 255, 255);
+		c = RGB(50, 70, 120);
+		SetTextColor(dc, c);
+		SetBkColor(dc, cf);
+		TextOutW(dc, rc.left + 20, rc.top+20, msg, msg.GetLength());
+
+
+
+		COLORREF crFunction = RGB(190, 0, 0);//цвет графика
+		COLORREF crAxes = RGB(89, 89, 250);//цвет осей (линий)
+		COLORREF crMarks = RGB(0, 0, 160);//цвет отметок на шкале
+		COLORREF crXYLines = RGB(140, 70, 0);//название осей
+		COLORREF crDeleniya = RGB(0, 0, 165);//цвет текста
+
+
+		HPEN hPenOxy, hOldPen;
+		hPenOxy = CreatePen(PS_SOLID, 2, crAxes);//создаем кисть цветом "crOxy"
+		hOldPen = (HPEN)SelectObject(dc, hPenOxy);
+
+		SetTextColor(dc, crAxes);//устанавливаем цвет текста
+		int cxClient, cyClient;
+		cyClient = rc.bottom;//высота
+		cxClient = rc.right;//ширина
+
+							//выводим ось OX
+		MoveToEx(dc, 0, cyClient / 2, NULL);
+		LineTo(dc, cxClient, cyClient / 2);
+		//выводим стрелочку
+		MoveToEx(dc, cxClient, cyClient / 2, NULL);
+		LineTo(dc, cxClient - cxClient / 100 * 2, cyClient / 2 - cyClient / 100 * 2);
+		MoveToEx(dc, cxClient, cyClient / 2, NULL);
+		LineTo(dc, cxClient - cxClient / 100 * 2, cyClient / 2 + cyClient / 100 * 2);
+		//рисуем ось OY
+		MoveToEx(dc, cxClient / 2, 50, NULL);
+		LineTo(dc, cxClient / 2, cyClient);
+		//выводим стрелочку
+		MoveToEx(dc, cxClient / 2, 50, NULL);
+		LineTo(dc, cxClient / 2 - cxClient / 100 * 2, cyClient / 100 * 2 + 50);
+		MoveToEx(dc, cxClient / 2, 50, NULL);
+		LineTo(dc, cxClient / 2 + cxClient / 100 * 2, cyClient / 100 * 2 + 50);
+		//название осей
+		SetTextColor(dc, crXYLines);
+		TextOut(dc, cxClient - cxClient / 100 * 2 - 30, cyClient / 2 + cyClient / 100 * 2, L"OX", 2);
+		TextOut(dc, cxClient / 2 + cxClient / 100 * 2.5, cyClient / 200 + 50, L"OY", 2);
+		TextOut(dc, cxClient - cxClient / 100 * 2 - 120, cyClient / 200 + 140, L"y=sin(x)", 8);
+
+
+		// рисуем график y=sin(x)
+		double Xmin;//минимальный Х
+		double Xmax;//максимальны Х
+		double x, y;//значений функций
+		int width, height;//высота, ширина делений
+
+		Xmin = -2 * PI;
+		Xmax = 2 * PI;
+
+		//ширину области деленим на колличество делений
+		width = cxClient / 12;
+		height = cyClient / 4;
+
+		for (x = Xmin; x <= Xmax; x += 0.001)
+		{
+			y = -sin(x);//минус так как ось У направлена вниз
+			SetPixel(dc, width*x + cxClient / 2, height*y + cyClient / 2, crFunction);
+
+			//width* - коэф. для оси Х
+			//height* - коэф. для оси У
+		}
+
+
+		SelectObject(dc, hOldPen);
+		DeleteObject(hPenOxy);
+		DeleteObject(hNew);
+		hold = (HFONT)SelectObject(dc, hbk);
+		
+
+=============================OnCoss()
+
+                CClientDC dc(this);
+		GetClientRect(&rc);
+		hNew=CreateFont(28,0,0,0,FW_NORMAL,0,0,0,ANSI_CHARSET,OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,DEFAULT_QUALITY,DEFAULT_PITCH|FF_DONTCARE,L"Times New Roman Cyr"); 
+		hold=(HFONT)SelectObject(dc,hNew);
+		
+		dc.FillSolidRect(&rc,RGB(255,255,255));
+		msg.Format(L"График тригонометрической функции");
+		cf=RGB(255,255,255);
+		c=RGB(50,70,120);
+		SetTextColor(dc,c);
+		SetBkColor(dc,cf);
+		TextOutW(dc, rc.left + 20, rc.top+20, msg, msg.GetLength());
+
+
+
+
+		COLORREF crFunction = RGB(0,190,0);//цвет графика
+		COLORREF crAxes = RGB(89,89,250);//цвет осей (линий)
+		COLORREF crMarks = RGB(0,0,160);//цвет отметок на шкале
+		COLORREF crXYLines = RGB(140,70,0);//название осей
+		COLORREF crDeleniya = RGB(0,0,165);//цвет текста
+
+
+		HPEN hPenOxy,hOldPen;
+		hPenOxy=CreatePen(PS_SOLID,2,crAxes);//создаем кисть цветом "crOxy"
+		hOldPen = (HPEN)SelectObject(dc,hPenOxy);
+
+		SetTextColor(dc,crAxes);//устанавливаем цвет текста
+		int cxClient,cyClient;
+		cyClient = rc.bottom;//высота
+		cxClient = rc.right;//ширина
+	
+		//выводим ось OX
+		MoveToEx(dc,0,cyClient/2,NULL);
+		LineTo(dc,cxClient,cyClient/2);
+		//выводим стрелочку
+		MoveToEx(dc,cxClient,cyClient/2,NULL);
+		LineTo(dc,cxClient-cxClient/100*2,cyClient/2-cyClient/100*2);
+		MoveToEx(dc,cxClient,cyClient/2,NULL);
+		LineTo(dc,cxClient-cxClient/100*2,cyClient/2+cyClient/100*2);
+		//рисуем ось OY
+		MoveToEx(dc,cxClient/2,50,NULL);
+		LineTo(dc,cxClient/2,cyClient);
+		//выводим стрелочку
+		MoveToEx(dc,cxClient/2,50,NULL);
+		LineTo(dc,cxClient/2-cxClient/100*2,cyClient/100*2+50);
+		MoveToEx(dc,cxClient/2,50,NULL);
+		LineTo(dc,cxClient/2+cxClient/100*2,cyClient/100*2+50);
+		//название осей
+		SetTextColor(dc,crXYLines);
+		TextOut(dc,cxClient-cxClient/100*2-30,cyClient/2+cyClient/100*2,L"OX",2);
+		TextOut(dc,cxClient/2+cxClient/100*2.5,cyClient/200+50,L"OY",2);
+		TextOut(dc,cxClient-cxClient/100*2-120,cyClient/200+140,L"y=cos(x)",8);
+		
+
+		// рисуем график y=sin(x)
+		double Xmin;//минимальный Х
+		double Xmax;//максимальны Х
+		double x,y;//значений функций
+		int width,height;//высота, ширина делений
+
+		Xmin=-2*PI;
+		Xmax=2*PI;
+
+		//ширину области деленим на колличество делений
+		width=cxClient/12;
+		height=cyClient/4;
+
+		for(x=Xmin;x<=Xmax;x+=0.001)
+		{
+			y=-cos(x);//минус так как ось У направлена вниз
+			SetPixel(dc,width*x+cxClient/2,height*y+cyClient/2,crFunction);
+			
+			//width* - коэф. для оси Х
+			//height* - коэф. для оси У
+		}
+
+		
+		SelectObject(dc,hOldPen);
+		DeleteObject(hPenOxy);
+		DeleteObject(hNew);		
+		hold=(HFONT)SelectObject(dc,hbk);		
+
