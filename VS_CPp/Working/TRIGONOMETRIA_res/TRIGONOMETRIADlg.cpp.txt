@@ -1,0 +1,410 @@
+﻿
+// ProgramDlg.cpp : файл реализации
+//
+
+#include "stdafx.h"
+#include "Program.h"
+#include "ProgramDlg.h"
+#include "afxdialogex.h"
+
+
+
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#endif
+
+
+// диалоговое окно CProgramDlg
+
+
+
+CProgramDlg::CProgramDlg(CWnd* pParent /*=NULL*/)
+	: CDialog(CProgramDlg::IDD, pParent)
+{
+	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+}
+
+void CProgramDlg::DoDataExchange(CDataExchange* pDX)
+{
+	CDialog::DoDataExchange(pDX);
+
+	/*
+	COLORREF pir[7];
+	pir[6] = 0x000000FF;
+	pir[5] = 0x000088FF;
+	pir[4] = 0x0000DDFF;
+	pir[3] = 0x0024FF00;
+	pir[2] = 0x00CEE23A;
+	pir[1] = 0x00E2383A;
+	pir[0] = 0x00A90D8A;
+	*/
+
+	c[0] = 0xFF00FF;
+	c[1] = 0xFFA500;
+	c[2] = 0xFFFF;
+	c[3] = 0x0C7800;
+	c[4] = 0x005690;
+	c[5] = 0xFFFF0000;
+	c[6] = 0xCC00AA;
+	c[7] = 0xAA5600;
+	c[8] = 0xAAAA;
+	c[9] = 0x00CC00;
+	c[10] = 0x090056;
+	c[11] = 0xF0F0F0;
+
+	fg = true;
+	k = -1;
+	SetWindowTextW(L"ТРИГОНОМЕТРИЧЕСКИЕ ФУНКЦИИ. ТОЖДЕСТВА.");
+
+	DDX_Control(pDX, IDC_PIC, cpic);
+}
+
+BEGIN_MESSAGE_MAP(CProgramDlg, CDialog)
+	ON_WM_PAINT()
+	ON_WM_QUERYDRAGICON()
+	ON_COMMAND(ID_FILE_BONUS, &CProgramDlg::OnFileBonus)
+	ON_COMMAND(ID_FILE_EXIT, &CProgramDlg::OnFileExit)
+	ON_COMMAND(ID_FILE_MMAIN, &CProgramDlg::OnFileMmain)
+	ON_COMMAND(ID_FILE_PIC1, &CProgramDlg::OnFilePic1)
+	ON_COMMAND(ID_FILE_PIC10, &CProgramDlg::OnFilePic10)
+	ON_COMMAND(ID_FILE_PIC11, &CProgramDlg::OnFilePic11)
+	ON_COMMAND(ID_FILE_PIC12, &CProgramDlg::OnFilePic12)
+	ON_COMMAND(ID_FILE_PIC13, &CProgramDlg::OnFilePic13)
+	ON_COMMAND(ID_FILE_PIC14, &CProgramDlg::OnFilePic14)
+	ON_COMMAND(ID_FILE_PIC15, &CProgramDlg::OnFilePic15)
+	ON_COMMAND(ID_FILE_PIC16, &CProgramDlg::OnFilePic16)
+	ON_COMMAND(ID_FILE_PIC2, &CProgramDlg::OnFilePic2)
+	ON_COMMAND(ID_FILE_PIC3, &CProgramDlg::OnFilePic3)
+	ON_COMMAND(ID_FILE_PIC4, &CProgramDlg::OnFilePic4)
+	ON_COMMAND(ID_FILE_PIC5, &CProgramDlg::OnFilePic5)
+	ON_COMMAND(ID_FILE_PIC6, &CProgramDlg::OnFilePic6)
+	ON_COMMAND(ID_FILE_PIC7, &CProgramDlg::OnFilePic7)
+	ON_COMMAND(ID_FILE_PIC8, &CProgramDlg::OnFilePic8)
+	ON_COMMAND(ID_FILE_PIC9, &CProgramDlg::OnFilePic9)
+	ON_COMMAND(ID_FILE_RESET, &CProgramDlg::OnFileReset)
+	ON_WM_LBUTTONDOWN()
+END_MESSAGE_MAP()
+
+
+// обработчики сообщений CProgramDlg
+
+BOOL CProgramDlg::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+
+	// Задает значок для этого диалогового окна.  Среда делает это автоматически,
+	//  если главное окно приложения не является диалоговым
+	SetIcon(m_hIcon, TRUE);			// Крупный значок
+	SetIcon(m_hIcon, FALSE);		// Мелкий значок
+
+	// TODO: добавьте дополнительную инициализацию
+
+	return TRUE;  // возврат значения TRUE, если фокус не передан элементу управления
+}
+
+// При добавлении кнопки свертывания в диалоговое окно нужно воспользоваться приведенным ниже кодом,
+//  чтобы нарисовать значок.  Для приложений MFC, использующих модель документов или представлений,
+//  это автоматически выполняется рабочей областью.
+
+void CProgramDlg::OnPaint()
+{
+	if (IsIconic())
+	{
+		CPaintDC dc(this); // контекст устройства для рисования
+
+		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
+
+		// Выравнивание значка по центру клиентского прямоугольника
+		int cxIcon = GetSystemMetrics(SM_CXICON);
+		int cyIcon = GetSystemMetrics(SM_CYICON);
+		CRect rect;
+		GetClientRect(&rect);
+		int x = (rect.Width() - cxIcon + 1) / 2;
+		int y = (rect.Height() - cyIcon + 1) / 2;
+
+		// Нарисуйте значок
+		dc.DrawIcon(x, y, m_hIcon);
+	}
+	else
+	{
+		
+		CDialog::OnPaint();
+	}
+}
+
+// Система вызывает эту функцию для получения отображения курсора при перемещении
+//  свернутого окна.
+HCURSOR CProgramDlg::OnQueryDragIcon()
+{
+	return static_cast<HCURSOR>(m_hIcon);
+}
+
+
+
+void CProgramDlg::OnFileBonus()
+{
+	// TODO: Add your command handler code here
+	pic.LoadBitmap(IDB_BITMAP4);
+	cpic.SetBitmap(pic);
+	pic.DeleteObject();
+	k = 18;
+}
+
+
+void CProgramDlg::OnFileExit()
+{
+	// TODO: Add your command handler code here
+
+	if (MessageBox(TEXT("Ви дійсно бажаєте вийти ?"), TEXT("УВАГА!!!"), MB_OKCANCEL | MB_ICONQUESTION) == IDOK)
+	{
+		OnOK();
+	}
+
+}
+
+
+void CProgramDlg::OnFileMmain()
+{
+	// TODO: Add your command handler code here
+	pic.LoadBitmap(IDB_BITMAP1);
+	cpic.SetBitmap(pic);
+	pic.DeleteObject();
+	k = 1;
+}
+
+
+void CProgramDlg::OnFilePic1()
+{
+	// TODO: Add your command handler code here
+	pic.LoadBitmap(IDB_BITMAP2);
+	cpic.SetBitmap(pic);
+	pic.DeleteObject();
+	k = 2;
+}
+
+
+void CProgramDlg::OnFilePic10()
+{
+	// TODO: Add your command handler code here
+	pic.LoadBitmap(IDB_BITMAP11);
+	cpic.SetBitmap(pic);
+	pic.DeleteObject();
+	k = 11;
+}
+
+
+void CProgramDlg::OnFilePic11()
+{
+	// TODO: Add your command handler code here
+	pic.LoadBitmap(IDB_BITMAP12);
+	cpic.SetBitmap(pic);
+	pic.DeleteObject();
+	k = 12;
+}
+
+
+void CProgramDlg::OnFilePic12()
+{
+	// TODO: Add your command handler code here
+	pic.LoadBitmap(IDB_BITMAP13);
+	cpic.SetBitmap(pic);
+	pic.DeleteObject();
+	k = 13;
+
+}
+
+
+void CProgramDlg::OnFilePic13()
+{
+	// TODO: Add your command handler code here
+	pic.LoadBitmap(IDB_BITMAP14);
+	cpic.SetBitmap(pic);
+	pic.DeleteObject();
+	k = 14;
+}
+
+
+void CProgramDlg::OnFilePic14()
+{
+	// TODO: Add your command handler code here
+	pic.LoadBitmap(IDB_BITMAP15);
+	cpic.SetBitmap(pic);
+	pic.DeleteObject();
+	k = 15;
+}
+
+
+void CProgramDlg::OnFilePic15()
+{
+	// TODO: Add your command handler code here
+	pic.LoadBitmap(IDB_BITMAP16);
+	cpic.SetBitmap(pic);
+	pic.DeleteObject();
+	k = 16;
+}
+
+
+void CProgramDlg::OnFilePic16()
+{
+	// TODO: Add your command handler code here
+	pic.LoadBitmap(IDB_BITMAP17);
+	cpic.SetBitmap(pic);
+	pic.DeleteObject();
+	k = 17;
+}
+
+
+void CProgramDlg::OnFilePic2()
+{
+	// TODO: Add your command handler code here
+	pic.LoadBitmap(IDB_BITMAP3);
+	cpic.SetBitmap(pic);
+	pic.DeleteObject();
+	k = 3;
+}
+
+
+void CProgramDlg::OnFilePic3()
+{
+	// TODO: Add your command handler code here
+	pic.LoadBitmap(IDB_BITMAP1);
+	cpic.SetBitmap(pic);
+	pic.DeleteObject();
+	k = 1;
+}
+
+
+void CProgramDlg::OnFilePic4()
+{
+	// TODO: Add your command handler code here
+	pic.LoadBitmap(IDB_BITMAP5);
+	cpic.SetBitmap(pic);
+	pic.DeleteObject();
+	k = 5;
+}
+
+
+
+void CProgramDlg::OnFilePic5()
+{
+	// TODO: Add your command handler code here
+	pic.LoadBitmap(IDB_BITMAP6);
+	cpic.SetBitmap(pic);
+	pic.DeleteObject();
+	k = 6;
+
+}
+
+
+void CProgramDlg::OnFilePic6()
+{
+	// TODO: Add your command handler code here
+	pic.LoadBitmap(IDB_BITMAP7);
+	cpic.SetBitmap(pic);
+	pic.DeleteObject();
+	k = 7;
+}
+
+
+void CProgramDlg::OnFilePic7()
+{
+	// TODO: Add your command handler code here
+	pic.LoadBitmap(IDB_BITMAP8);
+	cpic.SetBitmap(pic);
+	pic.DeleteObject();
+	k = 8;
+}
+
+
+void CProgramDlg::OnFilePic8()
+{
+	// TODO: Add your command handler code here
+	pic.LoadBitmap(IDB_BITMAP9);
+	cpic.SetBitmap(pic);
+	pic.DeleteObject();
+	k = 9;
+}
+
+
+void CProgramDlg::OnFilePic9()
+{
+	// TODO: Add your command handler code here
+	pic.LoadBitmap(IDB_BITMAP10);
+	cpic.SetBitmap(pic);
+	pic.DeleteObject();
+	k = 10;
+}
+
+
+void CProgramDlg::OnFileReset()
+{
+	// TODO: Add your command handler code here
+	pic.LoadBitmap(IDB_BITMAP18);
+	cpic.SetBitmap(pic);
+	pic.DeleteObject();
+	k = 0;
+	fg = true;
+}
+
+
+void CProgramDlg::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: Add your message handler code here and/or call default
+
+	fg = true;
+	if (k == -1) fg = false;
+
+	CClientDC dc(this);
+	GetClientRect(&rc);
+	w.left = rc.left;
+	w.right = rc.right;
+	w.top = rc.top;
+	w.bottom = rc.bottom;
+
+	kw[0].left = w.left + 85;
+	kw[0].top = w.top + 150;
+	kw[0].right = kw[0].left + 60;
+	kw[0].bottom = kw[0].top + 60;
+
+
+	kw[1].left = w.left + 5;
+	kw[1].top = w.top + 10;
+	kw[1].right = kw[1].left + 85;
+	kw[1].bottom = kw[1].top + 150;
+	
+	kw[2].left = w.left + 250;
+	kw[2].top = w.top + 10;
+	kw[2].right = kw[2].left + 210;
+	kw[2].bottom = kw[2].top + 325;
+
+
+	kw[3].left = w.left + 90;
+	kw[3].top = w.top +105;
+	kw[3].right = kw[3].left + 50;
+	kw[3].bottom = kw[3].top + 40;
+
+
+	kw[4].left = w.left + 95;
+	kw[4].top = w.top + 10;
+	kw[4].right = kw[4].left + 155;
+	kw[4].bottom = kw[4].top + 90;
+
+
+	if (k == 0 && fg)
+	{
+		//dc.Rectangle(kw[3]);
+		//dc.Rectangle(kw[4]);
+
+		if (PtInRect(&kw[0], point)) OnFilePic1();
+		if (PtInRect(&kw[1], point)) OnFilePic4();
+		if (PtInRect(&kw[2], point)) OnFilePic4();
+		if (PtInRect(&kw[3], point)) OnFilePic5();
+		if (PtInRect(&kw[4], point)) OnFilePic5();
+
+		fg = false;
+	}
+
+
+	CDialog::OnLButtonDown(nFlags, point);
+}

@@ -1,0 +1,41 @@
+файл
+
+BITMAP01 головна/малюнок
+BITMAP04 бонус
+
+означення
+BITMAP02 основні
+BITMAP03 функції
+BITMAP06 властивості
+BITMAP15 таблиця
+
+графіки
+BITMAP07 синусоіда
+BITMAP08 коситусоіда
+BITMAP09 тангенсоіда
+BITMAP10 котангенсоіда
+
+тотожності
+BITMAP05 основні
+BITMAP16 сума/різниця
+BITMAP17 подвоєні/половинні
+
+рівняння
+BITMAP11 sinx=a
+BITMAP12 cosx=a
+BITMAP13 tgx=a
+BITMAP14 ctgx=a
+
+BITMAP18 на початок/reset
+
+вихід exit
+
+
+	if (MessageBox(L"Бажаєте вийти з програми?    ", L"Діалог виходу", MB_YESNO | MB_ICONQUESTION) == IDYES)
+	{
+		OnOK();
+	}
+
+	mpic.SetBitmap(BM[k]);
+
+	BM[k].LoadBitmapW(IDB_BITMAP1);

@@ -1,0 +1,73 @@
+﻿
+// ProgramDlg.h : файл заголовка
+//
+
+#pragma once
+#include "afxwin.h"
+
+#define mtime 298
+
+// диалоговое окно CProgramDlg
+class CProgramDlg : public CDialog
+{
+// Создание
+public:
+	CProgramDlg(CWnd* pParent = NULL);	// стандартный конструктор
+
+// Данные диалогового окна
+	enum { IDD = IDD_PROGRAM_DIALOG };
+
+	protected:
+	virtual void DoDataExchange(CDataExchange* pDX);	// поддержка DDX/DDV
+
+
+// Реализация
+protected:
+	HICON m_hIcon;
+
+	// Созданные функции схемы сообщений
+	virtual BOOL OnInitDialog();
+	afx_msg void OnPaint();
+	afx_msg HCURSOR OnQueryDragIcon();
+
+private:
+
+	HFONT hold, hNew, hbk;
+	HBRUSH m, oldm;
+	COLORREF cf, c[25];
+
+	CPen d, oldd;
+	CBitmap pic;
+	CRect rc,w,kw[25];
+
+	CString ms,t, z;
+
+	int Matrix[50][50];
+	int RH, RW, k, i, j, cx,cy, dx, dy;
+	bool fg;
+
+	DECLARE_MESSAGE_MAP()
+public:
+	CStatic cpic;
+	afx_msg void OnFileBonus();
+	afx_msg void OnFileExit();
+	afx_msg void OnFileMmain();
+	afx_msg void OnFilePic1();
+	afx_msg void OnFilePic10();
+	afx_msg void OnFilePic11();
+	afx_msg void OnFilePic12();
+	afx_msg void OnFilePic13();
+	afx_msg void OnFilePic14();
+	afx_msg void OnFilePic15();
+	afx_msg void OnFilePic16();
+	afx_msg void OnFilePic2();
+	afx_msg void OnFilePic3();
+	afx_msg void OnFilePic4();
+	afx_msg void OnFilePic5();
+	afx_msg void OnFilePic6();
+	afx_msg void OnFilePic7();
+	afx_msg void OnFilePic8();
+	afx_msg void OnFilePic9();
+	afx_msg void OnFileReset();
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+};
