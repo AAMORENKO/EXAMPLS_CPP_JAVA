@@ -1,0 +1,447 @@
+﻿
+// ProgramDlg.cpp : файл реализации
+//
+
+#include "stdafx.h"
+#include "Program.h"
+#include "ProgramDlg.h"
+#include "afxdialogex.h"
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#endif
+
+
+// диалоговое окно CProgramDlg
+
+
+
+CProgramDlg::CProgramDlg(CWnd* pParent /*=NULL*/)
+	: CDialog(IDD_PROGRAM_DIALOG, pParent)
+	, N(1)
+	, RP1(0)
+	, RP2(0)
+	, RP3(0)
+	, S(0)
+{
+	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+}
+
+void CProgramDlg::DoDataExchange(CDataExchange* pDX)
+{
+	CDialog::DoDataExchange(pDX);
+
+	SetWindowTextW(L"Галерея типових фігур з планіметрії та формули для обчислення їх площини.");
+	DDX_Control(pDX, IDC_PIC, mpic);
+	DDX_Text(pDX, IDC_EDIT1, N);
+	DDX_Control(pDX, IDC_SPIN1, mspin);
+	DDX_Control(pDX, IDC_EK, EK);
+
+	DDX_Control(pDX, IDC_PR1, PR1);
+	DDX_Control(pDX, IDC_PR2, PR2);
+	DDX_Control(pDX, IDC_PR3, PR3);
+
+	DDX_Text(pDX, IDC_EDIT2, RP1);
+	DDX_Text(pDX, IDC_EDIT3, RP2);
+	DDX_Text(pDX, IDC_EDIT4, RP3);
+	DDX_Text(pDX, IDC_EDIT5, S);
+
+	DDX_Control(pDX, IDC_EDIT1, kRP1);
+
+
+
+	//ASSERT(kRP3.GetStyle() & ES_READONLY);
+	DDX_Control(pDX, IDC_EDIT2, kRP2);
+	DDX_Control(pDX, IDC_EDIT3, kRP3);
+	DDX_Control(pDX, IDC_EDIT4, kRP4);
+}
+
+BEGIN_MESSAGE_MAP(CProgramDlg, CDialog)
+	ON_WM_PAINT()
+	ON_WM_QUERYDRAGICON()
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN1, &CProgramDlg::OnDeltaposSpin1)
+	ON_BN_CLICKED(IDC_BUTTON1, &CProgramDlg::OnBnClickedButton1)
+END_MESSAGE_MAP()
+
+
+// обработчики сообщений CProgramDlg
+
+BOOL CProgramDlg::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+
+	// Задает значок для этого диалогового окна.  Среда делает это автоматически,
+	//  если главное окно приложения не является диалоговым
+	SetIcon(m_hIcon, TRUE);			// Крупный значок
+	SetIcon(m_hIcon, FALSE);		// Мелкий значок
+
+	// TODO: добавьте дополнительную инициализацию
+	EK.SetWindowTextW(L"Обчислимо площу трикутника.\nВведіть необхідні дані:");
+	PR1.SetWindowTextW(L"сторона a=");
+	PR2.SetWindowTextW(L"висота  h=");
+	PR3.SetWindowTextW(L"");
+	kRP1.SetReadOnly(TRUE);
+	kRP4.SetReadOnly(TRUE);
+	mspin.SetRange32(1, 11);
+	return TRUE;  // возврат значения TRUE, если фокус не передан элементу управления
+}
+
+// При добавлении кнопки свертывания в диалоговое окно нужно воспользоваться приведенным ниже кодом,
+//  чтобы нарисовать значок.  Для приложений MFC, использующих модель документов или представлений,
+//  это автоматически выполняется рабочей областью.
+
+void CProgramDlg::OnPaint()
+{
+	if (IsIconic())
+	{
+		CPaintDC dc(this); // контекст устройства для рисования
+
+		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
+
+		// Выравнивание значка по центру клиентского прямоугольника
+		int cxIcon = GetSystemMetrics(SM_CXICON);
+		int cyIcon = GetSystemMetrics(SM_CYICON);
+		CRect rect;
+		GetClientRect(&rect);
+		int x = (rect.Width() - cxIcon + 1) / 2;
+		int y = (rect.Height() - cyIcon + 1) / 2;
+
+		// Нарисуйте значок
+		dc.DrawIcon(x, y, m_hIcon);
+	}
+	else
+	{
+		CDialog::OnPaint();
+	}
+}
+
+// Система вызывает эту функцию для получения отображения курсора при перемещении
+//  свернутого окна.
+HCURSOR CProgramDlg::OnQueryDragIcon()
+{
+	return static_cast<HCURSOR>(m_hIcon);
+}
+
+
+
+void CProgramDlg::OnDeltaposSpin1(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
+	// TODO: Add your control notification handler code here
+	*pResult = 0;
+
+	int n;
+	CBitmap pc[12];	   // всего 11 картинок, counter - предельное число 
+	int counter = 11;  // его нужно увеличить до количества картинок,
+					   // сейчас их 4
+
+	CString ff[12];
+	ff[0] = "трикутника";
+	ff[1] = "паралелограму";
+	ff[2] = "трапеції";
+	ff[3] = "круга";
+	ff[4] = "прямокутника";
+	ff[5] = "квадрату";
+	ff[6] = "ромбу";
+	ff[7] = "правильного трикутника";
+	ff[8] = "сегменту";
+	ff[9] = "сектору";
+	ff[10] = "чотирикутника";
+
+	UpdateData(true);
+	
+	N = mspin.GetPos() + pNMUpDown->iDelta;
+	if (N > counter) 
+	{
+		N = 1;
+	}
+	else if(N<1)
+	{
+		N = counter;
+	}
+	
+	n = N;
+
+	UpdateData(false);
+
+	UpdateData(true);
+	RP1=0;
+	RP2=0;
+	RP3=0;
+	S=0;
+	UpdateData(false);
+
+
+	pc[0].LoadBitmapW(IDB_BITMAP1);
+	pc[1].LoadBitmapW(IDB_BITMAP2);
+	pc[2].LoadBitmapW(IDB_BITMAP3);
+	pc[3].LoadBitmapW(IDB_BITMAP4);
+	pc[4].LoadBitmapW(IDB_BITMAP5);
+	pc[5].LoadBitmapW(IDB_BITMAP6);
+	pc[6].LoadBitmapW(IDB_BITMAP7);
+	pc[7].LoadBitmapW(IDB_BITMAP8);
+	pc[8].LoadBitmapW(IDB_BITMAP9);
+	pc[9].LoadBitmapW(IDB_BITMAP10);
+	pc[10].LoadBitmapW(IDB_BITMAP11);
+
+	switch (n)
+	{
+	case 1: 
+	{
+		mpic.SetBitmap(pc[0]);
+		ms = "Обчислимо площу ";
+		ms += ff[n - 1];
+		ms += ".\nВведіть необхідні дані:";
+		EK.SetWindowTextW(ms);
+		PR1.SetWindowTextW(L"сторона a=");
+		PR2.SetWindowTextW(L"висота  h=");
+		PR3.SetWindowTextW(L"");
+		kRP1.SetReadOnly(TRUE);
+		kRP2.SetReadOnly(FALSE);
+		kRP3.SetReadOnly(FALSE);
+		kRP4.SetReadOnly(TRUE);
+		break;
+	}
+	case 2:
+	{
+		mpic.SetBitmap(pc[1]);
+		ms = "Обчислимо площу ";
+		ms += ff[n - 1];
+		ms += ".\nВведіть необхідні дані:";
+		EK.SetWindowTextW(ms);
+		PR1.SetWindowTextW(L"сторона a=");
+		PR2.SetWindowTextW(L"висота  h=");
+		PR3.SetWindowTextW(L"");
+		kRP1.SetReadOnly(TRUE);
+		kRP2.SetReadOnly(FALSE);
+		kRP3.SetReadOnly(FALSE);
+		kRP4.SetReadOnly(TRUE);
+		break;
+	}
+	case 3: 
+	{
+		mpic.SetBitmap(pc[2]);
+		ms = "Обчислимо площу ";
+		ms += ff[n - 1];
+		ms += ".\nВведіть необхідні дані:";
+		EK.SetWindowTextW(ms);
+		PR1.SetWindowTextW(L"сторона a=");
+		PR2.SetWindowTextW(L"сторона b=");
+		PR3.SetWindowTextW(L"висота  h=");
+		kRP1.SetReadOnly(TRUE);
+		kRP2.SetReadOnly(FALSE);
+		kRP3.SetReadOnly(FALSE);
+		kRP4.SetReadOnly(FALSE);
+		break;
+	}
+	case 4: 
+	{
+		mpic.SetBitmap(pc[3]);
+		ms = "Обчислимо площу ";
+		ms += ff[n - 1];
+		ms += ".\nВведіть необхідні дані:";
+		EK.SetWindowTextW(ms);
+		PR1.SetWindowTextW(L"радіус R=");
+		PR2.SetWindowTextW(L"");
+		PR3.SetWindowTextW(L"");
+		kRP1.SetReadOnly(TRUE);
+		kRP3.SetReadOnly(TRUE);
+		kRP4.SetReadOnly(TRUE);
+		break;
+	}
+	case 5: 
+	{
+		mpic.SetBitmap(pc[4]);
+		ms = "Обчислимо площу ";
+		ms += ff[n - 1];
+		ms += ".\nВведіть необхідні дані:";
+		EK.SetWindowTextW(ms);
+		PR1.SetWindowTextW(L"сторона a=");
+		PR2.SetWindowTextW(L"сторона b=");
+		PR3.SetWindowTextW(L"");
+		kRP1.SetReadOnly(TRUE);
+		kRP2.SetReadOnly(FALSE);
+		kRP3.SetReadOnly(FALSE);
+		kRP4.SetReadOnly(TRUE);
+		break;
+	}
+	case 6: 
+	{
+		mpic.SetBitmap(pc[5]);
+		ms = "Обчислимо площу ";
+		ms += ff[n - 1];
+		ms += ".\nВведіть необхідні дані:";
+		EK.SetWindowTextW(ms);
+		PR1.SetWindowTextW(L"сторона a=");
+		PR2.SetWindowTextW(L"");
+		PR3.SetWindowTextW(L"");
+		kRP1.SetReadOnly(TRUE);
+		kRP2.SetReadOnly(FALSE);
+		kRP3.SetReadOnly(TRUE);
+		kRP4.SetReadOnly(TRUE);
+		break;
+	}
+	case 7:
+	{
+		mpic.SetBitmap(pc[6]);
+		ms = "Обчислимо площу ";
+		ms += ff[n - 1];
+		ms += ".\nВведіть необхідні дані:";
+		EK.SetWindowTextW(ms);
+		PR1.SetWindowTextW(L"діагональ d1=");
+		PR2.SetWindowTextW(L"діагональ d2=");
+		PR3.SetWindowTextW(L"");
+		kRP1.SetReadOnly(TRUE);
+		kRP2.SetReadOnly(FALSE);
+		kRP3.SetReadOnly(FALSE);
+		kRP4.SetReadOnly(TRUE);
+		break;
+	}
+	case 8: 
+	{
+		mpic.SetBitmap(pc[7]);
+		ms = "Обчислимо площу ";
+		ms += ff[n - 1];
+		ms += ".\nВведіть необхідні дані:";
+		EK.SetWindowTextW(ms);
+		PR1.SetWindowTextW(L"сторона a=");
+		PR2.SetWindowTextW(L"");
+		PR3.SetWindowTextW(L"");
+		kRP1.SetReadOnly(TRUE);
+		kRP2.SetReadOnly(FALSE);
+		kRP3.SetReadOnly(TRUE);
+		kRP4.SetReadOnly(TRUE);
+		break;
+	}
+	case 9: 
+	{
+		mpic.SetBitmap(pc[8]);
+		ms = "Обчислимо площу ";
+		ms += ff[n - 1];
+		ms += ".\nВведіть необхідні дані:";
+		EK.SetWindowTextW(ms);
+		PR1.SetWindowTextW(L"OA=OB=R=");
+		PR2.SetWindowTextW(L"кут AOB=");
+		PR3.SetWindowTextW(L"");
+		kRP1.SetReadOnly(TRUE);
+		kRP2.SetReadOnly(FALSE);
+		kRP3.SetReadOnly(FALSE);
+		kRP4.SetReadOnly(TRUE);
+		break;
+	}
+	case 10: 
+	{
+		mpic.SetBitmap(pc[9]);
+		ms = "Обчислимо площу ";
+		ms += ff[n - 1];
+		ms += ".\nВведіть необхідні дані:";
+		EK.SetWindowTextW(ms);
+		PR1.SetWindowTextW(L"OA=OB=R=");
+		PR2.SetWindowTextW(L"кут AOB=");
+		PR3.SetWindowTextW(L"");
+		kRP1.SetReadOnly(TRUE);
+		kRP2.SetReadOnly(FALSE);
+		kRP3.SetReadOnly(FALSE);
+		kRP4.SetReadOnly(TRUE);
+		break;
+	}
+	case 11:
+	{
+		mpic.SetBitmap(pc[10]);
+		ms = "Обчислимо площу ";
+		ms += ff[n - 1];
+		ms += ".\nВведіть необхідні дані:";
+		EK.SetWindowTextW(ms);
+		PR1.SetWindowTextW(L"діагональ d1=");
+		PR2.SetWindowTextW(L"діагональ d2=");
+		PR3.SetWindowTextW(L"кут       Фи=");
+		kRP1.SetReadOnly(TRUE);
+		kRP2.SetReadOnly(FALSE);
+		kRP3.SetReadOnly(FALSE);
+		kRP4.SetReadOnly(FALSE);
+		break;
+	}
+	}
+
+}
+
+
+void CProgramDlg::OnCancel()
+{
+	// TODO: Add your specialized code here and/or call the base class
+	if (MessageBox(TEXT("Ви дійсно бажаєте вийти ?"), TEXT("Попередження."), MB_OKCANCEL | MB_ICONQUESTION) == IDOK)
+	{
+		OnOK();
+	};
+}
+
+
+void CProgramDlg::OnBnClickedButton1()
+{
+	// TODO: Add your control notification handler code here
+
+	double a, b, h, d1, d2, fi, r, s;
+	double pr1, pr2, pr3;
+	int n;
+	s = 0;
+	UpdateData(true);
+	pr1 = RP1;
+	pr2 = RP2;
+	pr3 = RP3;
+	n=N;
+	UpdateData(false);
+
+
+	if(n==1)
+	{
+		a = pr1; h = pr2; s = 0.5*a*h;
+	}
+	if (n == 2)
+	{
+		a = pr1; h = pr2; s = a*h;
+	}
+	if (n == 3)
+	{
+		a = pr1; b = pr2; h = pr3;  s = 0.5*(a+b)*h;
+	}
+	if (n == 4)
+	{
+		r = pr1; s = pi*r*r;
+	}
+	if (n == 5)
+	{
+		a = pr1; b = pr2; s = a*b;
+	}
+	if (n == 6)
+	{
+		a = pr1; s =a*a;
+	}
+	if (n == 7)
+	{
+		d1 = pr1; d2 = pr2; s = d1*d2*0.5;
+	}
+	if (n == 8)
+	{
+		a = pr1; s = a*a*sqrt(3)/4.0;
+	}
+	if (n == 9)
+	{
+		r = pr1; fi = pr2; s = pi*r*r*fi / 360.0;
+		fi = fi*pi / 180.0;
+		s = s - 0.5*r*r*sin(fi);
+	}
+	if (n == 10)
+	{
+		r = pr1; fi = pr2; s = pi*r*r*fi/360.0;
+	}
+	if (n == 11)
+	{
+		d1 = pr1; d2 = pr2; fi = pr3*pi/180.0;  
+		s = d1*d2*0.5*sin(fi);
+	}
+
+	UpdateData(true);
+	S = s;
+	UpdateData(false);
+
+}

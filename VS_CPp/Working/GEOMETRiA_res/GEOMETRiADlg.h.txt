@@ -1,0 +1,76 @@
+﻿
+// ProgramDlg.h : файл заголовка
+//
+
+#pragma once
+#include "afxwin.h"
+#include "afxcmn.h"
+
+#define mtime 298
+#define pi 3.14159265358979323846
+
+// диалоговое окно CProgramDlg
+class CProgramDlg : public CDialog
+{
+// Создание
+public:
+	CProgramDlg(CWnd* pParent = NULL);	// стандартный конструктор
+
+// Данные диалогового окна
+#ifdef AFX_DESIGN_TIME
+	enum { IDD = IDD_PROGRAM_DIALOG };
+#endif
+
+	protected:
+	virtual void DoDataExchange(CDataExchange* pDX);	// поддержка DDX/DDV
+
+
+// Реализация
+protected:
+	HICON m_hIcon;
+
+	// Созданные функции схемы сообщений
+	virtual BOOL OnInitDialog();
+	afx_msg void OnPaint();
+	afx_msg HCURSOR OnQueryDragIcon();
+	DECLARE_MESSAGE_MAP()
+
+private:
+
+	HPEN hPenOxy, hOldPen;
+	HBRUSH m, oldm, brush;
+	HPEN pen;
+
+	COLORREF cf, c[25];
+
+	CPen d, oldd;
+	CBitmap pic;
+	CRect rc, w, kw[12];
+
+	CString ms, t, z;
+
+	int Matrix[50][50];
+	int RH, RW, k, i, j, cx, cy, dx, dy;
+	bool fg;
+
+
+public:
+	CStatic mpic;
+	int N;
+	CSpinButtonCtrl mspin;
+	afx_msg void OnDeltaposSpin1(NMHDR *pNMHDR, LRESULT *pResult);
+	virtual void OnCancel();
+	CStatic EK;
+	CStatic PR1;
+	double RP1;
+	double S;
+	CStatic PR2;
+	double RP2;
+	CStatic PR3;
+	double RP3;
+	CEdit kRP1;
+	CEdit kRP2;
+	CEdit kRP3;
+	CEdit kRP4;
+
+};
