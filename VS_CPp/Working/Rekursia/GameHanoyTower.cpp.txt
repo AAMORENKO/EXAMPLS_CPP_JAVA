@@ -1,0 +1,30 @@
+﻿#include <iostream>
+using namespace std;
+
+char a, b, c;
+int piramid(int n, char a, char b, char c);
+int main()
+{
+	setlocale(LC_ALL, "rus");
+	system("color F0");
+	cout << "\n\n\tПрактична робота. Ханойскi башти.\n\n\t";
+
+	a = 'A';
+	b = 'B';
+	c = 'C';
+	piramid(4, a, b, c);
+
+	cout << endl << endl << "\t";
+	system("pause");
+	return 0;
+}
+int piramid(int n, char a, char b, char c)
+{
+	if (n > 0)
+	{
+		piramid(n - 1, a, c, b);
+		printf("\n\t%c ---> %c", a, c);
+		piramid(n - 1, b, a, c);
+	}
+	return 0;
+}

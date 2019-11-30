@@ -1,0 +1,32 @@
+﻿#include <iostream>
+
+using namespace std;
+int max(int x, int y)
+{
+	int res = x;
+	if (x >= y) return res;
+	else res = y;
+	return res;
+}
+
+int main()
+{
+	setlocale(LC_ALL, ".1251");
+	system("color 1F");
+
+	cout << "\n\n\tПошук бiльшого з трьох чисел:\n\n";
+
+	int a, b, c;
+	int m;
+
+	cout << "\n\ta="; cin >> a;
+	cout << "\n\tb="; cin >> b;
+	cout << "\n\tc="; cin >> c;
+
+	m = max(max(a, b), c);
+	cout << "\n\n\tнайбiльше число: " << m;
+
+	cout << "\n\n\t";
+	system("pause");
+	return 0;
+}

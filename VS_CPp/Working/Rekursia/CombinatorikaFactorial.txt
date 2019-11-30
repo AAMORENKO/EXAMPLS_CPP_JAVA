@@ -1,0 +1,28 @@
+﻿#include <iostream>
+using namespace std;
+
+int factorial(int n)
+{
+	int res = 1;
+	if (n == 1) return res;
+	else res *= (n*factorial(n - 1));
+	return res;
+}
+
+int main()
+{
+	setlocale(LC_ALL, "rus");
+	system("color F0");
+	cout << "\n\n\tПрактична робота. Рекурсiя в програмах.\n\n\t";
+
+	int m,k;
+	cout << "Введiть натуральне число N=";
+	cin >> k;
+
+	m = factorial(k);
+	cout << "\n\t" << k << "! = " << m;
+	
+	cout << endl << endl << "\t";
+	system("pause");
+	return 0;
+}

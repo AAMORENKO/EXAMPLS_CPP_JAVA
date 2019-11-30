@@ -1,0 +1,46 @@
+﻿#include <iostream>
+
+using namespace std;
+
+struct H_tower
+{
+	char tower;
+};
+
+H_tower a, b, c;
+
+int puton(H_tower x, H_tower y);
+int piramid(int n, H_tower a, H_tower b, H_tower c);
+int main()
+{
+	setlocale(LC_ALL, "rus");
+	system("color F0");
+	cout << "\n\n\tПрактична робота. Ханойскi башти.\n\n\t";
+
+	a.tower = 'A';
+	b.tower = 'B';
+	c.tower = 'C';
+	piramid(5, a, b, c);
+
+	cout << endl << endl << "\t";
+	system("pause");
+	return 0;
+}
+
+int puton(H_tower x, H_tower y)
+{
+	printf("\n\t%c ---> %c", x, y);
+	return 0;
+}
+
+int piramid(int n, H_tower a, H_tower b, H_tower c)
+{
+	if (n > 0)
+	{
+		piramid(n - 1, a, c, b);
+		puton(a, c);
+		piramid(n - 1, b, a, c);
+	}
+	return
+		0;
+}

@@ -1,0 +1,38 @@
+﻿#include <iostream>
+#include <time.h>
+using namespace std;
+
+struct MTX
+{
+	int aa[1000];
+};
+
+MTX a, b;
+
+MTX write(int m, MTX a)
+{
+
+	for (int k = 0; k < m; k++)
+	{
+		if (k % 10 != 0) printf("%4i", a.aa[k]);
+		else printf("\n%4i", a.aa[k]);
+	}
+	return a;
+}
+
+int main()
+{
+	srand((unsigned)time(NULL));
+	setlocale(LC_ALL, "rus");
+	system("color F0");
+	cout << "\n\n\tПрактична робота. Друкування матрицi.\n\n";
+
+	int n = 99;
+
+	for (int i = 0; i < n; i++) b.aa[i] = rand() * 10 / RAND_MAX;
+	write(n, b);
+
+	cout << endl << endl << "\t";
+	system("pause");
+	return 0;
+}
