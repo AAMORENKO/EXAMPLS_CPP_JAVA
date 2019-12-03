@@ -1,0 +1,70 @@
+#include <iostream>
+
+using namespace std;
+
+const int N = 5;
+int desk[N][N];		// размер доски
+int nstep;			// номер шага
+double p = 0;		// число шагов
+
+static int xy[8][2] = {				// возможные ходы коня
+						{ 1,-2 },
+						{ 1, 2 },
+						{ -1,-2 },
+						{ -1, 2 },
+						{ 2,-1 },
+						{ 2, 1 },
+						{ -2, 1 },
+						{ -2,-1 }
+};
+
+
+int step(int x0, int y0) 
+{
+	p++;
+	if (x0 < 0 || x0 >N - 1 || y0 < 0 || y0 >N - 1) return(0); // выход за пределы доски
+	if (desk[x0][y0] != 0) return(0); // поле уже пройдено
+	desk[x0][y0] = ++nstep; // отметить свободное поле
+	if (nstep == N * N) return(1); // все поля отмечены - успех
+	for (int i = 0; i<8; i++) //i - локальный параметр - номер хода
+	if (step(x0 + xy[i][0], y0 + xy[i][1])) return(1); // поиск успешного хода
+	nstep--; // вернуться на ход назад
+	desk[x0][y0] = 0; // стереть отметку поля
+	return(0); // последовательность не найдена
+}
+
+int Path(int x0, int y0) 
+{
+	for (int i = 0; i<N; i++)
+		for (int j = 0; j<N; j++) desk[i][j] = 0;  // очистка доски
+	nstep = 0; // установить номер шага
+	return step(x0, y0); // вызвать функцию для исходной
+}
+
+
+int main()
+{
+	setlocale(LC_ALL, "rus");
+	system("color F0");
+	cout << "\n\n\tПрактична робота. Тема: ChessHorse.";
+
+
+	int n = Path(0, 0); // нумерация полей - слева и сверху, с нуля
+
+	// вывод результатов
+	cout << "\n\n\tякщо N=" << N << "\n\n";
+	for (int i = 0; i < N; i++)
+	{
+		cout << "\t";
+		for (int j = 0; j < N; j++)
+		{
+			printf("%02d ", desk[i][j]);
+		}
+		cout << "\n";
+	}
+	printf("\n\tRes=%d,Steps=%.0lf", n, p);
+
+	cout << "\n\n\t";
+	system("pause");
+	return 0;
+}
