@@ -1,0 +1,261 @@
+﻿
+// ProgramDlg.cpp : файл реализации
+//
+
+#include "stdafx.h"
+#include "Program.h"
+#include "ProgramDlg.h"
+#include "afxdialogex.h"
+#include <cstring>
+#include <iostream>
+
+using namespace std;
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#endif
+
+
+// диалоговое окно CProgramDlg
+
+
+
+CProgramDlg::CProgramDlg(CWnd* pParent /*=NULL*/)
+	: CDialog(IDD_PROGRAM_DIALOG, pParent)
+	, Z(_T("Я изучаю программирование."))
+{
+	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+}
+
+void CProgramDlg::DoDataExchange(CDataExchange* pDX)
+{
+	CDialog::DoDataExchange(pDX);
+
+	fg = true;
+
+	SetWindowTextW(L"Программа шифрования");
+	DDX_Text(pDX, IDC_EDIT1, Z);
+	DDX_Control(pDX, IDC_E, E);
+
+	E.SetWindowTextW(L"Результат шифрования:");
+
+}
+
+BEGIN_MESSAGE_MAP(CProgramDlg, CDialog)
+	ON_WM_PAINT()
+	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_BUTTON1, &CProgramDlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON2, &CProgramDlg::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_BUTTON3, &CProgramDlg::OnBnClickedButton3)
+END_MESSAGE_MAP()
+
+
+// обработчики сообщений CProgramDlg
+
+BOOL CProgramDlg::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+
+	// Задает значок для этого диалогового окна.  Среда делает это автоматически,
+	//  если главное окно приложения не является диалоговым
+	SetIcon(m_hIcon, TRUE);			// Крупный значок
+	SetIcon(m_hIcon, FALSE);		// Мелкий значок
+
+	// TODO: добавьте дополнительную инициализацию
+
+	return TRUE;  // возврат значения TRUE, если фокус не передан элементу управления
+}
+
+// При добавлении кнопки свертывания в диалоговое окно нужно воспользоваться приведенным ниже кодом,
+//  чтобы нарисовать значок.  Для приложений MFC, использующих модель документов или представлений,
+//  это автоматически выполняется рабочей областью.
+
+void CProgramDlg::OnPaint()
+{
+	if (IsIconic())
+	{
+		CPaintDC dc(this); // контекст устройства для рисования
+
+		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
+
+		// Выравнивание значка по центру клиентского прямоугольника
+		int cxIcon = GetSystemMetrics(SM_CXICON);
+		int cyIcon = GetSystemMetrics(SM_CYICON);
+		CRect rect;
+		GetClientRect(&rect);
+		int x = (rect.Width() - cxIcon + 1) / 2;
+		int y = (rect.Height() - cyIcon + 1) / 2;
+
+		// Нарисуйте значок
+		dc.DrawIcon(x, y, m_hIcon);
+	}
+	else
+	{
+		CDialog::OnPaint();
+	}
+}
+
+// Система вызывает эту функцию для получения отображения курсора при перемещении
+//  свернутого окна.
+HCURSOR CProgramDlg::OnQueryDragIcon()
+{
+	return static_cast<HCURSOR>(m_hIcon);
+}
+
+
+
+void CProgramDlg::OnBnClickedButton1()
+{
+	// TODO: Add your control notification handler code here
+	UpdateData(true);
+	ms = Z;
+	UpdateData(false);
+
+	shf = "\tТаблица кодирования (ru):\n\n\t";
+	
+	n = ms.GetLength();
+	t.Empty();
+
+	A[0] = ' '; B[0] = 0; 
+	A[65] = '.';  B[65] = 65;
+
+	for (k = 1; k <65; k++)
+	{
+	
+		shf += "\""; 
+		shf += wchar_t(k + 1039); 
+		A[k] = wchar_t(k + 1039); B[k] = k;
+		
+		if (k % 11 == 0)
+		{	
+			if(k==9) t.Format(L"\"=0%i\n\t", k);
+			else t.Format(L"\"=%i\n\t", k);
+		}
+		else 
+			if(k<10) t.Format(L"\"=0%i\t", k); 
+			else t.Format(L"\"=%i\t", k);
+		
+		shf += t;
+	}
+
+	shf += "\".\"=65";
+	shf += "\t\" \"=00";
+
+	shf += "\n\n\tРезультат кодирования: \"";
+	shf += ms; 
+	shf += "\"\n\t";
+	
+	shf = "\n";
+
+	for (k = 0; k < n; k++)
+	{
+		cod = (wchar_t)ms[k]-1039;
+
+		if (cod == -1007)
+		{
+			shf += "00";
+		}
+		else
+		if (cod == -993)
+		{
+			shf += "65";
+		}
+		else
+		if (cod > 0 && cod < 10)
+		{
+			t.Format(L"0%i", cod);
+			shf += t;
+		}
+		else
+		{
+			t.Format(L"%i", cod);
+			shf += t;
+		}
+	}
+	
+	E.SetWindowTextW(shf);
+
+	setlocale(LC_ALL, ".1251");
+	CStdioFile otf(L"data1.txt", CFile::modeCreate | CFile::modeWrite);
+	otf.WriteString(shf);
+	otf.Flush();
+	otf.Close();
+
+	ShellExecute(m_hWnd, L"open", L"data1.txt", NULL, NULL, SW_SHOWDEFAULT);
+
+}
+
+
+void CProgramDlg::OnBnClickedButton2()
+{
+	// TODO: Add your control notification handler code here
+	if (MessageBox(TEXT("Ви дійсно бажаєте вийти ?"), TEXT("УВАГА!!!"), MB_OKCANCEL | MB_ICONQUESTION) == IDOK)
+	{
+		OnOK();
+	};
+}
+
+
+void CProgramDlg::OnBnClickedButton3()
+{
+	// TODO: Add your control notification handler code here
+	UpdateData(true);
+	ms = Z;
+	UpdateData(false);
+
+	shf = "\tТаблица кодирования (ru):\n\n\t";
+
+	n = ms.GetLength();
+	t.Empty();
+
+	A[0] = ' '; B[0] = 0;
+	A[65] = '.';  B[65] = 65;
+
+	for (k = 1; k <65; k++)
+	{
+
+		shf += "\"";
+		shf += wchar_t(k + 1039);
+		A[k] = wchar_t(k + 1039); B[k] = k;
+
+		if (k % 11 == 0)
+		{
+			if (k == 9) t.Format(L"\"=0%i\n\t", k);
+			else t.Format(L"\"=%i\n\t", k);
+		}
+		else
+			if (k<10) t.Format(L"\"=0%i\t", k);
+			else t.Format(L"\"=%i\t", k);
+
+			shf += t;
+	}
+
+	shf += "\".\"=65";
+	shf += "\t\" \"=00";
+
+	shf += "\n\n\tРезультат декодирования: \"";
+	shf += ms;
+	shf += "\"\n\t";
+
+	shf = "\n";
+
+	for (k = 0; k < n - 1; k += 2)
+	{
+		t = ms[k];
+		t += ms[k + 1];
+		cod = _wtoi(t);
+		shf += A[cod];
+	}
+
+	E.SetWindowTextW(shf);
+
+	setlocale(LC_ALL, ".1251");
+	CStdioFile otf(L"data2.txt", CFile::modeCreate | CFile::modeWrite);
+	otf.WriteString(shf);
+	otf.Flush();
+	otf.Close();
+
+	ShellExecute(m_hWnd, L"open", L"data2.txt", NULL, NULL, SW_SHOWDEFAULT);
+
+
+}
