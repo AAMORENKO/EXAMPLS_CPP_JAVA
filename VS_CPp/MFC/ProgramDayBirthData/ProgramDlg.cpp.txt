@@ -1,0 +1,355 @@
+﻿#include "stdafx.h"
+#include "Program.h"
+#include "ProgramDlg.h"
+#include "afxdialogex.h"
+
+#include <time.h>  // Добавлены стандартные библиотеки
+#include <fstream>
+#include <iostream>
+#include <string>
+
+using namespace std; // обязательное использование
+
+					 // резервирование таблички с названиями дней недели
+char day[][20] = { "неділля", "понеділок", "вівторок", "середа",
+"четвер", "п`ятниця", "субота" };
+
+
+struct arr {
+	int day;
+	CString stroka;
+};
+
+arr sortarr[200];
+
+
+CProgramDlg::CProgramDlg(CWnd* pParent /*=NULL*/)
+	: CDialog(IDD_PROGRAM_DIALOG, pParent)
+{
+	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	srand((unsigned)time(NULL));
+}
+
+void CProgramDlg::DoDataExchange(CDataExchange* pDX)
+{
+	CDialog::DoDataExchange(pDX);
+
+	// заголовок окошка программы
+	SetWindowTextW(L"Програма нагадування знаменних дат");
+
+	CStdioFile inf;
+	inf.Open(L"data.txt", CFile::modeRead);
+	if (!inf) return; // ERROR readfile
+	p = 0;
+	setlocale(LC_ALL, ".1251");
+	while (inf.ReadString(spisok[p]))
+	{
+		p++;
+	}
+	inf.Close();
+
+	inf.Open(L"HaPPy.txt", CFile::modeRead);
+	if (!inf) return; // ERROR readfile
+	ev = 0;
+	//setlocale(LC_ALL, ".1251");
+	while (inf.ReadString(events[ev]))
+	{
+		ev++;
+	}
+	inf.Close();
+
+
+	for (int k = 0; k < p; k++) {
+		sortarr[k].day = 0;
+		sortarr[k].stroka = "";
+	}
+
+}
+
+BEGIN_MESSAGE_MAP(CProgramDlg, CDialog)
+	ON_WM_PAINT()
+	ON_WM_QUERYDRAGICON()
+	ON_WM_LBUTTONDOWN()
+END_MESSAGE_MAP()
+
+BOOL CProgramDlg::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+
+	SetIcon(m_hIcon, TRUE);			// Крупный значок
+	SetIcon(m_hIcon, FALSE);		// Мелкий значок
+
+									// TODO: добавьте дополнительную инициализацию
+	c[0] = 0xFF00FF;
+	c[1] = 0xFFA500;
+	c[2] = 0xFFFF;
+	c[3] = 0x0C7800;
+	c[4] = 0x005690;
+	c[5] = 0xFFFF0000;
+	c[6] = 0xCC00AA;
+	c[7] = 0xAA5600;
+	c[8] = 0xAAAA;
+	c[9] = 0x00CC00;
+	c[10] = 0x090056;
+	c[11] = 0xF0F0F0;
+
+	fg = true;
+
+	return TRUE;
+}
+
+void CProgramDlg::OnPaint()
+{
+	if (IsIconic())
+	{
+		CPaintDC dc(this); // контекст устройства для рисования
+
+		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
+
+		// Выравнивание значка по центру клиентского прямоугольника
+		int cxIcon = GetSystemMetrics(SM_CXICON);
+		int cyIcon = GetSystemMetrics(SM_CYICON);
+		CRect rect;
+		GetClientRect(&rect);
+		int x = (rect.Width() - cxIcon + 1) / 2;
+		int y = (rect.Height() - cyIcon + 1) / 2;
+
+		// Нарисуйте значок
+		dc.DrawIcon(x, y, m_hIcon);
+	}
+	else
+	{
+		//определяем зону рисования - прямоугольник rc
+		CClientDC dc(this);
+		GetClientRect(&rc);
+		dc.FillSolidRect(&rc, RGB(255, 255, 255)); // фон белого цвета
+
+		x = rc.left;
+		y = rc.top;
+
+		kw[0].left = x1 = x + 710;
+		kw[0].top = y1 = y + 70;
+		kw[0].right = x2 = x1 + 50;
+		kw[0].bottom = y2 = y1 + 50;
+
+		dc.Rectangle(&kw[0]);
+
+		kw[1].left = x1 = x + 710;
+		kw[1].top = y1 = y + 140;
+		kw[1].right = x2 = x1 + 50;
+		kw[1].bottom = y2 = y1 + 50;
+
+		dc.Rectangle(&kw[1]);
+
+
+
+
+		COleDateTime st = COleDateTime::GetCurrentTime(); // узнаем день год и время
+
+		hbk = (HFONT)::GetStockObject(SYSTEM_FONT);
+		hNew = CreateFont(44, 0, 0, 0, FW_NORMAL, 0, 0, 0, ANSI_CHARSET,
+			OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+			DEFAULT_PITCH | FF_DONTCARE, L"Penta");
+		hold = (HFONT)SelectObject(dc, hNew);
+
+		//int d=st.GetDayOfWeek();
+		ms.Empty();
+
+		int parametr = (14 - st.GetMonth()) / 12;
+		int year = st.GetYear() - parametr;
+		int moth = st.GetMonth() + 12 * parametr - 2;
+		// формула дня недели от 0 до 6
+		int res = (7000 + (st.GetDay() + year + year / 4 - year / 100 + year
+			/ 400 + (31 * moth) / 12)) % 7;
+
+		t = "сьогодні: ";
+		t += day[res];
+		ms.Format(L"  %02d.%02d.%d", st.GetDay(), st.GetMonth(), st.GetYear());
+		t += ms;
+
+		x = 150; y = 10;
+		SetTextColor(dc, 0x00973274);
+		// печатаем текст с днем недели
+		dc.TextOutW(x, y, t, t.GetLength());
+
+		x = 20;
+		y += 50;
+
+		hbk = (HFONT)::GetStockObject(SYSTEM_FONT);
+		hNew = CreateFont(26, 0, 0, 0, FW_BOLD, 0, 0, 0, ANSI_CHARSET,
+			OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+			DEFAULT_PITCH | FF_DONTCARE, L"Times New Roman");
+		hold = (HFONT)SelectObject(dc, hNew);
+		SetTextColor(dc, RGB(53, 19, 223));
+		j = 0;
+
+
+		for (k = 0; k < p; k++)
+		{
+
+			t.Empty();
+
+			t = spisok[k][3];
+			temp = *t;
+			firstn = (int)temp - '0';
+
+			t = spisok[k][4];
+			temp = *t;
+			secondn = (int)temp - '0';
+
+			// номер месяца
+			numb = 10 * firstn + secondn;
+
+
+			t = spisok[k][0];
+			temp = *t;
+			fir = (int)temp - '0';
+
+			t = spisok[k][1];
+			temp = *t;
+			sec = (int)temp - '0';
+
+			// дата рождения
+			NNN = 10 * fir + sec;
+
+			if (numb == st.GetMonth()) {
+				sortarr[j].day = NNN;
+				sortarr[j].stroka = spisok[k];
+				//t.Format(L"%i", NNN);
+				//dc.TextOutW(x-10, y + j * 28, t, t.GetLength());
+				//dc.TextOutW(x+20, y + j * 28, spisok[k], spisok[k].GetLength());
+				j++;
+			}
+		}
+
+		//t.Format(L"%i",j);
+		//dc.TextOutW(x - 10, 400, t, t.GetLength());
+
+		int count = j;
+		int swap = 0;
+		int min, n_min;
+
+		for (i = 0; i < count - 1; i++) {
+			min = sortarr[i].day; n_min = i;
+			for (j = i + 1; j < count; j++) {
+				if (min > sortarr[j].day)
+				{
+					min = sortarr[j].day;
+					n_min = j;
+				}
+			}
+
+			swap = sortarr[n_min].day;
+			sortarr[n_min].day = sortarr[i].day;
+			sortarr[i].day = swap;
+
+			t = sortarr[n_min].stroka;
+			sortarr[n_min].stroka = sortarr[i].stroka;
+			sortarr[i].stroka = t;
+
+		}
+
+		dy = 0;
+		for (j = 0; j <count; j++) {
+
+			//t.Format(L"%i", sortarr[j].day);
+			//dc.TextOutW(x-10, y + j * 28, t, t.GetLength());
+			if (sortarr[j].day >= st.GetDay()) {
+				t = sortarr[j].stroka;
+				dc.TextOutW(x + 40, y + dy * 28, t, t.GetLength());
+				dy++;
+			}
+		}
+
+
+
+		j = rand() % 99;
+
+		hbk = (HFONT)::GetStockObject(SYSTEM_FONT);
+		hNew = CreateFont(14, 0, 0, 0, FW_NORMAL, 0, 0, 0, ANSI_CHARSET,
+			OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+			DEFAULT_PITCH | FF_DONTCARE, L"Opium");
+		hold = (HFONT)SelectObject(dc, hNew);
+		SetTextColor(dc, 0x000045FF);
+
+		x = rc.left + 20;
+		y = rc.top + 420;
+		t = events[j];
+		t.Delete(0, 3);
+		dc.TextOutW(x, y, t, t.GetLength());
+
+
+
+		x = rc.left;
+		y = rc.top + 460;
+		x1 = rc.right;
+		y1 = rc.bottom;
+
+		// st.GetDay(), st.GetMonth(), st.GetYear(), st.GetHour(),st.GetMinute(), st.GetSecond()
+		t.Format(L"%02d.%02d.%d   %02d:%02d", st.GetDay(), st.GetMonth(),st.GetYear(), st.GetHour(), st.GetMinute());
+
+
+
+
+
+		// рисуем полоску для вывода времени
+		dc.FillSolidRect(x, y, x1, y1, 0x00DBCCD1);
+		hNew = CreateFont(14, 0, 0, 0, FW_BOLD, 0, 0, 0, ANSI_CHARSET,
+			OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+			DEFAULT_PITCH | FF_DONTCARE, L"Arial");
+		hold = (HFONT)SelectObject(dc, hNew);
+		SetTextColor(dc, 0x0082004B);
+		// выводим мелко в полоску дату и время
+		dc.TextOutW(x + 700, y + 5, t, t.GetLength());
+
+
+
+
+
+		hold = (HFONT)SelectObject(dc, hbk);
+
+		CDialog::OnPaint();
+	}
+}
+
+
+HCURSOR CProgramDlg::OnQueryDragIcon()
+{
+	return static_cast<HCURSOR>(m_hIcon);
+}
+
+
+
+void CProgramDlg::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: Add your message handler code here and/or call default
+
+	CClientDC dc(this);
+	GetClientRect(&rc);
+
+	x = rc.left;
+	y = rc.top;
+
+	kw[0].left = x1 = x + 710;
+	kw[0].top = y1 = y + 70;
+	kw[0].right = x2 = x1 + 50;
+	kw[0].bottom = y2 = y1 + 50;
+
+	kw[1].left = x1 = x + 710;
+	kw[1].top = y1 = y + 140;
+	kw[1].right = x2 = x1 + 50;
+	kw[1].bottom = y2 = y1 + 50;
+
+
+	if (PtInRect(&kw[0], point)) {
+		ShellExecute(m_hWnd, L"open", L"data.txt", NULL, NULL, SW_SHOWDEFAULT);
+	}
+
+	if (PtInRect(&kw[1], point)) {
+		OnOK();
+		WinExec((LPCSTR)"Program.exe", 1);
+	}
+
+
+	CDialog::OnLButtonDown(nFlags, point);
+}
