@@ -1,0 +1,8 @@
+﻿import WinGrLib.WinGrLib;
+
+public class ProgramApp {
+
+    public static void main(String[] args) {
+        new WinGrLib();
+    }
+}

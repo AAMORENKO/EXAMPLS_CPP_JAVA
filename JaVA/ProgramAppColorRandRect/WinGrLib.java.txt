@@ -1,0 +1,111 @@
+﻿package WinGrLib;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+
+import java.awt.event.WindowListener;
+
+public class WinGrLib extends Frame implements WindowListener {
+
+    public void windowOpened(WindowEvent e) {
+    }
+
+    ;
+
+    public void windowClosing(WindowEvent e) {
+        dispose();
+        System.exit(0);
+    }
+
+    ;
+
+    public void windowClosed(WindowEvent e) {
+    }
+
+    ;
+
+    public void windowIconified(WindowEvent e) {
+    }
+
+    ;
+
+    public void windowDeiconified(WindowEvent e) {
+    }
+
+    ;
+
+    public void windowActivated(WindowEvent e) {
+    }
+
+    ;
+
+    public void windowDeactivated(WindowEvent e) {
+    }
+
+    ;
+
+    public void paint(Graphics g) {
+        Dimension rc = getSize();
+        Insets in = getInsets();
+
+        int RH = rc.width;
+        int RW = rc.height;
+
+        int minX = in.left;
+        int maxX = RH - in.right;
+        int minY = in.top;
+        int maxY = RW - in.bottom;
+
+        int cx, cy, dx, dy;
+
+        int x1, y1, x2, y2;
+
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(3.0f));
+
+        cx = Math.abs(maxX - minX) / 2;
+        cy = Math.abs(maxY - minY) / 2;
+        dx = maxX / 10;
+        dy = maxY / 10;
+
+
+        //g.setFont(new Font("Trebuchet Ms", Font.BOLD, 24));
+        //g.setColor(new Color(0x2728CB));
+        //g.drawString(txt, 40, 70);
+        int c1,c2,c3; int wx,hy,n,m;
+        n=18; m=12; // РєРѕР»СЊРѕСЂРѕРІС– РїСЂСЏРјРѕРєСѓС‚РЅРёРєРё
+        wx=maxX/n; hy=maxY/m;
+        for (int i = 0; i <n; i++) {
+            x1=minX+i*wx; x2=minX+(i+1)*wx;
+            for (int j = 0; j <m ; j++) {
+                y1=minY+j*hy; y2=minY+(j+1)*hy;
+                c1= (int) (Math.random()*255);
+                c2= (int) (Math.random()*255);
+                c3= (int) (Math.random()*255);
+                g.setColor(new Color(c1,c2,c3));
+                g.fillRect(x1,y1,x2,y2);
+            }
+        } // СЃРµС‚РєР° РЅР° РїР»Р°РЅС€РµС‚Рµ
+        g.setColor(new Color(0,0,0));
+        for (int i = 0; i <n ; i++) {
+            x1=minX+i*wx; y1=minY; x2=x1; y2=maxY;
+            g.drawLine(x1,y1,x2,y2);
+        }
+        for (int i = 0; i <m ; i++) {
+            x1=minX; y1=minY+i*hy; x2=maxX; y2=y1;
+            g.drawLine(x1,y1,x2,y2);
+        }
+    }
+
+    public WinGrLib() {
+        super("Р“СЂР°С„С–С‡РЅС– РїСЂРёРјС–С‚РёРІРё");
+        addWindowListener(this);
+        setLayout(null);
+        setLocation(120, 100);
+        setSize(800, 600);
+        show();
+    }
+
+
+}
