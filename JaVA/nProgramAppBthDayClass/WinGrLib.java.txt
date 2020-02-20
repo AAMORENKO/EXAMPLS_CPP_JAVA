@@ -1,0 +1,395 @@
+package WinGrLib;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import java.util.*;
+
+import java.awt.event.WindowListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.List;
+
+public class WinGrLib extends Frame implements WindowListener,
+        MouseListener,MouseMotionListener{
+
+    String mouseEvent=null;
+    String mouseMoveEvent=null;
+    String mouseDragEvent;
+    String ctrl;
+    public Point toch=null;
+    public int x,y,w,h;
+
+
+    public void windowOpened(WindowEvent e) {
+    }
+
+    ;
+
+    public void windowClosing(WindowEvent e) {
+        dispose();
+        System.exit(0);
+    }
+
+    ;
+
+    public void windowClosed(WindowEvent e) {
+    }
+
+    ;
+
+    public void windowIconified(WindowEvent e) {
+    }
+
+    ;
+
+    public void windowDeiconified(WindowEvent e) {
+    }
+
+    ;
+
+    public void windowActivated(WindowEvent e) {
+    }
+
+    ;
+
+    public void windowDeactivated(WindowEvent e) {
+    }
+
+    ;
+
+    public void paint(Graphics g) {
+        Dimension rc = getSize();
+        Insets in = getInsets();
+
+        int RH = rc.width;
+        int RW = rc.height;
+
+        int minX = in.left;
+        int maxX = RH - in.right;
+        int minY = in.top;
+        int maxY = RW - in.bottom;
+
+        int cx, cy, dx, dy;
+
+        int x1, y1, x2, y2,x3,y3;
+
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(1.0f));
+
+        cx = Math.abs(maxX - minX) / 2;
+        cy = Math.abs(maxY - minY) / 2;
+        dx = maxX / 10;
+        dy = maxY / 10;
+
+        GregorianCalendar calendar = new GregorianCalendar();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        String txt = "Сьогодні: ";
+        txt += " " + day + " ";
+        switch (month) {
+            case 1:
+                txt += "січня ";
+                break;
+            case 2:
+                txt += "лютого ";
+                break;
+            case 3:
+                txt += "березня ";
+                break;
+            case 4:
+                txt += "квітня ";
+                break;
+            case 5:
+                txt += "травня ";
+                break;
+            case 6:
+                txt += "червня ";
+                break;
+            case 7:
+                txt += "липня ";
+                break;
+            case 8:
+                txt += "серпня ";
+                break;
+            case 9:
+                txt += "вересня ";
+                break;
+            case 10:
+                txt += "жовтня ";
+                break;
+            case 11:
+                txt += "листопада ";
+                break;
+            case 12:
+                txt += "грудня ";
+                break;
+        }
+        txt += year + " року";
+        g.setFont(new Font("Trebuchet Ms", Font.BOLD, 24));
+        g.setColor(new Color(0x2728CB));
+        g.drawString(txt, 40, 70);
+
+        txt = "У цьому місяці відзначають свій день народження:";
+        g.setFont(new Font("Trebuchet Ms", Font.PLAIN, 18));
+        g.setColor(new Color(0x7F14B0));
+        g.drawString(txt, 40, 100);
+
+        List<String> list=new ArrayList<String>();
+        List<String> events=new ArrayList<String>();
+
+        File inf=new File("data.txt");
+        BufferedReader reader=null;
+        int p=0;
+        try {
+            reader=new BufferedReader(new FileReader(inf));
+            String text="";
+            while((text=reader.readLine())!=null){
+                list.add(text);
+                p++;
+            }
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        inf=new File("HaPPy.txt");
+        reader=null;
+        int e=0;
+        try {
+            reader=new BufferedReader(new FileReader(inf));
+            String text="";
+            while((text=reader.readLine())!=null){
+                events.add(text);
+                e++;
+            }
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }finally {
+            try {
+                reader.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+        g.setFont(new Font("Times New Roman", Font.BOLD, 24));
+        g.setColor(new Color(0x1218B0));
+
+        int count=0;
+
+        int[] ndays= new int[200];
+        String[] stroka=new String[200];
+
+        for (int i = 0; i <p ; i++) {
+            char temp1=list.get(i).charAt(3);
+            char temp2=list.get(i).charAt(4);
+            int nomer=0;
+            nomer=(int)temp1-'0';
+            nomer*=10;
+            nomer+=((int)temp2-'0');
+
+
+            char temp3=list.get(i).charAt(0);
+            char temp4=list.get(i).charAt(1);
+            int NNN=0;
+            NNN=(int)temp3-'0';
+            NNN*=10;
+            NNN+=((int)temp4-'0');
+
+            if(month==nomer){
+
+                ndays[count]=NNN;
+                stroka[count]=list.get(i);
+
+                //g.drawString(list.get(i),80,140+count*26);
+                count++;
+            }
+        }
+
+        int swap=0; int min,n_min;
+        for (int i = 0; i <count-1 ; i++) {
+            min=ndays[i];n_min=i;
+            for (int j = i+1; j <count ; j++) {
+                if(min>ndays[j]){
+                    min=ndays[j];
+                    n_min=j;
+                }
+            }
+            swap=ndays[n_min];
+            ndays[n_min]=ndays[i];
+            ndays[i]=swap;
+
+            txt=stroka[n_min];
+            stroka[n_min]=stroka[i];
+            stroka[i]=txt;
+        }
+
+        String [] imenaIM=new String[20];
+        int py=0;
+        for (int i = 0; i <count ; i++) {
+            if(ndays[i]>=day)
+            {
+                g.drawString(stroka[i],80,140+py*26);
+                imenaIM[py]=stroka[i];
+                py++;
+            }
+        }
+
+        int j= (int) (Math.random()*99);
+        g.setFont(new Font("Arial", Font.BOLD, 10));
+        g.setColor(new Color(0xCD1479));
+        txt="";
+        for (int i = 4; i < events.get(j).length(); i++) {
+            txt+=events.get(j).charAt(i);
+        }
+        g.drawString(txt,40,550);
+
+
+
+        File otf=new File("listim.txt");
+        BufferedWriter writer=null;
+
+        try {
+            writer=new BufferedWriter(new FileWriter(otf));
+            for (int i = 0; i <py ; i++) {
+                writer.write(imenaIM[i]);
+                writer.write("\n");
+            }
+            writer.write(txt);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }finally {
+            try {
+                writer.flush();
+                writer.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+        g.setColor(new Color(0x04250C));
+        x1=minX+600;
+        y1=minY+40;
+        g.drawRect(x1,y1,50,50);
+        x2=minX+600;
+        y2=minY+110;
+        g.drawRect(x2,y2,50,50);
+        x3=minX+600;
+        y3=minY+180;
+        g.drawRect(x3,y3,50,50);
+
+        if(toch!=null){
+            x=toch.x;
+            y=toch.y;
+
+            if(x>x1 && x<x1+50 && y>y1 && y<y1+50){
+                g.setColor(new Color(0xCD1479));
+                g.fillRect(x1,y1,50,50);
+
+                try {
+                    Process process=Runtime.getRuntime().exec("cmd /c notepad.exe "+"data.txt");
+                    process.waitFor();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+
+
+            }
+
+            if(x>x2 && x<x2+50 && y>y2 && y<y2+50){
+                g.setColor(new Color(0x1C954A));
+                g.fillRect(x2,y2,50,50);
+            }
+
+            if(x>x3 && x<x3+50 && y>y3 && y<y3+50){
+                g.setColor(new Color(0x2C4FC8));
+                g.fillRect(x3,y3,50,50);
+
+                try {
+                    Process process=Runtime.getRuntime().exec("C:\\Program Files\\Microsoft Office\\Office16\\winword.exe "+"happylist.docx");
+                    process=Runtime.getRuntime().exec("cmd /c notepad.exe "+"listim.txt");
+                    process.waitFor();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+            }
+
+        }
+
+
+    }
+
+    MouseAdapter mouseHandler= new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            super.mouseClicked(e);
+            toch=e.getPoint();
+            repaint();
+        }
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            toch=e.getPoint();
+        }
+    };
+
+    public WinGrLib() {
+        super("Визначні дати");
+        addWindowListener(this);
+
+        addMouseMotionListener(mouseHandler);
+        addMouseListener(mouseHandler);
+
+        setLayout(null);
+        setLocation(120, 100);
+        setSize(1024, 600);
+        show();
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
+    }
+}
