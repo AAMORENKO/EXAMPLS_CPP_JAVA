@@ -1,4 +1,4 @@
-﻿package WinGrLib;
+package WinGrLib;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -6,9 +6,20 @@ import java.io.*;
 import java.util.*;
 
 import java.awt.event.WindowListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
-public class WinGrLib extends Frame implements WindowListener {
+public class WinGrLib extends Frame implements WindowListener,
+MouseListener,MouseMotionListener{
+
+    String mouseEvent=null;
+    String mouseMoveEvent=null;
+    String mouseDragEvent;
+    String ctrl;
+    public Point toch=null;
+    public int x,y,w,h;
+
 
     public void windowOpened(WindowEvent e) {
     }
@@ -61,10 +72,10 @@ public class WinGrLib extends Frame implements WindowListener {
 
         int cx, cy, dx, dy;
 
-        int x1, y1, x2, y2;
+        int x1, y1, x2, y2,x3,y3;
 
         Graphics2D g2 = (Graphics2D) g;
-        g2.setStroke(new BasicStroke(3.0f));
+        g2.setStroke(new BasicStroke(1.0f));
 
         cx = Math.abs(maxX - minX) / 2;
         cy = Math.abs(maxY - minY) / 2;
@@ -222,20 +233,19 @@ public class WinGrLib extends Frame implements WindowListener {
             stroka[i]=txt;
         }
 
+        String [] imenaIM=new String[20];
         int py=0;
         for (int i = 0; i <count ; i++) {
             if(ndays[i]>=day)
             {
                 g.drawString(stroka[i],80,140+py*26);
+                imenaIM[py]=stroka[i];
                 py++;
             }
         }
 
-
-
-
         int j= (int) (Math.random()*99);
-        g.setFont(new Font("Arial", Font.BOLD, 14));
+        g.setFont(new Font("Arial", Font.BOLD, 10));
         g.setColor(new Color(0xCD1479));
         txt="";
         for (int i = 4; i < events.get(j).length(); i++) {
@@ -245,21 +255,140 @@ public class WinGrLib extends Frame implements WindowListener {
 
 
 
+        File otf=new File("listim.txt");
+        BufferedWriter writer=null;
+
+        try {
+            writer=new BufferedWriter(new FileWriter(otf));
+            for (int i = 0; i <py ; i++) {
+                writer.write(imenaIM[i]+"\n");
+            }
+            writer.write(txt);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }finally {
+            try {
+                writer.flush();
+                writer.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+        g.setColor(new Color(0x04250C));
+        x1=minX+600;
+        y1=minY+40;
+        g.drawRect(x1,y1,50,50);
+        x2=minX+600;
+        y2=minY+110;
+        g.drawRect(x2,y2,50,50);
+        x3=minX+600;
+        y3=minY+180;
+        g.drawRect(x3,y3,50,50);
+
+        if(toch!=null){
+            x=toch.x;
+            y=toch.y;
+
+            if(x>x1 && x<x1+50 && y>y1 && y<y1+50){
+                g.setColor(new Color(0xCD1479));
+                g.fillRect(x1,y1,50,50);
+
+                try {
+                    Process process=Runtime.getRuntime().exec("cmd /c notepad.exe "+"data.txt");
+                    process.waitFor();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+
+
+            }
+
+            if(x>x2 && x<x2+50 && y>y2 && y<y2+50){
+                g.setColor(new Color(0x1C954A));
+                g.fillRect(x2,y2,50,50);
+            }
+
+            if(x>x3 && x<x3+50 && y>y3 && y<y3+50){
+                g.setColor(new Color(0x2C4FC8));
+                g.fillRect(x3,y3,50,50);
+
+                try {
+                    Process process=Runtime.getRuntime().exec("C:\\Program Files\\Microsoft Office\\Office16\\winword.exe "+"happylist.docx");
+                    process=Runtime.getRuntime().exec("cmd /c notepad.exe "+"listim.txt");
+                    process.waitFor();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+            }
+
+        }
 
 
     }
 
-
-
-
+    MouseAdapter mouseHandler= new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            super.mouseClicked(e);
+            toch=e.getPoint();
+            repaint();
+        }
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            toch=e.getPoint();
+        }
+    };
 
     public WinGrLib() {
         super("Визначні дати");
         addWindowListener(this);
+
+        addMouseMotionListener(mouseHandler);
+        addMouseListener(mouseHandler);
+
         setLayout(null);
         setLocation(120, 100);
         setSize(1024, 600);
         show();
     }
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
+    }
 }
