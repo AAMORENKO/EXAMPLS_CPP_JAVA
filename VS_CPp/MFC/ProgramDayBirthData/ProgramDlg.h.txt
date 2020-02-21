@@ -1,4 +1,4 @@
-﻿#define mtime 298
+#define mtime 298
 #define pi 3.14159265358979323846
 
 
@@ -6,9 +6,9 @@ class CProgramDlg : public CDialog
 {
 
 public:
-	CProgramDlg(CWnd* pParent = NULL);	
+	CProgramDlg(CWnd* pParent = NULL);
 
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);
 
 	HICON m_hIcon;
@@ -27,17 +27,17 @@ private:
 	CBitmap pic;
 	CRect rc, w, kw[30];
 
-	CString ms, t, z, spisok[200], events[200];
+	CString ms, t, z, spisok[200], events[200], happylist[100];
 
 	int Matrix[50][50];
 	int x1, y1, x2, y2, x3, y3, x4, y4;
-	int RH, RW, k, i, j, p,ev, x, y, cx, cy, dx, dy;
+	int RH, RW, k, i, j, p, ev, hp, x, y, cx, cy, dx, dy;
 
 	wchar_t temp;
 	int numb, NNN;
 	int fir, sec, firstn, secondn;
 
-	CStdioFile inf;
+	CStdioFile inf, otf;
 
 	bool fg;
 
