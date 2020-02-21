@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+#include "stdafx.h"
 #include "Program.h"
 #include "ProgramDlg.h"
 #include "afxdialogex.h"
@@ -133,7 +133,7 @@ void CProgramDlg::OnPaint()
 		kw[0].bottom = y2 = y1 + 50;
 
 		dc.Rectangle(&kw[0]);
-
+		
 		kw[1].left = x1 = x + 710;
 		kw[1].top = y1 = y + 140;
 		kw[1].right = x2 = x1 + 50;
@@ -141,7 +141,12 @@ void CProgramDlg::OnPaint()
 
 		dc.Rectangle(&kw[1]);
 
+		kw[2].left = x1 = x + 710;
+		kw[2].top = y1 = y + 210;
+		kw[2].right = x2 = x1 + 50;
+		kw[2].bottom = y2 = y1 + 50;
 
+		dc.Rectangle(&kw[2]);
 
 
 		COleDateTime st = COleDateTime::GetCurrentTime(); // узнаем день год и время
@@ -250,12 +255,16 @@ void CProgramDlg::OnPaint()
 		}
 
 		dy = 0;
+		hp = 0;
 		for (j = 0; j <count; j++) {
 
 			//t.Format(L"%i", sortarr[j].day);
 			//dc.TextOutW(x-10, y + j * 28, t, t.GetLength());
 			if (sortarr[j].day >= st.GetDay()) {
 				t = sortarr[j].stroka;
+				happylist[hp] = t;
+				happylist[hp] += "\n";
+				hp++;
 				dc.TextOutW(x + 40, y + dy * 28, t, t.GetLength());
 				dy++;
 			}
@@ -275,9 +284,11 @@ void CProgramDlg::OnPaint()
 		x = rc.left + 20;
 		y = rc.top + 420;
 		t = events[j];
-		t.Delete(0, 3);
+		t.Delete(0, 4);
 		dc.TextOutW(x, y, t, t.GetLength());
 
+		happylist[hp] = t;
+		hp++;
 
 
 		x = rc.left;
@@ -286,7 +297,7 @@ void CProgramDlg::OnPaint()
 		y1 = rc.bottom;
 
 		// st.GetDay(), st.GetMonth(), st.GetYear(), st.GetHour(),st.GetMinute(), st.GetSecond()
-		t.Format(L"%02d.%02d.%d   %02d:%02d", st.GetDay(), st.GetMonth(),st.GetYear(), st.GetHour(), st.GetMinute());
+		t.Format(L"%02d.%02d.%d   %02d:%02d", st.GetDay(), st.GetMonth(), st.GetYear(), st.GetHour(), st.GetMinute());
 
 
 
@@ -307,6 +318,19 @@ void CProgramDlg::OnPaint()
 
 
 		hold = (HFONT)SelectObject(dc, hbk);
+
+
+
+		otf.Open(L"happylist.txt", CFile::modeCreate | CFile::modeWrite);
+		if (!otf) return;
+		for (k = 0; k < hp; k++)
+		{
+			otf.WriteString(happylist[k]);
+		}
+		otf.Flush();
+		otf.Close();
+
+
 
 		CDialog::OnPaint();
 	}
@@ -340,9 +364,15 @@ void CProgramDlg::OnLButtonDown(UINT nFlags, CPoint point)
 	kw[1].right = x2 = x1 + 50;
 	kw[1].bottom = y2 = y1 + 50;
 
+	kw[2].left = x1 = x + 710;
+	kw[2].top = y1 = y + 210;
+	kw[2].right = x2 = x1 + 50;
+	kw[2].bottom = y2 = y1 + 50;
+
 
 	if (PtInRect(&kw[0], point)) {
 		ShellExecute(m_hWnd, L"open", L"data.txt", NULL, NULL, SW_SHOWDEFAULT);
+		dc.FillSolidRect(&kw[0], RGB(80, 0, 199));
 	}
 
 	if (PtInRect(&kw[1], point)) {
@@ -350,6 +380,11 @@ void CProgramDlg::OnLButtonDown(UINT nFlags, CPoint point)
 		WinExec((LPCSTR)"Program.exe", 1);
 	}
 
+	if (PtInRect(&kw[2], point)) {
+		ShellExecute(m_hWnd, L"open", L"happylist.txt", NULL, NULL, SW_SHOWDEFAULT);
+		ShellExecute(m_hWnd, L"open", L"happylist.docx", NULL, NULL, SW_SHOWDEFAULT);
+		dc.FillSolidRect(&kw[2], RGB(228, 0, 156));
+	}
 
 	CDialog::OnLButtonDown(nFlags, point);
 }
