@@ -1,0 +1,50 @@
+﻿Установка Intellij Idea Ultimate
+https://youtu.be/XzbyP2kKx7M
+
+IntelliJ IDEA для новичков: советы и секреты
+https://youtu.be/mcvnjaLqVWQ
+
+Горячие клавиши в Intellij IDEA (1часть) с подписью кнопок внизу
+https://youtu.be/gZzaOzkUKoY
+https://youtu.be/vQksLDvacTo <Ctrl>+<J>
+
+Эффективная работа с кодом в IntelliJ IDEA
+https://youtu.be/tpv5n2jWHlw
+https://youtu.be/y5O8dIW-ROg
+
+Настройка Intellij IDEA Java - 3 совета как пользоваться
+https://youtu.be/-e-SG4Wvjzo
+
+
+Приклади програм від АА https://github.com/AAMORENKO
+
+
+
+P.S. How to Fix error of Unable to parse template Class in Android Studio
+
+0)
+
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end #parse("File Header.java") public class ${NAME} { }
+
+Unable to parse template class error in android studio...
+
+##copy and paste in setting/editor/file and code templates/class
+
+1)
+
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end #parse("File Header.java") public class ${NAME} { }
+
+
+2)
+
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "" &&    ${Is_your_class_abstract_Reply_yes_no} == "no")
+package ${PACKAGE_NAME};
+#parse("File Header.java") public class ${NAME} {
+}
+#elseif (${Is_your_class_abstract_Reply_yes_no} == "yes")
+#parse("File Header.java") public abstract class ${NAME} {
+}
+#end
+
+
+https://stackoverflow.com/questions/45497266/unable-to-parse-template-class
