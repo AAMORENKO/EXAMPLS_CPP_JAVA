@@ -1,0 +1,234 @@
+﻿private:
+
+	CRect rc, w, kw[20];
+	int x, y, x1, y1, x2, y2, x3, y3,x4,y4;
+	int k, i, j, p, n;
+	int maxX, minX, maxY, minY;
+	int RW, RH, cx, cy, dx, dy;
+	CString ms, t, z;
+
+	COLORREF c, cf, c1, c2, pp[20];
+	HPEN pno, opn;
+	HBRUSH m, oldm;
+	HFONT hold, hNew, hbk;
+
+	bool fg;
+
+----------------------------------------------
+
+#include <time.h>
+using namespace std;
+
+----------------------------------------------
+
+srand((unsigned)time(NULL));
+
+SetWindowTextW(L"Різнокольорові квадрати");
+
+----------------------------------------------
+
+	pp[6] = 0x000000FF;
+	pp[5] = 0x000088FF;
+	pp[4] = 0x0000DDFF;
+	pp[3] = 0x000D820D;
+	pp[2] = 0x00FF9D3A;
+	pp[1] = 0x00945823;
+	pp[0] = 0x007A1B50;
+
+----------------------------------------------
+
+		CClientDC dc(this);
+		GetClientRect(&rc);
+
+		c1 = 0x0000DDFF;
+		c2 = 0x00C4563D;
+
+		cf = RGB(255, 255, 255);
+
+		dc.FillSolidRect(&rc, cf);
+
+		x1 = rc.left; x2 = rc.right;
+		y1 = rc.top;  y2 = rc.bottom;
+
+		RH = x2 - x1;
+		RW = y2 - y1;
+
+		n = 8; p = 6;
+		dx = RH / n;
+		dy = RW / p;
+
+		j = 0;
+		for (k = 0; k < n; k++)
+		{
+			for (i = 0; i < p; i++)
+			{
+				if (j % 2 == 0) c = c1; else c = c2;
+				j++;
+				x = x1 + k * dx; x3 = x1 + (k + 1)*dx;
+				y = y1 + i * dy; y3 = y1 + (i + 1)*dy;
+				dc.FillSolidRect(x, y, x3, y3, c);
+			}
+			j = k - 1;
+		}
+
+		c = RGB(0, 0, 0);
+		pno = CreatePen(PS_SOLID, 1, c);
+		opn = (HPEN)SelectObject(dc, pno);
+		m = CreateSolidBrush(c);
+		oldm = (HBRUSH)SelectObject(dc, m);
+
+		for (k = 0; k < n; k++)
+		{
+			x = x1 + k * dx; y = y1;
+			dc.MoveTo(x, y);
+			dc.LineTo(x, y2);
+		}
+
+		for (k = 0; k < p; k++)
+		{
+			x = x1; y = y1 + k * dy;
+			dc.MoveTo(x, y);
+			dc.LineTo(x2, y);
+		}
+
+		DeleteObject(pno);
+		SelectObject(dc, opn);
+		SelectObject(dc, oldm);
+		DeleteObject(m);
+
+----------------------------------------------
+	CClientDC dc(this);
+	GetClientRect(&rc);
+
+	c1 = 0x0000DDFF;
+	c2 = 0x00C4563D;
+
+	cf = RGB(255, 255, 255);
+
+	dc.FillSolidRect(&rc, cf);
+
+	minX=x1 = rc.left; maxX=x2 = rc.right;
+	minY=y1 = rc.top;  maxY=y2 = rc.bottom;
+
+	RH = x2 - x1;
+	RW = y2 - y1;
+
+	n = 8; p = 6;
+	dx = RH / n;
+	dy = RW / p;
+
+	for (i = 0; i < 7; i++)
+	{
+		m = CreateSolidBrush(pp[6 - i]);
+		oldm = (HBRUSH)SelectObject(dc, m);
+		pno = CreatePen(PS_SOLID, 2, pp[6 - i]);
+		opn = (HPEN)SelectObject(dc, pno);
+		w.left = minX + 150 + i * dx / 3;
+		w.right = minX + 750 - i * dx / 3;
+		w.top = minY + 20 + i * dy / 2.5;
+		w.bottom = minY + 650 - i * dy / 2.5;
+		dc.Rectangle(&w);
+
+	}
+	
+	SelectObject(dc, oldm);
+	DeleteObject(m);
+	SelectObject(dc, opn);
+	DeleteObject(pno);
+
+----------------------------------------------
+
+	m = CreateSolidBrush(pp[ i]);
+	oldm = (HBRUSH)SelectObject(dc, m);
+	pno = CreatePen(PS_SOLID, 2, pp[ i]);
+	opn = (HPEN)SelectObject(dc, pno);
+	w.left = minX + 150 + i * dx / 3;
+	w.right = minX + 750 - i * dx / 3;
+	w.top = minY + 20 + i * dy / 2.5;
+	w.bottom = minY + 650 - i * dy / 2.5;
+	dc.Ellipse(&w);
+
+----------------------------------------------
+
+	m = CreateSolidBrush(pp[i]);
+	oldm = (HBRUSH)SelectObject(dc, m);
+	pno = CreatePen(PS_SOLID, 2, pp[i]);
+	opn = (HPEN)SelectObject(dc, pno);
+	w.left = minX + 150 + i * dx / 3;
+	w.right = minX + 750 - i * dx / 3;
+	w.top = maxY - 50 - i * dy/1.5 ;
+	w.bottom = maxY - 50 - (i+1) * dy/1.5 ;		
+	w.DeflateRect(1, 1);
+	dc.RoundRect(&w, CPoint(21, 21));
+
+----------------------------------------------
+	CClientDC dc(this);
+	GetClientRect(&rc);
+
+	c1 = 0x0000DDFF;
+	c2 = 0x00C4563D;
+
+	cf = RGB(255, 255, 255);
+
+	dc.FillSolidRect(&rc, cf);
+
+	x1 = rc.left; x2 = rc.right;
+	y1 = rc.top;  y2 = rc.bottom;
+
+	RH = x2 - x1;
+	RW = y2 - y1;
+
+	n = 8; p = 6;
+	dx = RH / n;
+	dy = RW / p;
+
+	for (k = 0; k < n; k++)
+	{
+		for (i = 0; i < p; i++)
+		{
+			c = RGB(rand() * 255, rand() * 255, rand() * 255);
+			x = x1 + k * dx; x3 = x1 + (k + 1)*dx;
+			y = y1 + i * dy; y3 = y1 + (i + 1)*dy;
+			dc.FillSolidRect(x, y, x3, y3, c);
+		}
+	}
+
+	c = RGB(0, 0, 0);
+	pno = CreatePen(PS_SOLID, 1, c);
+	opn = (HPEN)SelectObject(dc, pno);
+
+	for (k = 0; k < n; k++)
+	{
+		x = x1 + k * dx; y = y1;
+		dc.MoveTo(x, y);
+		dc.LineTo(x, y2);
+	}
+
+	for (k = 0; k < p; k++)
+	{
+		x = x1; y = y1 + k * dy;
+		dc.MoveTo(x, y);
+		dc.LineTo(x2, y);
+	}
+
+
+	DeleteObject(pno);
+	SelectObject(dc, opn);
+----------------------------------------------
+
+	hbk = (HFONT)::GetStockObject(SYSTEM_FONT);
+	hNew = CreateFont(55, 0, 0, 0, FW_NORMAL, 0, 0, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Penta");
+
+	t = "Это мой домик";
+
+	hold = (HFONT)SelectObject(dc, hNew);
+	SetTextColor(dc, c[3]);
+	dc.TextOutW(400, 320, t, t.GetLength());
+	hold = (HFONT)SelectObject(dc, hbk);
+
+
+----------------------------------------------
+
+	if (MessageBox(TEXT("Ви дійсно бажаєте вийти ?"), TEXT("УВАГА!!!"), MB_OKCANCEL | MB_ICONQUESTION) == IDOK) OnOK();
+
+----------------------------------------------
