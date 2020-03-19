@@ -1,0 +1,121 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <time.h>
+
+using namespace std;
+
+
+int k, i, j, n, m, p;
+string ms, t;
+//float a, b, c, d, x, y;
+int TAB[1000];
+
+int main()
+{
+	srand((unsigned)time(NULL));
+	setlocale(LC_ALL, "rus");
+	system("color 0F");
+	cout << "\n\n\tПрактична робота. Тема: Формування таблиць. Пошук в таблицях.\n\n";
+
+	n = 12;
+	m = 172;
+
+	for (k = 0; k < n; k++) {
+		// найбільший ріст 181 cm
+		TAB[k] = 145 + rand()%(182 - 145);
+	}
+
+	// дільники числа 12: 1,2,3,4,6,12
+
+	for (k = 0; k < n; k++)
+	{
+		printf(" A[%2i]=%4i", k + 1, TAB[k]);
+	}
+
+	int min, sw, num;
+	for (k = 0; k < n - 1; k++)
+	{
+		min = TAB[k]; num = k;
+		for (i = k + 1; i < n; i++)
+		{
+			if (min > TAB[i])
+			{
+				min = TAB[i];
+				num = i;
+			}
+		}
+		sw = TAB[k];
+		TAB[k] = min;
+		TAB[num] = sw;
+	}
+
+
+
+	cout << "\n\n";
+	for (k = 0; k < n; k++)
+	{
+		printf("\tA[%2i]=%4i\n", k + 1, TAB[k]);
+	}
+
+	cout << "\n\n";
+	j = 2; p = 6; int g = 0;
+	for (k = 0; k <j; k++)
+	{
+		cout << "\t";
+		for (i = 0; i < p; i++)
+		{
+			printf("A[%2i]=%4i\t", g + 1, TAB[g]);
+			g++;
+		}
+		cout << "\n";
+	}
+
+	cout << "\n\n";
+	j = 6; p = 2; g = 0;
+	for (k = 0; k <j; k++)
+	{
+		cout << "\t";
+		for (i = 0; i < p; i++)
+		{
+			printf("A[%2i]=%4i\t", g + 1, TAB[g]);
+			g++;
+		}
+		cout << "\n";
+	}
+
+	cout << "\n\n";
+	j = 3; p = 4; g = 0;
+	for (k = 0; k <j; k++)
+	{
+		cout << "\t";
+		for (i = 0; i < p; i++)
+		{
+			printf("A[%2i]=%4i\t", g + 1, TAB[g]);
+			g++;
+		}
+		cout << "\n";
+	}
+
+	cout << "\n\n";
+	j = 4; p = 3; g = 0;
+	for (k = 0; k <j; k++)
+	{
+		cout << "\t";
+		for (i = 0; i < p; i++)
+		{
+			printf("A[%2i]=%4i\t", g + 1, TAB[g]);
+			g++;
+		}
+		cout << "\n";
+	}
+
+	cout << "\n\n\tПошук тих, хто має зрiст бiльше за ";
+	cout << m << " см : ";
+
+	//код пошуку кількості
+
+	cout << endl << endl << "\t";
+	system("pause");
+	return 0;
+}
