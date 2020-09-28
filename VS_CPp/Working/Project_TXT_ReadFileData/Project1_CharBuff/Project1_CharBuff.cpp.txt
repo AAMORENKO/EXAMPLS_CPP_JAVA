@@ -1,0 +1,36 @@
+﻿#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+fstream inf;
+char buf;
+int k, n;
+
+
+int main()
+{
+	setlocale(LC_ALL, ".1251");
+	system("color 1F");
+	cout << "\n\n\tТЕМА: Обчислення кiлькостi iнформацiї у файлi.\n\n";
+
+	k = n = 0;
+	inf.open("data.txt", ios::in);
+	if (!inf) return 0;
+
+	while (!inf.eof())
+	{
+		inf >> buf;
+		cout << buf;
+		k++;
+	}
+
+	inf.close();
+
+	cout << "\n\n\tКiлькiсть зчитаних знакiв: " << k-1;
+	cout << "\n\n\tКiлькiсть iнформацiї: " << (double)(k-1) / 1024 << " Кбайт";
+
+	cout << "\n\n\t";
+	system("pause");
+	return 0;
+}
