@@ -60,7 +60,7 @@ public class GrLibWindow extends Frame implements WindowListener {
         dy = maxY / ndrob;
 
         g.setColor(new Color(0x00D30094));
-        txt = "РћР±СЂРѕР±РєР° РґР°РЅРёС… РІ РіСЂР°С„С–С‡РЅРѕРјСѓ СЂРµР¶РёРјС–: ";
+        txt = "Практична робота. Обробка даних в таблицях: ";
         g.setFont(new Font("Trebuchet Ms", Font.BOLD, 24));
 
         //int nf = g.getFontMetrics().stringWidth(txt);
@@ -77,7 +77,7 @@ public class GrLibWindow extends Frame implements WindowListener {
     }
 
     public GrLibWindow() {
-        super("РџСЂР°РєС‚РёС‡РЅР° СЂРѕР±РѕС‚Р°.");
+        super("Графічний режим мови JaVA.");
         addWindowListener(this);
         setLayout(null);
         setLocation(80, 80);
