@@ -1,0 +1,56 @@
+﻿#include <iostream>
+#include <fstream>
+#include <string>
+#include <time.h>
+
+using namespace std;
+
+fstream inf, otf;
+int k, i, j, p, n, m, sum;
+int A[10][10];
+string ms,t;
+
+int main()
+{
+	srand((unsigned)time(NULL));
+	setlocale(LC_ALL, "rus");
+	system("color 1F");
+	cout << "\n\tПрактическая работа. ТЕМА: Обробка даних в таблицях. \n";
+
+	ms = t = "";
+
+	otf.open("data.txt", ios::out);
+	for ( i = 0; i < 10; i++)
+	{
+		for (k = 0; k < 10; k++)
+		{
+			A[i][k] = rand() % 99;
+			otf << A[i][k] << "\n";
+		}
+	}
+	otf.flush();
+	otf.close();
+
+	if (otf) cout << "\n\tФайл data.txt створено";
+	else return 0;
+
+
+	cout << "\n\n\tТаблиця А[10[10], дані зчитано з файлу:\n\n";
+	inf.open("data.txt", ios::in);
+	if (!inf) return 0;
+	for (i = 0; i < 10; i++)
+	{
+		for (k = 0; k < 10; k++)
+		{
+			inf>>A[i][k];
+			cout << "\t"<< A[i][k];
+		}
+		cout << "\n";
+	}
+	inf.close();
+	
+
+	cout << endl << endl << "\t";
+	system("pause");
+	return 0;
+}
