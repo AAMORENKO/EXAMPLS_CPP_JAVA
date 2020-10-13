@@ -1,0 +1,116 @@
+package GrLibWindow;
+
+import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
+public class GrLibWindow  extends Frame implements WindowListener {
+    public void windowOpened(WindowEvent e) {
+    }
+    ;
+    public void windowClosing(WindowEvent e) {
+        dispose();
+        System.exit(0);
+    }
+    ;
+    public void windowClosed(WindowEvent e) {
+    }
+    ;
+    public void windowIconified(WindowEvent e) {
+    }
+    ;
+    public void windowDeiconified(WindowEvent e) {
+    }
+    ;
+
+    public void windowActivated(WindowEvent e) {
+    }
+    ;
+
+    public void windowDeactivated(WindowEvent e) {
+    }
+    ;
+
+
+    public void paint(Graphics g) {
+
+        Dimension rc = getSize();
+        Insets in = getInsets();
+
+        int RH = rc.width;
+        int RW = rc.height;
+
+        int minX = in.left;
+        int maxX = RH - in.right;
+        int minY = in.top;
+        int maxY = RW - in.bottom;
+
+        int cx, cy, dx, dy;
+        int x1, y1, x2, y2, k, i, j, n, m;
+
+        String txt, text, ms;
+
+        int ndrob=12;
+        float wt=1.5f;
+
+        cx = Math.abs(maxX - minX) / 2;
+        cy = Math.abs(maxY - minY) / 2;
+        dx = maxX / ndrob;
+        dy = maxY / ndrob;
+
+        g.setColor(new Color(0x00D30094));
+        txt = "Практична робота. Обробка даних в таблицях: ";
+        g.setFont(new Font("Trebuchet Ms", Font.BOLD, 24));
+
+        //int nf = g.getFontMetrics().stringWidth(txt);
+        g.drawString(txt, 50, 80);
+
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(wt));
+        g.setColor(new Color(0x7221FF));
+
+
+        // TO DO THIS CODE
+        g.drawLine(50,89,590,89);
+
+        x1=minX+10; x2=maxX-10;
+        y1=minY+75; y2=maxY-10;
+        dx=(x2-x1)/ndrob;
+        dy=(y2-y1)/ndrob;
+        g.setColor(new Color(0xEAD8D8));
+        g.drawRect(x1,y1,x2-x1,y2-y1);
+
+        g.setColor(new Color(0x392EB5));
+
+        for ( i = 0; i <=ndrob ; i++) {
+            g.drawLine(x1,y1+i*dy,x2,y1+i*dy);
+        }
+
+        for ( i = 0; i <=ndrob ; i++) {
+            g.drawLine(x1+i*dx,y1,x1+i*dx,y2);
+        }
+
+
+        g.setColor(new Color(0x4AA827));
+        m=1;
+        for ( k = 0; k <12 ; k++) {
+            for ( j = 0; j <12; j++) {
+                txt="";
+                txt+=m;
+                g.drawString(txt, x1+15+j*dx, y1+30+k*dy);
+                m++;
+            }
+        }
+
+    }
+
+    public GrLibWindow() {
+        super("Графічний режим мови JaVA.");
+        addWindowListener(this);
+        setLayout(null);
+        setLocation(80, 80);
+        setSize(800, 600);
+        show();
+    }
+
+}

@@ -1,0 +1,8 @@
+import GrLibWindow.GrLibWindow;
+
+public class ProjectAppTabDlg {
+    public static void main(String[] args) {
+        new GrLibWindow();
+    }
+
+}
