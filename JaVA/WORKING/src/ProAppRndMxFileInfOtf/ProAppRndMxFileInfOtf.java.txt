@@ -1,0 +1,52 @@
+import GrhWinLib.GrhWinLib;
+
+import javax.swing.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Random;
+
+public class ProAppRndMxFileInfOtf {
+
+    public static void main(String[] args) throws IOException {
+
+        int n=12;
+        n=Integer.parseInt(JOptionPane.showInputDialog("Введіть кількість строк таблиці A[n][n]  n="));
+        if(n>12) n=12;
+        if(n<2) n=2;
+        int [][] Mx=new int[n][n];
+        for (int i = 0; i <n ; i++) {
+            for (int j = 0; j <n ; j++) {
+                Mx[i][j]=rnd(10,99);
+            }
+        }
+
+        File otf=new File("data.txt");
+        otf.createNewFile();
+        FileWriter writer=new FileWriter(otf);
+
+        String txt="";
+        txt+=n;
+        for (int i = 0; i <n ; i++) {
+            for (int j = 0; j <n ; j++) {
+                txt+="\n";
+                txt+=Mx[i][j];
+            }
+        }
+        writer.write(txt);
+        writer.flush();
+        writer.close();
+
+        JOptionPane.showMessageDialog(null, "Файл data.txt створено.");
+
+        new GrhWinLib();
+    }
+
+    private static int rnd(int min, int max) {
+
+        return (new Random()).ints(min,max).iterator().nextInt();
+
+    }
+
+
+}
