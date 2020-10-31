@@ -1,0 +1,42 @@
+﻿#include <iostream>
+#include <time.h>
+
+using namespace std; 
+
+
+int main()
+{
+	srand((unsigned)time(NULL));
+	setlocale(LC_ALL, ".1251");
+	system("color 1F");
+
+	const int n=29;
+	
+	cout << "\n N="<<n;
+	cout << ".\tОтже таблиця Q["<<n<<"]:\n\n";
+
+	int array[n];
+
+	
+	for (int k =0; k < n; k++)
+	{
+		array[k] =10+ rand() % 89;
+		printf("%3i",array[k]);
+	}
+
+	cout << "\n\n";
+	bool ok = true;
+
+	for (int i = 0; i < n-1; i++) {
+		for (int j = i + 1; j < n; j++) {
+			if (array[i] == array[j]) ok = false;
+		}
+	}
+
+	if(ok) cout << "\tвсi елементи масиву цiлих двозначних чисел є унiкальними";
+	else cout << "\tелементи масиву не є унiкальними";
+
+	cout << "\n\n\t";
+	system("pause");
+	return 0;
+}

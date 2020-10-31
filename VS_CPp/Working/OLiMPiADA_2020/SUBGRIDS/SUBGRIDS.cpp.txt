@@ -1,0 +1,55 @@
+﻿#include <iostream>
+#include <time.h>
+
+using namespace std;
+
+
+int main()
+{
+	srand((unsigned)time(NULL));
+	setlocale(LC_ALL, ".1251");
+	system("color 1F");
+
+	const int n = 5;
+
+	cout << "\n N=" << n;
+	cout << ".\tОтже таблиця Q[" << n << "]:\n\n";
+
+	int S[n][n];
+
+
+	for (int k = 0; k < n; k++)
+	{
+		cout << "\t";
+		for (int i = 0; i < n; i++)
+		{
+			S[k][i] = rand() % 2;
+			printf("%3i", S[k][i]);
+		}
+		cout << "\n";
+	}
+
+
+	cout << "\n\tЗнайдено ";
+
+	int count = 0; int a = 0;
+	int b; 
+	while (a <= n - 1)
+	{
+		b = a + 1;
+		for (int i = 0; i < n; i++) 
+		{
+			for (b = a+1; b < n; b++)
+			{
+				if (S[a][i] == 1 && S[b][i] == 1) count++;
+			}
+		}
+		a++;
+	}
+
+	cout << count << " сiток з темними кутами";
+
+	cout << "\n\n\t";
+	system("pause");
+	return 0;
+}

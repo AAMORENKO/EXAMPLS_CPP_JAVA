@@ -1,0 +1,39 @@
+﻿#include <iostream>
+
+using namespace std;
+
+__int64 fn(int x);
+
+int main()
+{
+	setlocale(LC_ALL, ".1251");
+	system("color 1F");
+
+	int n = 20;
+	int q = 0;
+
+	for (int i = 0; i <= n; i++)
+	{
+		cout << "\n N=" << i;
+		cout << ".";
+		for (int k = 0; k <=i; k++)
+		{
+			q = fn(i) / (fn(k)*fn(i - k));
+			cout << "\t" << q;
+		}
+		cout <<"\n";
+	}
+
+	cout << "\n\n\t";
+	system("pause");
+	return 0;
+}
+
+__int64 fn(int x)
+{
+	__int64 res = x;
+	if (res == 0) res = 1;
+	if (res == 1) return res;
+	res = fn(x - 1)*x;
+	return res;
+}

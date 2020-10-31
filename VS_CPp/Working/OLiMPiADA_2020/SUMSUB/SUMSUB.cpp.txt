@@ -1,0 +1,57 @@
+﻿#include <iostream>
+#include <time.h>
+
+using namespace std;
+
+int max(int x, int y);
+
+int main()
+{
+	srand((unsigned)time(NULL));
+	setlocale(LC_ALL, ".1251");
+	system("color 1F");
+
+	const int n = 19;
+
+	cout << "\n N=" << n;
+	cout << ".\tОтже таблиця C[" << n << "]:\n\n";
+
+	int array[n];
+
+	for (int k = 0; k < n; k++)
+	{	
+		int p = -1;
+		for (int j = 1; j < rand() % n; j++) p *= (-1);
+		array[k] = rand() % 10;
+		array[k] *= p;
+		printf("%3i", array[k]);
+	}
+
+	cout << "\n\n";
+	
+	int best = 0;
+	for (int a = 0; a < n; a++) {
+		for (int b = a; b < n; b++) {
+			int sum = 0;
+			cout << "\t";
+			for (int k = a; k <= b; k++) {
+				sum += array[k];
+				printf("%3i", array[k]);
+			}
+			best = max(best, sum);
+			cout << " = "<<sum<<"\n";
+		}
+	}
+	cout <<"\n\n\tНайкраща сума: "<<best;
+ 
+	cout << "\n\n\t";
+	system("pause");
+	return 0;
+}
+
+int max(int x, int y)
+{
+	int res = x;
+	if (y > x) res = y;
+	return res;
+}

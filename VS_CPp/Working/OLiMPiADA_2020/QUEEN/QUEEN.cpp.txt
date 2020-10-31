@@ -1,0 +1,36 @@
+﻿#include <iostream>
+
+using namespace std;
+
+int qn(int x);
+
+int main()
+{
+	setlocale(LC_ALL, ".1251");
+	system("color 1F");
+
+	int n = 10;
+	int q = 0;
+
+	for (int i = 1; i <= n; i++)
+	{
+		cout << "\n N=" << i;
+		cout << ".\tОтже кiлькiсть способiв розставити двох ферзiв на  дошцi " << i << "x" << i << ": ";
+
+		q = qn(i);
+
+		cout << q << "\n";
+	}
+
+	cout << "\n\n\t";
+	system("pause");
+	return 0;
+}
+
+int qn(int x)
+{
+	int res = x;
+	if (res == 0) return res;
+	res = qn(x - 1) + 2 * (x - 1)*(x - 1)*(x - 2);
+	return res;
+}
