@@ -1,0 +1,50 @@
+﻿
+// RegularPolygonsDlg.h : header file
+//
+
+#pragma once
+#include "afxcmn.h"
+
+#define PI 3.15115268
+
+// CRegularPolygonsDlg dialog
+class CRegularPolygonsDlg : public CDialog
+{
+// Construction
+public:
+	CRegularPolygonsDlg(CWnd* pParent = NULL);	// standard constructor
+
+// Dialog Data
+#ifdef AFX_DESIGN_TIME
+	enum { IDD = IDD_REGULARPOLYGONS_DIALOG };
+#endif
+
+	protected:
+	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
+
+
+// Implementation
+protected:
+	HICON m_hIcon;
+
+	// Generated message map functions
+	virtual BOOL OnInitDialog();
+	afx_msg void OnPaint();
+	afx_msg HCURSOR OnQueryDragIcon();
+	DECLARE_MESSAGE_MAP()
+public:
+	int N;
+	CSpinButtonCtrl mspin;
+	afx_msg void OnDeltaposSpin1(NMHDR *pNMHDR, LRESULT *pResult);
+
+
+private:
+	CRect rc, rt;
+	COLORREF kf, cf;
+	int i, j, k, n, m;
+	double x, y, f;
+
+	HPEN hS, hN;
+
+
+};

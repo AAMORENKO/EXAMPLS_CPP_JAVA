@@ -1,0 +1,154 @@
+﻿
+// RegularPolygonsDlg.cpp : implementation file
+//
+
+#include "stdafx.h"
+#include "RegularPolygons.h"
+#include "RegularPolygonsDlg.h"
+#include "afxdialogex.h"
+
+#include <cmath>
+
+using namespace std;
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#endif
+
+
+// CRegularPolygonsDlg dialog
+
+
+
+CRegularPolygonsDlg::CRegularPolygonsDlg(CWnd* pParent /*=NULL*/)
+	: CDialog(IDD_REGULARPOLYGONS_DIALOG, pParent)
+	, N(3)
+{
+	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+}
+
+void CRegularPolygonsDlg::DoDataExchange(CDataExchange* pDX)
+{
+	CDialog::DoDataExchange(pDX);
+	DDX_Text(pDX, IDC_EDIT1, N);
+	DDX_Control(pDX, IDC_SPIN1, mspin);
+}
+
+BEGIN_MESSAGE_MAP(CRegularPolygonsDlg, CDialog)
+	ON_WM_PAINT()
+	ON_WM_QUERYDRAGICON()
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN1, &CRegularPolygonsDlg::OnDeltaposSpin1)
+END_MESSAGE_MAP()
+
+
+// CRegularPolygonsDlg message handlers
+
+BOOL CRegularPolygonsDlg::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+
+	// Set the icon for this dialog.  The framework does this automatically
+	//  when the application's main window is not a dialog
+	SetIcon(m_hIcon, TRUE);			// Set big icon
+	SetIcon(m_hIcon, FALSE);		// Set small icon
+
+	// TODO: Add extra initialization here
+	mspin.SetRange32(3, 16);
+	return TRUE;  // return TRUE  unless you set the focus to a control
+}
+
+// If you add a minimize button to your dialog, you will need the code below
+//  to draw the icon.  For MFC applications using the document/view model,
+//  this is automatically done for you by the framework.
+
+void CRegularPolygonsDlg::OnPaint()
+{
+	if (IsIconic())
+	{
+		CPaintDC dc(this); // device context for painting
+
+		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
+
+		// Center icon in client rectangle
+		int cxIcon = GetSystemMetrics(SM_CXICON);
+		int cyIcon = GetSystemMetrics(SM_CYICON);
+		CRect rect;
+		GetClientRect(&rect);
+		int x = (rect.Width() - cxIcon + 1) / 2;
+		int y = (rect.Height() - cyIcon + 1) / 2;
+
+		// Draw the icon
+		dc.DrawIcon(x, y, m_hIcon);
+	}
+	else
+	{
+		CDialog::OnPaint();
+	}
+}
+
+// The system calls this function to obtain the cursor to display while the user drags
+//  the minimized window.
+HCURSOR CRegularPolygonsDlg::OnQueryDragIcon()
+{
+	return static_cast<HCURSOR>(m_hIcon);
+}
+
+
+
+void CRegularPolygonsDlg::OnDeltaposSpin1(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
+	// TODO: Add your control notification handler code here
+
+	Invalidate();
+	UpdateData(TRUE);	
+	n = N;	
+	UpdateData(FALSE);
+
+	CPaintDC dc(this);
+	GetClientRect(&rc);
+
+
+	int Lx, Px, Vy, Ny;
+	Lx = rc.left;
+	Px = rc.right;
+	Vy = rc.top;
+	Ny = rc.bottom;
+
+	int Cx, Cy;
+	Cx = abs(Px - Lx) / 2;
+	Cy = abs(Ny - Vy) / 2;
+
+	cf = RGB(89, 89, 89);
+	hN = CreatePen(PS_SOLID, 15, cf);
+	hS = (HPEN)SelectObject(dc, hN);
+
+	int r = 250;
+
+	m = 360 / n;
+	f = 0;
+
+	x = Cx;
+	y = Cy;
+
+	x = x + r*cos(f + PI / 4);
+	y = y + r*sin(f + PI / 4);
+
+	MoveToEx(dc, x, y, NULL);
+
+	for (i = 1; i <= n; i++)
+	{
+		f += m;
+		x = r*cos(f*PI / 180 + PI / 4);
+		y = r*sin(f*PI / 180 + PI / 4);
+		LineTo(dc, x + Cx, y + Cy);
+	}
+
+
+
+	SelectObject(dc, hS);
+	DeleteObject(hN);
+
+
+	*pResult = 0;
+}
