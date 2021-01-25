@@ -1,0 +1,9 @@
+﻿import Casting.Casting;
+
+public class Max3App {
+    public static void main(String[] args) {
+        Casting app = new Casting();
+        app.setVisible(true);
+    }
+
+}
