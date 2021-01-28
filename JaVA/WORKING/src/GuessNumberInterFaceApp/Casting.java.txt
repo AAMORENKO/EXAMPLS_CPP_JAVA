@@ -1,0 +1,69 @@
+package Casting;
+
+        import javax.swing.*;
+        import java.awt.*;
+        import java.awt.event.ActionEvent;
+        import java.awt.event.ActionListener;
+
+public class Casting  extends JFrame {
+
+    JButton button1 = new JButton("Загадати число");
+    JLabel label1 = new JLabel("Ваша спроба: ");
+    JTextField input1 = new JTextField("",5);
+
+    JButton button2 = new JButton("Перевірити");
+
+    JLabel label2 = new JLabel("Ваш результат: ");
+    JTextField input2 = new JTextField("",5);
+
+    JLabel label3 = new JLabel("");
+
+    public Casting(){
+        super("Вгадай-но!");
+        this.setBounds(200,150,500,100);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        Container container = this.getContentPane();
+        container.setLayout(new GridLayout(3,1));
+
+        Container container1=new Container();
+        container1.setLayout(new GridLayout(1,3));
+        container1.add(button1);
+        container1.add(label1);
+        container1.add(input1);
+        input1.setText("22");
+
+        Container container2=new Container();
+        container2.setLayout(new GridLayout(1,3));
+        container2.add(button2);
+        container2.add(label3);
+        container2.add(label3);
+
+        Container container3=new Container();
+        container3.setLayout(new GridLayout(1,2));
+        container3.add(label2);
+        container3.add(input2);
+        input2.setText("Ти вгадав число");
+
+        container.add(container1);
+        container.add(container2);
+        container.add(container3);
+
+        button1.addActionListener(new ButtonEventList1());
+        button2.addActionListener(new ButtonEventList2());
+    }
+
+    private class ButtonEventList1 implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+               
+        }
+    }
+
+    private class ButtonEventList2 implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        
+        }
+    }
+}

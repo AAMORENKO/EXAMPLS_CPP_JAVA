@@ -1,0 +1,11 @@
+import Casting.Casting;
+
+public class GuessNumberApp {
+
+    public static void main(String[] args) {
+        Casting app = new Casting();
+        app.setVisible(true);
+    }
+
+
+}
