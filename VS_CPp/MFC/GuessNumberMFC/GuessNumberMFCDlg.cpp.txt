@@ -1,0 +1,43 @@
+﻿
+#include <time.h>
+using namespace std;
+
+	, N(22)
+	, REZ(_T("Ви вгадали!"))
+
+	srand((unsigned)time(NULL));
+
+	SetWindowTextW(L"Вгадай-но!");
+
+
+	CStdioFile inf;
+	inf.Open(L"data.tmp", CFile::modeCreate | CFile::modeWrite);
+	CString t;
+	t.Format(L"%i", rand() % 100);
+	inf.WriteString(t);
+	inf.Flush();
+	inf.Close();
+
+
+	// TODO: Add your control notification handler code here
+
+	CStdioFile inf;
+	inf.Open(L"data.tmp", CFile::modeRead);
+	CString t;
+	inf.ReadString(t);
+	inf.Close();
+
+	int n, p;
+	p = _wtoi(t);
+
+	UpdateData(true);
+	n = N;
+	UpdateData(false);
+
+	if (p == n) t = "Ви вгадали число!";
+	if (p > n) t = "Ваше число менше!";
+	if (p < n) t = "Ваше число більше!";
+
+	UpdateData(true);
+	REZ = t;
+	UpdateData(false);
