@@ -1,5 +1,7 @@
 package Casting;
 
+import GrEllipse.GrEllipse;
+import GrKvadrat.GrKvadrat;
 import GrSetka.GrSetka;
 
 import javax.swing.*;
@@ -20,7 +22,7 @@ public class Casting  extends JFrame {
     JRadioButton rad3 = new JRadioButton("Ellipse");
 
     public Casting(){
-        super("Малюємо спектри.");
+        super("РњР°Р»СЋС”РјРѕ СЃРїРµРєС‚СЂРё.");
         this.setBounds(200,150,300,90);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -46,6 +48,8 @@ public class Casting  extends JFrame {
 
         this.setResizable(false);
         rad1.addActionListener(new RadioButtonEventList1());
+        rad2.addActionListener(new RadioButtonEventList2());
+        rad3.addActionListener(new RadioButtonEventList3());
     }
 
 
@@ -53,6 +57,20 @@ public class Casting  extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             new GrSetka();
+        }
+    }
+
+    private class RadioButtonEventList2 implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new GrKvadrat();
+        }
+    }
+
+    private class RadioButtonEventList3 implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new GrEllipse();
         }
     }
 }
