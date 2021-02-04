@@ -1,0 +1,122 @@
+﻿private:
+
+	CWnd * WndPtr;
+
+	HWND hwdesc;
+	HDC hdesc;
+	HDC hdc;
+	HDC hdct;
+
+	CRect rc, kw[15], w;
+	CBitmap pic;
+	HBITMAP hbmn;
+	BITMAP bm;
+	HBITMAP hbm;
+	BITMAPINFO bmi;
+	int nweiDst, nheiDst;
+
+	COLORREF cf, ck, c[15];
+	DWORD *arb;
+
+	CString ms, z, t;
+
+	HPEN hPenOxy, hOldPen, pen;
+	HBRUSH m, oldm, brush;
+	CPen d, oldd;
+
+	HFONT hold, hNew, hbk;
+	
+	int x, y, cx, cy, HR, WR, dx, dy, x1, y1, x2, y2, k, i, p;
+	int counter;
+
+protected:
+
+	afx_msg void ImageSetupRc(int x0, int y0, CString ms0);
+
+
+------------------------------------------------------------------------------------------------------------
+
+		CClientDC dc(this);
+		GetClientRect(&rc);
+		dc.FillSolidRect(&rc, RGB(255, 255, 255));
+
+		ImageSetupRc(10, 10, L"res\\bitmap1.bmp");
+
+		CDialog::OnPaint();
+	
+------------------------------------------------------------------------------------------------------------
+afx_msg void CProgramDlg::ImageSetupRc(int x0, int y0, CString ms0)
+{
+	CClientDC dc(this);
+	GetClientRect(&rc);
+	hbmn = (HBITMAP)LoadImage(0, ms0, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_DEFAULTSIZE);
+	GetObject(hbmn, sizeof(bm), (LPVOID)&bm);
+	int nweiDst = bm.bmWidth; //ширина картинки в пикселях
+	int nheiDst = bm.bmHeight; //высота картинки в пикселях
+	hwdesc = *GetDesktopWindow();
+	hdesc = *GetDC();
+	hdc = CreateCompatibleDC(hdesc); //создаем основной контекст для прорисовки
+	hdct = CreateCompatibleDC(hdesc); //создаем временный контекст
+	SelectObject(hdct, hbmn);
+	ZeroMemory(&bmi, sizeof(BITMAPINFO));
+	bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+	bmi.bmiHeader.biWidth = nweiDst;
+	bmi.bmiHeader.biHeight = -nheiDst;
+	bmi.bmiHeader.biPlanes = 1;
+	bmi.bmiHeader.biBitCount = 32;
+	bmi.bmiHeader.biCompression = BI_RGB;
+	hbm = CreateDIBSection(dc, &bmi, DIB_RGB_COLORS, (VOID**)&arb, 0, 0);
+	SelectObject(dc, hbm);
+	BitBlt(dc, x0, y0, bm.bmWidth, bm.bmHeight, hdct, 0, 0, SRCCOPY);
+	DeleteDC(hdct);
+	DeleteObject(hbmn);
+	return;
+}
+
+------------------------------------------------------------------------------------------------------------
+void CProgramDlg::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: Add your message handler code here and/or call default
+	CClientDC dc(this);
+	GetClientRect(&rc);
+	dc.FillSolidRect(&rc, RGB(255, 255, 255));
+	ImageSetupRc(10, 10, L"res\\bitmap1.bmp");
+
+	w.left = rc.left + 10;
+	w.top = rc.top + 10;
+	w.right = w.left + 48;
+	w.bottom = w.top + 48;
+
+	if (PtInRect(&w, point))
+	{
+		ImageSetupRc(10, 10, L"res\\bitmap2.bmp");
+		ImageSetupRc(180, 85, L"res\\MonstrInc.bmp");
+	}
+
+	CDialog::OnLButtonDown(nFlags, point);
+}
+
+------------------------------------------------------------------------------------------------------------
+void CProgramDlg::OnMouseMove(UINT nFlags, CPoint point)
+{
+	// TODO: Add your message handler code here and/or call default
+	CClientDC dc(this);
+	GetClientRect(&rc);
+	dc.FillSolidRect(&rc, RGB(255, 255, 255));
+	ImageSetupRc(10, 10, L"res\\bitmap1.bmp");
+
+	w.left = rc.left + 10;
+	w.top = rc.top + 10;
+	w.right = w.left + 48;
+	w.bottom = w.top + 48;
+
+	if (PtInRect(&w, point))
+	{
+		ImageSetupRc(10, 10, L"res\\bitmap2.bmp");
+		ImageSetupRc(180, 85, L"res\\MonstrInc.bmp");
+	}
+	Sleep(200);
+
+	CDialog::OnMouseMove(nFlags, point);
+}
+------------------------------------------------------------------------------------------------------------
