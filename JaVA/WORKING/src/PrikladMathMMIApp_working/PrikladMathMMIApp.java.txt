@@ -1,0 +1,13 @@
+import Casting.Casting;
+
+/**
+ * Created by Admin on 08.02.2021.
+ */
+public class PrikladMathMMIApp {
+    public static void main(String[] args) {
+
+
+        Casting app = new Casting();
+        app.setVisible(true);
+    }
+}
