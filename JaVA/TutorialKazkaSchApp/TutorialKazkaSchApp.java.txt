@@ -1,0 +1,10 @@
+import GrTutorKazka.GrTutorKazka;
+
+/**
+ * Created by Admin on 14.02.2021.
+ */
+public class TutorialKazkaSchApp {
+    public static void main(String[] args) {
+        new GrTutorKazka();
+    }
+}

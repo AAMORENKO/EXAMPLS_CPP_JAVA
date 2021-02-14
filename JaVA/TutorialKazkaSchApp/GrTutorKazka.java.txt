@@ -1,0 +1,285 @@
+package GrTutorKazka;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
+
+
+public class GrTutorKazka extends Frame implements
+        WindowListener, MouseMotionListener, MouseListener {
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        dispose();
+        System.exit(0);
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
+    }
+
+    public int x, y, w, h;
+    public int x1, y1, x2, y2, x3, y3;
+    public int cr, cq, cb;
+    public int d;
+    public int cx, cy, dx, dy;
+
+    String mouseEvent=null;
+    String mouseMoveEvent=null;
+    String mouseDragEvent;
+    String ctrl;
+
+    public String ms;
+    public Point toch=null;
+
+    public Image[] pic=new Image[9];
+    public int[] kwx=new int[9];
+    public int[] kwy=new int[9];
+
+
+    public void paint(Graphics g) {
+
+        Dimension rc = getSize();
+        Insets in = getInsets();
+
+        int RH = rc.width;
+        int RW = rc.height;
+
+        int minX = in.left;
+        int maxX = RH - in.right;
+        int minY = in.top;
+        int maxY = RW - in.bottom;
+
+        float wdk = 3.0f;
+
+        cx = Math.abs(maxX - minX) / 2;
+        cy = Math.abs(maxY - minY) / 2;
+        dx = maxX / 10;
+        dy = maxY / 10;
+
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(wdk));
+
+        // TO DO init
+
+        Image line1=new ImageIcon("res/line-01.png").getImage();
+        Image line2=new ImageIcon("res/line-02.png").getImage();
+
+        g.drawImage(line1,70,50,null);
+        g.drawImage(line2,70,550,null);
+
+        try {
+            for (int i = 0; i <9 ; i++) {
+                pic[i]= ImageIO.read(new File("res/0"+(i+1)+".png"));
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //g.drawImage(pic[0],100,160,null);
+
+        int k=0;
+        for (int i = 0; i <5 ; i++) {
+            kwx[k]=80+i*100+i*8;
+            kwy[k]=60;
+            //g.drawRect(kwx[k],kwy[k],100,70);
+            k++;
+        }
+        for (int i = 0; i <4 ; i++) {
+            kwx[k]=80+i*100+i*8;
+            kwy[k]=553;
+            //g.drawRect(kwx[k],kwy[k],100,70);
+            k++;
+        }
+
+        if(toch!=null)
+        {
+            x1=toch.x;
+            y1=toch.y;
+
+            for (int i = 0; i <9 ; i++) {
+                if(x1>kwx[i] && x1<kwx[i]+120
+                        && y1>kwy[i] &&y1<kwy[i]+100)
+                {
+                   // g.setColor(new Color(190, 33, 100));
+                    //g.drawRect(kwx[i],kwy[i],100,70);
+                    g.drawImage(pic[i],100,160,null);
+
+                    switch (i) {
+                        case 0:
+                            ctrl = "cmd /c start "+"res/01.png";
+                            try {
+                                Runtime.getRuntime().exec(ctrl);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case 1:
+                            ctrl = "cmd /c start "+"res/02.png";
+                            try {
+                                Runtime.getRuntime().exec(ctrl);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case 2:
+                            ctrl = "cmd /c start "+"res/03.png";
+                            try {
+                                Runtime.getRuntime().exec(ctrl);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case 3:
+                            ctrl = "cmd /c start "+"res/04.png";
+                            try {
+                                Runtime.getRuntime().exec(ctrl);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case 4:
+                            ctrl = "cmd /c start "+"res/05.png";
+                            try {
+                                Runtime.getRuntime().exec(ctrl);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case 5:
+                            ctrl = "cmd /c start "+"res/06.png";
+                            try {
+                                Runtime.getRuntime().exec(ctrl);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case 6:
+                            ctrl = "cmd /c start "+"res/07.png";
+                            try {
+                                Runtime.getRuntime().exec(ctrl);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case 7:
+                            ctrl = "cmd /c start "+"res/08.png";
+                            try {
+                                Runtime.getRuntime().exec(ctrl);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case 8:
+                            ctrl = "cmd /c start "+"res/09.png";
+                            try {
+                                Runtime.getRuntime().exec(ctrl);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                    }
+
+                }
+            }
+        }
+    }
+
+
+    MouseAdapter mouseHandler = new MouseAdapter()
+    {
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            toch = e.getPoint();
+            //mouseMoveEvent = "mouse move= " + x + "; " + y;
+            //repaint();
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            toch = e.getPoint();
+            //mouseEvent = "mouse click= " + x + "; " + y;
+            repaint();
+        }
+    };
+
+    public GrTutorKazka() {
+
+        super("Народні казки (початкова школа).");
+        addWindowListener(this);
+        addMouseListener(mouseHandler);
+        addMouseMotionListener(mouseHandler);
+        setLayout(null);
+        setLocation(200,120);
+        setSize(800,680);
+        this.setResizable(false);
+        show();
+        //Image icon=new ImageIcon("res/icoProject.png").getImage();
+        //this.setIconImage(icon);
+    }
+
+}
