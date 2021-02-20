@@ -1,0 +1,12 @@
+import gLemniBer.gLemniBer;
+
+/**
+ * Created by Admin on 20.02.2021.
+ */
+public class LemniskataBernulliApp {
+
+    public static void main(String[] args) {
+        new gLemniBer();
+    }
+
+}
