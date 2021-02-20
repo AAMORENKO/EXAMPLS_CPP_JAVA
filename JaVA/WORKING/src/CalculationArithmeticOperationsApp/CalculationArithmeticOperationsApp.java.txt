@@ -1,0 +1,10 @@
+import GrCalcArOper.GrCalcArOper;
+
+
+public class CalculationArithmeticOperationsApp {
+
+    public static void main(String[] args) {
+            new GrCalcArOper();
+    }
+
+}
