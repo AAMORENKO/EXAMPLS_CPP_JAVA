@@ -1,0 +1,38 @@
+﻿Задача 2 - Кількість арифметичних операцій у записі
+
+
+
+private:
+
+	int max;
+	CString ms, t, z, w;
+
+SetWindowTextW(L"Кількість арифметичних операцій у записі");
+
+	ms = ""; // приклад для тестування
+	ms = "\n";
+	CStdioFile inf;
+	inf.Open(L"data.txt", CFile::modeRead);
+	if (!inf) return 0;
+	do
+	{
+		inf.ReadString(w);
+		if (!w.IsEmpty())
+		{
+			t = w;
+			ms += t;
+			max = 0;
+			for (int i = 0; i < t.GetLength(); i++)
+			{
+				if (t[i] == '*' || t[i] == '+' || t[i] == '-') max++;
+			}
+			ms += "\n";
+			z.Format(L"знайдено %i операцій", max);
+			ms += z;
+			ms += "\n\n";
+		}
+	} while (!w.IsEmpty());
+	inf.Close();
+	E.SetWindowTextW(ms);
+
+
