@@ -1,0 +1,53 @@
+﻿Задача 1 - Піфагорові трійки чисел x^2+y^2=z^2
+
+private:
+
+	int max, u, v, x, y, a, b;
+	CString ms, t, z;
+
+	afx_msg int NSD(int x, int y);
+	afx_msg bool vprosto(int a, int b);
+
+	SetWindowTextW(L"Піфагорові числа");
+
+
+max = 1000;
+	u = 3; v = 1;
+	ms = "";
+	while ((u*u + v*v) / 2 <= max)
+	{
+		while ((u*u + v*v) / 2 <= max)
+		{
+			if (vprosto(u, v))
+			{
+				t.Format(L"%i", u*v);//друкувати
+				ms += t;
+				ms += "^2 + ";
+				t.Format(L"%i", (u*u - v*v) / 2);
+				ms += t;
+				ms += "^2 = ";
+				t.Format(L"%i", (u*u + v*v) / 2);
+				ms += t;
+				ms += "^2\n";
+			}
+			u += 2;
+		}
+		v += 2;
+		u += 2;
+	}
+	E.SetWindowTextW(ms);
+
+
+afx_msg int CProgramDlg::NSD(int x, int y)
+{
+	if (x == 0) return y;
+	else return NSD(y%x, x);
+}
+afx_msg bool CProgramDlg::vprosto(int a, int b)
+{
+	if (NSD(a, b) == 1) return true;
+	else return false;
+}
+
+
+
