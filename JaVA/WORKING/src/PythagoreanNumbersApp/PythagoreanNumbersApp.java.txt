@@ -1,0 +1,14 @@
+import GrPifNum.GrPifNum;
+
+/**
+ * Created by Admin on 20.02.2021.
+ */
+public class PythagoreanNumbersApp {
+
+    public static void main(String[] args) {
+        new GrPifNum();
+    }
+
+}
+
+

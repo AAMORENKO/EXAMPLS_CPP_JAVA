@@ -1,0 +1,182 @@
+package GrPifNum;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.Random;
+
+public class GrPifNum extends Frame implements
+        WindowListener, MouseListener, MouseMotionListener {
+
+    String mouseEvent = null;
+    String mouseMoveEvent = null;
+    String mouseDragEvent;
+    String ctrl;
+    public Point toch = null;
+    public int x, y, w, h;
+    final public double PI = 3.14159265359;
+
+    public int u,v,max;
+    public boolean fg=true;
+    public String ms,t;
+
+
+    public void windowOpened(WindowEvent e) {
+    }
+
+    ;
+
+    public void windowClosing(WindowEvent e) {
+        dispose();
+        System.exit(0);
+    }
+
+    ;
+
+    public void windowClosed(WindowEvent e) {
+    }
+
+    ;
+
+    public void windowIconified(WindowEvent e) {
+    }
+
+    ;
+
+    public void windowDeiconified(WindowEvent e) {
+    }
+
+    ;
+
+    public void windowActivated(WindowEvent e) {
+    }
+
+    ;
+
+    public void windowDeactivated(WindowEvent e) {
+    }
+
+    ;
+
+    public void mouseClicked(MouseEvent e) {
+    }
+
+    ;
+
+    public void mousePressed(MouseEvent e) {
+    }
+
+    ;
+
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    ;
+
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    ;
+
+    public void mouseExited(MouseEvent e) {
+    }
+
+    ;
+
+    public void mouseDragged(MouseEvent e) {
+    }
+
+    ;
+
+    public void mouseMoved(MouseEvent e) {
+    }
+
+    ;
+
+
+    public void paint(Graphics g) {
+        Dimension rc = getSize();
+        Insets in = getInsets();
+
+        int RH = rc.width;
+        int RW = rc.height;
+
+        int minX = in.left;
+        int maxX = RH - in.right;
+        int minY = in.top;
+        int maxY = RW - in.bottom;
+
+        int cx, cy, dx, dy;
+
+        int x1, y1, x2, y2, x3, y3;
+
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(1.0f));
+
+        cx = Math.abs(maxX - minX) / 2;
+        cy = Math.abs(maxY - minY) / 2 + 50;
+        dx = 40;
+        dy = 20;
+
+        // TODO THIS PAINT
+        max=1000; // запитати
+        v=1;u=3; int i=1;
+        while ((u*u+v*v)/2<max)
+        {
+            while ((u*u+v*v)/2<max) {
+                if (vzprosto(u, v)) {
+                    int first=u*v;
+                    int second=(u*u-v*v)/2;
+                    int third=(u*u+v*v)/2;
+                    ms=(first+"^2  + "+second+"^2 = "+third +"^2");
+                    g.setFont(new Font("Trebuchet Ms", Font.BOLD, 32));
+                    g.setColor(new Color(0x1314D7));
+                    g2.drawString(ms,25,25+i*34);  //друкуємо
+                    i++;
+                    u+=2;
+                }
+            }
+            v+=2;
+            u+=2;
+        }
+    }
+    private boolean vzprosto(int a, int b) {
+        boolean res;
+        if(NSD(a,b)==1) res=true; else res=false;
+        return res;
+    }
+    private int NSD(int m, int n) {
+        if(m==0) return n;
+        else return NSD(n%m,m);
+    }
+
+    private static int rnd(int min, int max) {
+        return (new Random()).ints(min,max).iterator().nextInt();
+    }
+
+    MouseAdapter mouseHandler= new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            super.mouseClicked(e);
+            toch=e.getPoint();
+            repaint();
+        }
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            toch=e.getPoint();
+        }
+    };
+
+    public GrPifNum() {
+        super("Піфагорові трійки чисел.");
+        addWindowListener(this);
+
+        addMouseMotionListener(mouseHandler);
+        addMouseListener(mouseHandler);
+
+        setLayout(null);
+        setLocation(120, 100);
+        setSize(800, 800);
+        show();
+    }
+
+
+}
