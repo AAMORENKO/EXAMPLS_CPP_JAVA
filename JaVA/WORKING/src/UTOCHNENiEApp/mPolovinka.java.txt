@@ -1,0 +1,139 @@
+package mPolovinka;
+
+        import javax.swing.*;
+        import java.awt.*;
+        import java.awt.event.*;
+        import java.util.Random;
+
+        import static java.lang.Thread.sleep;
+        import static javax.swing.JFrame.EXIT_ON_CLOSE;
+
+public class mPolovinka extends Frame implements WindowListener{
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        this.dispose();
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
+    }
+
+    JTextField input1 = new JTextField();
+    JTextField input2 = new JTextField();
+    String ms="";
+    String t="";
+    JButton button=new JButton("Обчислити");
+
+
+    public void paint(Graphics g) {
+
+        Dimension rc = getSize();
+        Insets in = getInsets();
+
+        int RH = rc.width;
+        int RW = rc.height;
+
+        int minX = in.left;
+        int maxX = RH - in.right;
+        int minY = in.top;
+        int maxY = RW - in.bottom;
+
+        int cx, cy, dx, dy;
+        float wdk=3.0f;
+
+        cx = Math.abs(maxX - minX) / 2;
+        cy = Math.abs(maxY - minY) / 2;
+
+        dx = Math.abs(maxX-minX) / 7;
+        dy = Math.abs(maxY-minY) / 7;
+
+
+
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(wdk));
+
+
+        // TO DO
+        Image umova=new ImageIcon("res\\sshot-1.png").getImage();
+        g.drawImage(umova,1,25,null);
+
+        String text="Введіть початок відрізка a=";
+
+        g.setColor(new Color(0,0,0));
+        g.setFont(new Font("Times New Roman",Font.PLAIN,22));
+        g.drawString(text,270,80);
+
+        text="Введіть кінець відрізка  b=";
+
+        g.setColor(new Color(0,0,0));
+        g.setFont(new Font("Times New Roman",Font.PLAIN,22));
+        g.drawString(text,270,120);
+
+        Image mbutton=new ImageIcon("res\\button1.png").getImage();
+        g.drawImage(mbutton,635,60,null);
+        button.setBounds(635,60,100,30);
+
+        input1.setBounds(530,60,60,30);
+        Font fnt=new Font("Times New Roman",Font.PLAIN,22);
+        input1.setFont(fnt);
+
+        input2.setBounds(530,100,60,30);
+        input2.setFont(fnt);
+
+        this.setLayout(null);
+        this.add(input1);
+        this.add(input2);
+        this.add(button);
+        this.setVisible(true);
+        input1.setText("1.5");
+        input2.setText("2");
+
+
+        button.addActionListener(new ButtonListEvent());
+
+    }
+
+
+    public mPolovinka() {
+        super("Уточнення кореня методом половинного ділення відрізка.");
+        addWindowListener(this);
+        setLayout(null);
+        setLocation(120,100);
+        setSize(800,600);
+        show();
+        this.setResizable(false);
+    }
+
+    private class ButtonListEvent implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
+}

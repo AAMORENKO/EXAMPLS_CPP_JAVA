@@ -1,0 +1,10 @@
+import ChoiceMethod.ChoiceMethod;
+
+public class UTOCHNENiEApp {
+
+    public static void main(String[] args) {
+        ChoiceMethod app = new ChoiceMethod();
+        app.setVisible(true);
+    }
+
+}
