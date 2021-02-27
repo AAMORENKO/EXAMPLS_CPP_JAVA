@@ -1,0 +1,8 @@
+import gBioRitm.gBioRitm;
+
+public class BioRitmApp {
+    public static void main(String[] args) {
+        new gBioRitm();
+    }
+
+}

@@ -1,0 +1,266 @@
+package gBioRitm;
+
+
+import java.awt.*;
+import java.awt.event.*;
+import java.util.Random;
+
+public class gBioRitm extends Frame implements WindowListener, MouseListener, MouseMotionListener {
+
+    String mouseEvent = null;
+    String mouseMoveEvent = null;
+    String mouseDragEvent;
+    String ctrl;
+    public Point toch = null;
+    public int x, y, w, h;
+    final public double PI = 3.14159265359;
+
+    public void windowOpened(WindowEvent e) {
+    }
+
+    ;
+
+    public void windowClosing(WindowEvent e) {
+        dispose();
+        System.exit(0);
+    }
+
+    ;
+
+    public void windowClosed(WindowEvent e) {
+    }
+
+    ;
+
+    public void windowIconified(WindowEvent e) {
+    }
+
+    ;
+
+    public void windowDeiconified(WindowEvent e) {
+    }
+
+    ;
+
+    public void windowActivated(WindowEvent e) {
+    }
+
+    ;
+
+    public void windowDeactivated(WindowEvent e) {
+    }
+
+    ;
+
+    public void mouseClicked(MouseEvent e) {
+    }
+
+    ;
+
+    public void mousePressed(MouseEvent e) {
+    }
+
+    ;
+
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    ;
+
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    ;
+
+    public void mouseExited(MouseEvent e) {
+    }
+
+    ;
+
+    public void mouseDragged(MouseEvent e) {
+    }
+
+    ;
+
+    public void mouseMoved(MouseEvent e) {
+    }
+
+    ;
+
+
+    public int biogd=1964;
+    public int biomm=5;
+    public int biodd=22;
+    public int nastgd=2021;
+    public int nastmm=2;
+    public int nastdd=25;
+
+
+    public void paint(Graphics g) {
+        Dimension rc = getSize();
+        Insets in = getInsets();
+
+        int RH = rc.width;
+        int RW = rc.height;
+
+        int minX = in.left;
+        int maxX = RH - in.right;
+        int minY = in.top;
+        int maxY = RW - in.bottom;
+
+        int cx, cy, dx, dy;
+
+        int x1, y1, x2, y2, x3, y3;
+
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(1.0f));
+
+        cx = Math.abs(maxX - minX) / 2;
+        cy = Math.abs(maxY - minY) / 2 + 50;
+        dx = 40;
+        dy = 20;
+
+        // TODO THIS PAINT
+        float wdk = 2.5f;
+        g2.setStroke(new BasicStroke(wdk));
+
+        g.setColor(new Color(47, 154, 27));
+        g.setFont(new Font("Times New Roman",Font.BOLD,32));
+        String ms="Визначаємо Ваші біоритми. Ваші дані: ";
+        dx=40; dy=40;
+        g.drawString(ms,10,60);
+
+        g.setFont(new Font("Trebuchet Ms",Font.BOLD,24));
+        g.setColor(new Color(120, 36, 203));
+        ms="      Рік: "+biogd;
+        g.drawString(ms,10,60+dy);
+        ms="Місяць: "+biomm;
+        g.drawString(ms,10,60+2*dy-20);
+        ms="   День: "+biodd;
+        g.drawString(ms,10,60+3*dy-40);
+
+        ms="Цей рік - ";
+        ms+=biogd+" - ";
+        if(visokos(biogd)) ms+="високосний";
+        else ms+="звичайний";
+        g.setColor(new Color(255, 29, 71));
+        g.drawString(ms,10,60+4*dy-45);
+        ms=("Цей "+biomm+" місяць складається з днів у кількості: " + dmm(biogd,biomm));
+        g.setColor(new Color(8, 144, 220));
+        g.drawString(ms,10,60+5*dy-60);
+
+        ms="На сьогодні "+nastdd+"."+nastmm+"."+nastgd+" пройшло - ";
+        ms+=dni(biogd,biomm,biodd,nastgd,nastmm,nastdd)+" днів";
+        g.setColor(new Color(0, 0, 0));
+        g.drawString(ms,10,60+6*dy-70);
+
+
+        // -----------------------------------------
+        g.setFont(new Font("Trebuchet Ms",Font.BOLD,29));
+        int fiz=dni(biogd,biomm,biodd,nastgd,nastmm,nastdd)%23;
+        ms="Ф";
+        for (int i = 3; i <5 ; i++) {
+            ms+=biomesc(fiz,23,i) ;
+        }
+        g.setColor(new Color(8, 200, 31));
+        g.drawString(ms,10,60+7*dy);
+
+        int emoc=dni(biogd,biomm,biodd,nastgd,nastmm,nastdd)%28;
+        ms=" Е";
+        for (int i = 3; i <5 ; i++) {
+            ms+=biomesc(emoc,28,i) ;
+        }
+        g.setColor(new Color(255, 29, 71));
+        g.drawString(ms,10,60+8*dy-15);
+
+        int intl=dni(biogd,biomm,biodd,nastgd,nastmm,nastdd)%33;
+        ms="  І";
+        for (int i = 3; i <5 ; i++) {
+            ms+=biomesc(intl,33,i) ;
+        }
+        g.setColor(new Color(186, 39, 200));
+        g.drawString(ms,10,60+9*dy-35);
+
+    }
+
+    public boolean visokos(int yr){
+        boolean fg=false;
+        if((yr%400==0)||(yr%100!=0)&&(yr%4==0)) fg=true;
+        return fg;
+    }
+    public int dmm(int gd,int mc)
+    {
+        int res=0;
+        if((mc==4)||(mc==6)||(mc==9)||(mc==11)) res = 30;
+        else if (mc == 2)
+            if (visokos(gd)) res = 29; else res = 28;
+        else res=31;
+        return res;
+    }
+    public int dni(int g1,int m1,int d1,int g2,int m2,int d2)
+    {
+        int res =0;
+        res=dnch(g1,g2)-dnd(g1,m1,d1)+dnd(g2,m2,d2);
+        return res;
+    }
+    public int dnch(int a,int b){
+        int res=0;
+        for (int i = a; i <b ; i++) {
+            if(visokos(i)) res+=366; else res+=365;
+        }
+        return res;
+    }
+    public int dnd(int a,int b, int c) {
+        int res = 0;
+        for (int i = 1; i <b ; i++) res+=dmm(a,i);
+        res+=c;
+        return res;
+    }
+    public String biomesc(int a,int b,int c)
+    {
+        String txt="";
+        int max1,max2,min1,min2,nul1,nul2;
+        max1=b/4; max2=(b+2)/4;
+        min1=b-max1; min2=b-max2;
+        nul1=b/2; nul2=(b+1)/2;
+        for (int i = 1; i <dmm(biogd,c) ; i++) {
+            if((a==0)||(a==nul1)||(a==nul2)||
+                    (a==max1)||(a==max2)||(a==min1)||(a==min2))
+            {
+                txt+="*";
+            }
+            else if(a<nul1) txt+="+"; else txt+="-";
+            a=(a+1)%b;
+        }
+        return txt;
+    }
+
+    MouseAdapter mouseHandler= new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            super.mouseClicked(e);
+            toch=e.getPoint();
+            repaint();
+        }
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            toch=e.getPoint();
+        }
+    };
+
+    public gBioRitm() {
+        super("Біоритми людини.");
+        addWindowListener(this);
+
+        addMouseMotionListener(mouseHandler);
+        addMouseListener(mouseHandler);
+
+        setLayout(null);
+        setLocation(20, 10);
+        setSize(1200, 700);
+        show();
+        this.setResizable(false);
+    }
+
+
+}
