@@ -1,7 +1,6 @@
 package ChoiceSoft;
 
-
-
+import FindAndPlusInArray.FindAndPlusInArray;
 import GrCalcArOper.GrCalcArOper;
 import MaxCif.MaxCif;
 import uRiven.uRiven;
@@ -28,6 +27,9 @@ public class ChoiceSoft  extends JFrame {
     JLabel label3 = new JLabel("                  Порівняння цифр: ");
     JRadioButton rad3 = new JRadioButton("Трицифрове число");
 
+    JLabel label4 = new JLabel("                  Обробка даних в таблиці: ");
+    JRadioButton rad4 = new JRadioButton("Пошук та змінення елементів");
+
     public ChoiceSoft(){
         super("Приклади програмування.");
         this.setBounds(200,150,520,190);
@@ -38,11 +40,12 @@ public class ChoiceSoft  extends JFrame {
 
 
         Container container4=new Container();
-        container4.setLayout(new GridLayout(3,1));
+        container4.setLayout(new GridLayout(4,1));
         ButtonGroup grup = new ButtonGroup();
         grup.add(rad1);
         grup.add(rad2);
         grup.add(rad3);
+        grup.add(rad4);
 
         container4.add(label1);
         container4.add(rad1);
@@ -54,6 +57,8 @@ public class ChoiceSoft  extends JFrame {
         container4.add(label3);
         container4.add(rad3);
 
+        container4.add(label4);
+        container4.add(rad4);
 
         container.add(container4);
 
@@ -63,6 +68,7 @@ public class ChoiceSoft  extends JFrame {
         rad1.addActionListener(new RadioButtonEventList1());
         rad2.addActionListener(new RadioButtonEventList2());
         rad3.addActionListener(new RadioButtonEventList3());
+        rad4.addActionListener(new RadioButtonEventList4());
     }
 
 
@@ -84,6 +90,13 @@ public class ChoiceSoft  extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             new MaxCif();
+        }
+    }
+
+    private class RadioButtonEventList4 implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new FindAndPlusInArray();
         }
     }
 }
