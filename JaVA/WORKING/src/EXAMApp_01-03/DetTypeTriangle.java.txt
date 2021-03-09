@@ -1,4 +1,4 @@
-﻿package GrCalcArOper;
+﻿package DetTypeTriangle;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 import java.util.Random;
 import java.util.Scanner;
 
-public class GrCalcArOper extends Frame implements
+public class DetTypeTriangle extends Frame implements
         WindowListener, MouseListener, MouseMotionListener {
 
     String mouseEvent = null;
@@ -26,7 +26,6 @@ public class GrCalcArOper extends Frame implements
 
     public void windowClosing(WindowEvent e) {
         this.dispose();
-
     }
 
     ;
@@ -91,6 +90,11 @@ public class GrCalcArOper extends Frame implements
 
     ;
 
+    public String ms,text,res;
+    public int hh;
+    public int [] TAB= new int[3*hh+100];
+    public int a,b,c;
+    public boolean fg=false;
 
     public void paint(Graphics g) {
         Dimension rc = getSize();
@@ -119,39 +123,63 @@ public class GrCalcArOper extends Frame implements
         // TODO THIS PAINT
         x=15; y=65; dy=dx=30;
         String text = "";
-        String ms = "Тестові завдання:";
+        String ms = "Дана таблиця із сторонами трикутників:";
         g.setFont(new Font("Trebuchet Ms", Font.BOLD, 24));
         g.setColor(new Color(35, 67, 221));
         g.drawString(ms, x, y);
-        File inf = new File("data1.txt");
+        File inf = new File("data5.txt");
         BufferedReader reader = null;
         try {
             Scanner scan = new Scanner(inf);
-            int i = 1;
-            while (scan.hasNextLine()) {
-                text = scan.nextLine();
-                g.setColor(new Color(135, 18, 153));
-                g.drawString(text, x, y + i * dy);
-                int sum=0;
-                for (int k = 0; k <text.length() ; k++) {
-                    if(text.charAt(k)=='+' || text.charAt(k)=='-' || text.charAt(k)=='*')
-                        sum++;
+            hh=scan.nextInt();
+            g.setFont(new Font("Trebuchet Ms", Font.BOLD, 22));
+            g.setColor(new Color(154, 11, 221));
+            int k=1;
+            for (int i = 1; i <3*hh+1 ; i+=3) {
+                a=TAB[i]=scan.nextInt();
+                ms=k+") a="+TAB[i];
+                b=TAB[i+1]=scan.nextInt();
+                ms+="; b= "+TAB[i+1];
+                c=TAB[i+2]=scan.nextInt();
+                ms+="; c= "+TAB[i+2];
+
+                if((a+b>c) && (a+c>b) && (b+c>a)){
+                    ms+=" -  існує";
+                    fg=true;
+                } else
+                {
+                    ms+=" -  не існує";
+                    fg=false;
                 }
-                String res=" усього: "+sum;
-                g.setColor(new Color(213, 0, 183));
-                g.drawString(res, x + text.length()*dx/2, y + i * dy);
-                i++;
+
+                if(fg)
+                {
+                    if(a==b && b==c){
+                        ms+=" - рівносторонній";
+                    } else
+                    if(a==b || b==c || a==c){
+                        ms+=" - рівнобедрений";
+                    }else
+                    if(a!=b && b!=c && a!=c)
+                    {
+                        ms+=" - різносторонній";
+                    }
+
+                }
+
+                g.drawString(ms, x, y+10+k*24);
+                k++;
             }
             scan.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-    }
+
+        g.setColor(new Color(40, 133, 15));
 
 
 
-    private static int rnd(int min, int max) {
-        return (new Random()).ints(min,max).iterator().nextInt();
+
     }
 
     MouseAdapter mouseHandler= new MouseAdapter() {
@@ -167,18 +195,20 @@ public class GrCalcArOper extends Frame implements
         }
     };
 
-    public GrCalcArOper() {
-        super("Кількість арифметичних операцій.");
+    public DetTypeTriangle() {
+        super("Визначаємо тип трикутника за його сторонами.");
         addWindowListener(this);
 
         addMouseMotionListener(mouseHandler);
         addMouseListener(mouseHandler);
 
         setLayout(null);
-        setLocation(120, 100);
-        setSize(800, 800);
+        setLocation(220, 20);
+        setSize(800, 500);
         show();
+        this.setResizable(false);
     }
+
 
 
 }

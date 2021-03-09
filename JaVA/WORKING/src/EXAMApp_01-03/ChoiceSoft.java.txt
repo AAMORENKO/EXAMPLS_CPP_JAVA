@@ -1,5 +1,6 @@
 package ChoiceSoft;
 
+import DetTypeTriangle.DetTypeTriangle;
 import FindAndPlusInArray.FindAndPlusInArray;
 import GrCalcArOper.GrCalcArOper;
 import MaxCif.MaxCif;
@@ -30,6 +31,10 @@ public class ChoiceSoft  extends JFrame {
     JLabel label4 = new JLabel("                  Обробка даних в таблиці: ");
     JRadioButton rad4 = new JRadioButton("Пошук та змінення елементів");
 
+    JLabel label5 = new JLabel("                  Визначення виду трикутника: ");
+    JRadioButton rad5 = new JRadioButton("За його сторонами");
+
+
     public ChoiceSoft(){
         super("Приклади програмування.");
         this.setBounds(200,150,520,190);
@@ -40,12 +45,13 @@ public class ChoiceSoft  extends JFrame {
 
 
         Container container4=new Container();
-        container4.setLayout(new GridLayout(4,1));
+        container4.setLayout(new GridLayout(5,1));
         ButtonGroup grup = new ButtonGroup();
         grup.add(rad1);
         grup.add(rad2);
         grup.add(rad3);
         grup.add(rad4);
+        grup.add(rad5);
 
         container4.add(label1);
         container4.add(rad1);
@@ -60,6 +66,9 @@ public class ChoiceSoft  extends JFrame {
         container4.add(label4);
         container4.add(rad4);
 
+        container4.add(label5);
+        container4.add(rad5);
+
         container.add(container4);
 
         //pack();
@@ -69,6 +78,7 @@ public class ChoiceSoft  extends JFrame {
         rad2.addActionListener(new RadioButtonEventList2());
         rad3.addActionListener(new RadioButtonEventList3());
         rad4.addActionListener(new RadioButtonEventList4());
+        rad5.addActionListener(new RadioButtonEventList5());
     }
 
 
@@ -97,6 +107,13 @@ public class ChoiceSoft  extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             new FindAndPlusInArray();
+        }
+    }
+
+    private class RadioButtonEventList5 implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new DetTypeTriangle();
         }
     }
 }
