@@ -1,0 +1,8 @@
+import ChoiceSoft.ChoiceSoft;
+
+public class ChoiceSoftApp {
+    public static void main(String[] args) {
+        ChoiceSoft app = new ChoiceSoft();
+        app.setVisible(true);
+    }
+}

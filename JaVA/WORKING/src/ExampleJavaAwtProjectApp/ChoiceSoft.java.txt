@@ -1,0 +1,134 @@
+package ChoiceSoft;
+
+import DetTypeTriangle.DetTypeTriangle;
+import FindAndPlusInArray.FindAndPlusInArray;
+import GrCalcArOper.GrCalcArOper;
+import MaxCif.MaxCif;
+import MultiplicatDig.MultiplicatDig;
+import uRiven.uRiven;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Random;
+import java.util.Scanner;
+
+public class ChoiceSoft  extends JFrame {
+
+    JLabel label1 = new JLabel("                  Кількість операцій: ");
+    JRadioButton rad1 = new JRadioButton("Арифметичний вираз");
+
+    JLabel label2 = new JLabel("                  Рівень успішності: ");
+    JRadioButton rad2 = new JRadioButton("Учні");
+
+    JLabel label3 = new JLabel("                  Порівняння цифр: ");
+    JRadioButton rad3 = new JRadioButton("Трицифрове число");
+
+    JLabel label4 = new JLabel("                  Обробка даних в таблиці: ");
+    JRadioButton rad4 = new JRadioButton("Пошук та змінення елементів");
+
+    JLabel label5 = new JLabel("                  Визначення виду трикутника: ");
+    JRadioButton rad5 = new JRadioButton("За його сторонами");
+
+    JLabel label6 = new JLabel("                  Добуток цифр: ");
+    JRadioButton rad6 = new JRadioButton("Даного трицифрового числа");
+
+    public ChoiceSoft(){
+        super("Приклади програмування.");
+        this.setBounds(200,150,520,190);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        Container container = this.getContentPane();
+        container.setLayout(new GridLayout(1,1));
+
+
+        Container container4=new Container();
+        container4.setLayout(new GridLayout(6,1));
+        ButtonGroup grup = new ButtonGroup();
+        grup.add(rad1);
+        grup.add(rad2);
+        grup.add(rad3);
+        grup.add(rad4);
+        grup.add(rad5);
+        grup.add(rad6);
+
+        container4.add(label1);
+        container4.add(rad1);
+        rad1.setSelected(true);
+
+        container4.add(label2);
+        container4.add(rad2);
+
+        container4.add(label3);
+        container4.add(rad3);
+
+        container4.add(label4);
+        container4.add(rad4);
+
+        container4.add(label5);
+        container4.add(rad5);
+
+        container4.add(label6);
+        container4.add(rad6);
+
+        container.add(container4);
+
+        //pack();
+
+        this.setResizable(false);
+        rad1.addActionListener(new RadioButtonEventList1());
+        rad2.addActionListener(new RadioButtonEventList2());
+        rad3.addActionListener(new RadioButtonEventList3());
+        rad4.addActionListener(new RadioButtonEventList4());
+        rad5.addActionListener(new RadioButtonEventList5());
+        rad6.addActionListener(new RadioButtonEventList6());
+    }
+
+
+    private class RadioButtonEventList1 implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new GrCalcArOper();
+        }
+    }
+
+    private class RadioButtonEventList2 implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new uRiven();
+        }
+    }
+
+    private class RadioButtonEventList3 implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new MaxCif();
+        }
+    }
+
+    private class RadioButtonEventList4 implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new FindAndPlusInArray();
+        }
+    }
+
+    private class RadioButtonEventList5 implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new DetTypeTriangle();
+        }
+    }
+
+    private class RadioButtonEventList6 implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new MultiplicatDig();
+        }
+    }
+}
