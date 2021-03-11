@@ -1,4 +1,4 @@
-﻿package GrCalcArOper;
+package GrCalcArOper;
 
 import java.awt.*;
 import java.awt.event.*;
