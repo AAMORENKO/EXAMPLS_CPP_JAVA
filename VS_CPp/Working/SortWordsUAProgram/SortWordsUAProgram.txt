@@ -1,0 +1,94 @@
+﻿public:
+	CStdioFile inf, otf;
+	int n, count;
+	CString ms, t, z, FRAZA[1000];
+	wchar_t buf, abetka[64];
+
+// ------------------------------------------------------
+
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+// ------------------------------------------------------ читання/занесення до таблиці слова
+
+	setlocale(LC_ALL, "Ukrainian");
+	ms = "Дана таблиця слів:\n\n";
+
+	inf.Open(L"data.txt", CFile::modeRead);
+	if (!inf) return 0;
+	inf.ReadString(t);
+	n = _wtoi(t);
+	count = 1;
+	for (int i = 0; i < n; i++)
+	{
+		inf.ReadString(t);
+		FRAZA[count] = t;
+		ms += t;
+		ms += ";  ";
+		count++;
+	}
+	inf.Close();
+
+// ------------------------------------------------------  файл data.txt
+17
+українська мова
+література
+іноземна мова
+історія
+математика
+біологія
+хімія
+фізика
+інформатика
+технології
+фізична культура
+мистецтво
+основи здоров`я
+географія
+ємець
+їжак
+ґаґаґа
+
+// ------------------------------------------------------ читання абетки UA
+
+	ms += "\n\nАбетка:\n";
+
+	inf.Open(L"abetka.txt", CFile::modeRead);
+	if (!inf) return 0;
+	inf.ReadString(t);
+	n = _wtoi(t);
+	ms += " ";
+	for (int i = 1; i <=n; i++)
+	{
+		inf.ReadString(t);
+		int k = _wtoi(t);
+		abetka[i] = wchar_t(k);
+
+		ms += abetka[i];
+		ms += "   ";
+	}
+
+// ------------------------------------------------------  сортування - звичайне - перестановка
+	for (int i = 1; i < count - 1; i++)
+	{
+		for (int k = i + 1; k < count; k++)
+		{
+			if (wcscmp(FRAZA[i], FRAZA[k]) > 0)
+			{
+				z = FRAZA[i];
+				FRAZA[i] = FRAZA[k];
+				FRAZA[k] = z;
+			}
+		}
+	}
+
+// ------------------------------------------------------  виведення  на екран
+	ms += "\n\nРезультати сортування:\n\n";
+	for (int i = 1; i < count; i++)
+	{
+		ms += FRAZA[i];
+		ms += "; ";
+	}
+
+	E.SetWindowTextW(ms);
