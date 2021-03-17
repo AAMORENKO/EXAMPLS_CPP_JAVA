@@ -1,0 +1,202 @@
+﻿public:
+
+	int TAB[1000];
+	CStdioFile inf, otf;
+	int a, b;
+	int max, min, sw;
+	CString ms, t, z, FRAZA[1000];
+	wchar_t buf, abetka[64];
+
+//-------------------------------------------
+#include <iostream>
+#include <time.h>
+#include <cstring>
+
+using namespace std;
+//-------------------------------------------
+srand((unsigned)time(NULL));
+//------------------------------------------- init
+
+	setlocale(LC_ALL, "Ukrainian");
+	ms = "Дана таблиця чисел з проміжку [";
+	int n = 65;
+	a = 10;
+	b = 99;
+	t.Format(L"%i; ", a);
+	ms += t;
+	t.Format(L"%i]:\n\n", b);
+	ms += t;
+	inf.Open(L"data1.txt", CFile::modeCreate | CFile::modeWrite);
+	if (!inf) return 0;
+
+	t.Format(L"%i\n", n);
+	inf.WriteString(t);
+
+	t.Format(L"%i\n", a);
+	inf.WriteString(t);
+
+	t.Format(L"%i\n", b);
+	inf.WriteString(t);
+
+	for (int i = 0; i < n; i++)
+	{
+		TAB[i] = a + rand() % (b - a + 1);
+
+		t.Format(L"%i\n", TAB[i]);
+		z.Format(L"%i\t", TAB[i]);
+		ms += z;
+		inf.WriteString(t);
+	}
+
+	inf.Flush();
+	inf.Close();
+
+	ms += "\n\nНатисніть <Генерувати> або <Сортувати>";
+	E.SetWindowTextW(ms);
+
+//-------------------------------------------
+
+	setlocale(LC_ALL, "Ukrainian");
+	ms = "Дана таблиця слів:\n\n";
+	inf.Open(L"data.txt", CFile::modeRead);
+	if (!inf) return 0;
+	inf.ReadString(t);
+	n = _wtoi(t);
+	int count = 1;
+	// читання з файлу слів, занесення до таблиці
+	for (int i = 0; i < n; i++)
+	{
+		inf.ReadString(t);
+		FRAZA[count] = t;
+		count++;
+		ms += t;
+		ms += ";  ";
+	}
+	inf.Close();
+
+	// сортування - звичайне - перестановка
+	for (int i = 1; i < count - 1; i++)
+	{
+		for (int k = i + 1; k < count; k++)
+		{
+			if (wcscmp(FRAZA[i], FRAZA[k]) > 0)
+			{
+				z = FRAZA[i];
+				FRAZA[i] = FRAZA[k];
+				FRAZA[k] = z;
+			}
+		}
+	}
+
+	// виведення  на екран
+	ms += "\n\nРезультати сортування:\n\n";
+	for (int i = 1; i < count; i++)
+	{
+		ms += FRAZA[i];
+		ms += "; ";
+	}
+
+	F.SetWindowTextW(ms);
+
+//------------------------------------------- OnBnClickedButton1
+	setlocale(LC_ALL, "Ukrainian");
+	ms = "Дана таблиця чисел з проміжку [";
+	int n = 65;
+	a = -9;
+	b = 9;
+	t.Format(L"%i; ", a);
+	ms += t;
+	t.Format(L"%i]:\n\n", b);
+	ms += t;
+	inf.Open(L"data1.txt", CFile::modeCreate | CFile::modeWrite);
+	if (!inf) return;
+
+	t.Format(L"%i\n", n);
+	inf.WriteString(t);
+
+	t.Format(L"%i\n", a);
+	inf.WriteString(t);
+
+	t.Format(L"%i\n", b);
+	inf.WriteString(t);
+
+	for (int i = 0; i < n; i++)
+	{
+		TAB[i] = a + rand() % (b - a + 1);
+
+		t.Format(L"%i\n", TAB[i]);
+		z.Format(L"%2i\t", TAB[i]);
+		ms += z;
+		inf.WriteString(t);
+	}
+
+	inf.Flush();
+	inf.Close();
+	ms += "\n\nНатисніть <Генерувати> або <Сортувати>";
+	E.SetWindowTextW(ms);
+
+//------------------------------------------- OnBnClickedButton2
+	setlocale(LC_ALL, "Ukrainian");
+	otf.Open(L"data1.txt", CFile::modeRead);
+	if (!otf) return;
+	otf.ReadString(t);
+	int n = _wtoi(t);
+	otf.ReadString(t);
+	int a = _wtoi(t);
+	otf.ReadString(t);
+	int b = _wtoi(t);
+	for (int i = 0; i < n; i++)
+	{
+		otf.ReadString(t);
+		TAB[i] = _wtoi(t);
+	}
+	otf.Close();
+
+	int i, k, m;
+	for (i = 0; i < n - 1; i++)
+	{
+		max = TAB[i]; m = i;
+		for (k = i + 1; k < n; k++)
+		{
+			if (max > TAB[k])
+			{
+				max = TAB[k];
+				m = k;
+			}
+		}
+		sw = TAB[i];
+		TAB[i] = max;
+		TAB[m] = sw;
+	}
+
+	ms = "Дана таблиця чисел з проміжку [";
+	t.Format(L"%i; ", a);
+	ms += t;
+	t.Format(L"%i]:\n\n", b);
+	ms += t;
+	for (int i = 0; i < n; i++)
+	{
+		z.Format(L"%2i\t", TAB[i]);
+		ms += z;
+	}
+	ms += "\n\nНатисніть <Генерувати> або <Сортувати>";
+	E.SetWindowTextW(ms);
+//-------------------------------------------
+// створення файлу з абеткою  Ukrainian
+	ms += "\n\nАбетка:\n";
+	inf.Open(L"abetka.txt", CFile::modeRead);
+	if (!inf) return 0;
+	inf.ReadString(t);
+	n = _wtoi(t);
+	for (int i = 1; i <n; i++)
+	{
+		inf.ReadString(t);
+		int k = _wtoi(t);
+		abetka[i] = wchar_t(k);
+		ms += abetka[i];
+		ms += "   ";
+	}
+	inf.Close();
+//-------------------------------------------
+
+//-------------------------------------------
