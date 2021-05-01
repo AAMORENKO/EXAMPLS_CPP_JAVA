@@ -1,0 +1,243 @@
+package wLineCalculat;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Objects;
+import java.util.Random;
+import java.util.Scanner;
+
+import static java.lang.Thread.sleep;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
+
+public class wLineCalculat extends Frame implements WindowListener{
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        this.dispose();
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
+    }
+
+    public JTextField input1 = new JTextField();
+    public String rms="";
+    public String rmz="";
+    public String ms="";
+    public String mz="";
+    public String t="";
+    public String z="";
+    public String text="";
+    JButton button=new JButton("Start");
+    public boolean fg=false;
+    public int n,m;
+    public float a,b,c,p,s;
+
+    public File inf=new File("data.txt");
+    public File otf=new File("fraza.txt");
+
+
+    public void paint(Graphics g) {
+
+        Dimension rc = getSize();
+        Insets in = getInsets();
+
+        int RH = rc.width;
+        int RW = rc.height;
+
+        int minX = in.left;
+        int maxX = RH - in.right;
+        int minY = in.top;
+        int maxY = RW - in.bottom;
+
+        int cx, cy, dx, dy;
+        float wdk=3.0f;
+
+        cx = Math.abs(maxX - minX) / 2;
+        cy = Math.abs(maxY - minY) / 2;
+
+        dx = Math.abs(maxX-minX) / 7;
+        dy = Math.abs(maxY-minY) / 7;
+
+
+
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(wdk));
+
+
+        // TO DO
+
+        g.setColor(new Color(27, 14, 154));
+        g.setFont(new Font("Times New Roman",Font.BOLD,32));
+        String text="Введіть сторони трикутника a b c:";
+        g.drawString(text,20,80);
+
+        g.setColor(new Color(0,0,0));
+        g.fillRect(0,200,800,400);
+        g.setColor(new Color(255, 255, 64));
+        g.setFont(new Font("Times New Roman",Font.BOLD,64));
+        text="Натисніть <Start>";
+        g.drawString(text,100,400);
+
+        Image mbutton=new ImageIcon("res\\button1.png").getImage();
+        g.drawImage(mbutton,630,160,null);
+        button.setBounds(630,160,100,30);
+        input1.setBounds(20,100,750,30);
+
+
+        Font fnt=new Font("Times New Roman",Font.BOLD,22);
+        input1.setFont(fnt);
+
+
+        this.setLayout(null);
+        this.add(input1);
+
+        this.add(button);
+        this.setVisible(true);
+
+        try {
+            Scanner scan=new Scanner(otf);
+            text=scan.nextLine();
+            scan.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        input1.setText(text);
+
+
+        button.addActionListener(new ButtonListEvent());
+
+        try {
+            Scanner scan=new Scanner(inf);
+            a= Float.parseFloat(scan.next());
+            b= Float.parseFloat(scan.next());
+            c= Float.parseFloat(scan.next());
+            scan.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+/*
+        if(n==1 && fg)
+        {
+            fg=true;
+            g.setColor(new Color(0,0,0));
+            g.fillRect(0,200,800,400);
+            g.setColor(new Color(70, 222, 32));
+            g.setFont(new Font("Times New Roman",Font.BOLD,64));
+            text="Так. Це паліндром.";
+            g.drawString(text,100,400);
+        }
+        if(n==2 && !fg)
+        {
+            fg=false;
+            g.setColor(new Color(0,0,0));
+            g.fillRect(0,200,800,400);
+            g.setColor(new Color(255, 29, 71));
+            g.setFont(new Font("Times New Roman",Font.BOLD,64));
+            text="Ні. Це не паліндром.";
+            g.drawString(text,100,400);
+        }
+*/
+    }
+
+
+    public wLineCalculat() {
+        super("Лінійні обчислювальні процеси.");
+        addWindowListener(this);
+        setLayout(null);
+        setLocation(120,100);
+        setSize(800,600);
+        show();
+        this.setResizable(false);
+    }
+
+    private class ButtonListEvent implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ms=input1.getText();
+
+            try {
+                otf.createNewFile();
+                FileWriter writer=new FileWriter(otf);
+                writer.write(ms);
+                writer.flush();
+                writer.close();
+                repaint();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+
+/*
+            mz=new StringBuilder(ms).reverse().toString();
+            rms=ms.replaceAll("\\s+","");
+            rmz=mz.replaceAll("\\s+","");
+            t=rms.toUpperCase();
+            z=rmz.toUpperCase();
+            fg= Objects.equals(t,z);
+
+            if(fg)
+            {
+                try {
+                    inf.createNewFile();
+                    FileWriter writer=new FileWriter(inf);
+                    int n=1;
+                    String text= String.valueOf(n);
+                    writer.write(text);
+                    writer.flush();
+                    writer.close();
+                    repaint();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+            if(!fg)
+            {
+                try {
+                    inf.createNewFile();
+                    FileWriter writer=new FileWriter(inf);
+                    int n=2;
+                    String text= String.valueOf(n);
+                    writer.write(text);
+                    writer.flush();
+                    writer.close();
+                    repaint();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+            */
+        }
+    }
+}
