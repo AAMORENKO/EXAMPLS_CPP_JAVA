@@ -1,0 +1,56 @@
+﻿
+// ProgramDlg.h : header file
+//
+
+#pragma once
+
+
+// CProgramDlg dialog
+class CProgramDlg : public CDialog
+{
+// Construction
+public:
+	CProgramDlg(CWnd* pParent = nullptr);	// standard constructor
+
+// Dialog Data
+#ifdef AFX_DESIGN_TIME
+	enum { IDD = IDD_PROGRAM_DIALOG };
+#endif
+
+	protected:
+	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
+
+
+// Implementation
+protected:
+	HICON m_hIcon;
+
+	// Generated message map functions
+	virtual BOOL OnInitDialog();
+	afx_msg void OnPaint();
+	afx_msg HCURSOR OnQueryDragIcon();
+	DECLARE_MESSAGE_MAP()
+
+private:
+
+	float a, b, c;
+	float ca, cb, cc;
+	CString ms, t;
+
+	bool fg;
+
+
+
+public:
+	CStatic E;
+	float A;
+	float B;
+	float C;
+	afx_msg void OnBnClickedButton1();
+
+	afx_msg bool existing(float x, float y, float z);
+	afx_msg float max2(float x, float y);
+
+
+
+};
