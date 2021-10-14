@@ -1,4 +1,4 @@
-﻿Програма з меню графічних примітивів Квадрати, Круги
+Програма з меню графічних примітивів Квадрати, Круги, Трикутники
 для конспектування 8-Мі клас
 
 відео - https://youtu.be/0Lq7g9ZQ4tw
@@ -194,3 +194,64 @@ CClientDC dc(this);
 	dc.Ellipse(&kw[2]);
 
 
+///////////////////////////////////////////////////////////////////
+
+	CClientDC dc(this);
+	GetClientRect(&rc);
+
+	c[6] = 0x000000FF;
+	c[5] = 0x000088FF;
+	c[4] = 0x0000DDFF;
+	c[3] = 0x000D820D;
+	c[2] = 0x00FF9D3A;
+	c[1] = 0x00945823;
+	c[0] = 0x007A1B50;
+	c[7] = 0xAA5600;
+	c[8] = 0xAAAA;
+	c[9] = 0x00CC00;
+	c[10] = 0x090056;
+	c[11] = 0xF0F0F0;
+
+	dc.FillSolidRect(&rc, RGB(0, 0, 0));
+
+	hbk = (HFONT)::GetStockObject(SYSTEM_FONT);
+	hNew = CreateFont(44, 0, 0, 0, FW_NORMAL, 0, 0, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS,
+		CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Penta");
+
+	t = "Трикутники";
+
+	hold = (HFONT)SelectObject(dc, hNew);
+	SetTextColor(dc, c[4]);
+	dc.TextOutW(35, 80, t, t.GetLength());
+	hold = (HFONT)SelectObject(dc, hbk);
+
+	x1 = w.left = rc.left;
+	x2 = w.right = rc.right;
+	y1 = w.top = rc.top;
+	y2 = w.bottom = rc.bottom;
+
+	x1 = w.left + 300;
+	y1 = w.top + 60;
+
+	x2 = x1 + 500;
+	y2 = y1 + 80;
+
+	x3 = x2 - 200;
+	y3 = y2 + 420;
+
+	CBrush br1(c[2]);
+	SelectObject(dc, br1);
+
+	pen = CreatePen(PS_SOLID, 3, c[7]);
+	SelectObject(dc,pen);
+
+	dc.MoveTo(x1, y1);
+	dc.LineTo(x2, y2);
+	dc.LineTo(x3, y3);
+	dc.LineTo(x1, y1);
+	dc.FloodFill(x1 + 100, y1 + 120, c[7]);
+
+	DeleteObject(pen);
+	DeleteObject(br1);
+	
+	
